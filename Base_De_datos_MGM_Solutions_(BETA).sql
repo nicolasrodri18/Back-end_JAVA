@@ -55,7 +55,7 @@ CREATE TABLE TBL_Producto (
 
 -- 8. TBL_Almacen
 CREATE TABLE TBL_Almacen (
-    Registro_Almacen INT auto_increment unique PRIMARY KEY, -- Se asume un ID de registro de inventario/almacenamiento
+    Registro_Almacen INT auto_increment unique PRIMARY KEY,
     DOCUMENTO_NIT VARCHAR(20) NOT NULL,
     ID_Producto INT NOT NULL,
     Precio_Asignado DECIMAL(10, 2) NOT NULL,
@@ -85,3 +85,34 @@ CREATE TABLE TBL_Productos_Vendidos (
     FOREIGN KEY (ID_Registro_Venta) REFERENCES TBL_Venta(ID_Registro_Venta),
     FOREIGN KEY (Registro_Almacen) REFERENCES TBL_Almacen(Registro_Almacen)
 );
+
+INSERT INTO TBL_ROL (ID_ROL, Nombre_ROL) VALUES (1, 'Administrador');
+INSERT INTO TBL_ROL (ID_ROL, Nombre_ROL) VALUES (2, 'Empresa');
+INSERT INTO TBL_ROL (ID_ROL, Nombre_ROL) VALUES (3, 'Usuario');
+INSERT INTO TBL_Permisos (ID_Permiso, Descripcion_Permiso) VALUES (1, 'Administrar todo');
+INSERT INTO TBL_Permisos (ID_Permiso, Descripcion_Permiso) VALUES (2, 'Administrar usuarios');
+INSERT INTO TBL_Permisos (ID_Permiso, Descripcion_Permiso) VALUES (3, 'Administrar productos');
+INSERT INTO TBL_Permisos (ID_Permiso, Descripcion_Permiso) VALUES (4, 'Administrar ventas');
+INSERT INTO TBL_ROL_Permisos (ID_Permiso, ID_ROL) VALUES (1, 1);
+INSERT INTO TBL_ROL_Permisos (ID_Permiso, ID_ROL) VALUES (2, 1);
+INSERT INTO TBL_ROL_Permisos (ID_Permiso, ID_ROL) VALUES (3, 1);
+INSERT INTO TBL_ROL_Permisos (ID_Permiso, ID_ROL) VALUES (4, 1);
+
+INSERT INTO TBL_CIUDADES (ID_Ciudad, Nombre) VALUES (1, 'Bogota');
+INSERT INTO TBL_CIUDADES (ID_Ciudad, Nombre) VALUES (2, 'Medellin');
+INSERT INTO TBL_CIUDADES (ID_Ciudad, Nombre) VALUES (3, 'Cali');
+INSERT INTO TBL_CIUDADES (ID_Ciudad, Nombre) VALUES (4, 'Barranquilla');
+INSERT INTO TBL_CIUDADES (ID_Ciudad, Nombre) VALUES (5, 'Cartagena');
+INSERT INTO TBL_CIUDADES (ID_Ciudad, Nombre) VALUES (6, 'Bucaramanga');
+INSERT INTO TBL_CIUDADES (ID_Ciudad, Nombre) VALUES (7, 'Manizales');
+INSERT INTO TBL_CIUDADES (ID_Ciudad, Nombre) VALUES (8, 'Pereira');
+INSERT INTO TBL_CIUDADES (ID_Ciudad, Nombre) VALUES (9, 'Barrancabermeja');
+INSERT INTO TBL_CIUDADES (ID_Ciudad, Nombre) VALUES (10, 'Barrancabermeja');
+
+INSERT INTO TBL_USUARIOS (DOCUMENTO_NIT, ID_ROL, Nombre, Direccion, Contraseña, Ciudad) VALUES (1097765431, 1, 'Administrador', 'Calle 123 # 45-67', 'Administrador', 1);
+INSERT INTO TBL_USUARIOS (DOCUMENTO_NIT, ID_ROL, Nombre, Direccion, Contraseña, Ciudad) VALUES (1097765432, 2, 'Empresa', 'Cra 43 # 56-78', 'Empresa', 2);
+INSERT INTO TBL_USUARIOS (DOCUMENTO_NIT, ID_ROL, Nombre, Direccion, Contraseña, Ciudad) VALUES (1097765433, 3, 'Usuario', 'Calle 123 # 45-67', 'Usuario', 3);
+
+INSERT INTO TBL_Correos (Correo, DOCUMENTO_NIT) VALUES ('Administrador@gmail.com', 1097765431);
+INSERT INTO TBL_Correos (Correo, DOCUMENTO_NIT) VALUES ('Empresa@gmail.com', 1097765432);
+INSERT INTO TBL_Correos (Correo, DOCUMENTO_NIT) VALUES ('Usuario@gmail.com', 1097765433);
