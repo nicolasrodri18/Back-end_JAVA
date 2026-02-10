@@ -1,0 +1,38 @@
+@import url(components/pie_pagina.css);
+@import url(components/encabezado_pagina_inicio.css);
+
+.seleccion-rol {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap_2xl);
+    background-color: var(--color_gris-medio);
+    width: var(--ancho_caja_seleccion-rol);
+    height: var(--alto_caja_seleccion-rol);
+    border-radius: var(--radius_caja-seleccion);
+}
+
+.cuerpo__contenido--texto {
+    font-family: var(--tipo_letra);
+    font-weight: var(--estilo_letra);
+    font-size: var(--font_5xl);
+    margin-bottom: var(--margin_xl);
+}
+
+.campo-rol {
+    text-align: center;
+    text-decoration: none;
+    color: var(--fondo_boton);
+    font-family: var(--tipo_letra);
+    background-color: var(--color_blanco);
+    width: var(--ancho_campo-rol);
+    height: var(--alto_campo-rol);
+    font-size: var(--font_4xl);
+    border-radius: var(--radius_campo-rol);
+}
+
+.campo-rol:hover {
+    background-color: var(--color_hover-gris);
+    color: var(--color_gris-oscuro);
+    transition: var(--transicion_rapida);
+}

@@ -1,0 +1,96 @@
+@import url(components/boton.css);
+@import url(components/logo_footer.css);
+@import url(components/logos_redes.css);
+@import url(components/campo_form.css);
+@import url(components/pie_pagina.css);
+@import url(components/encabezado_pagina_inicio.css);
+
+/* main */
+.cuerpo {
+    grid-area: main;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap_xl);
+}
+
+.cuerpo__bienvenida--mensaje {
+    text-align: center;
+    font-family: var(--tipo_letra);
+    font-weight: var(--estilo_letra);
+    font-size: var(--font_3xl);
+}
+
+.menu-inicio--formulario,
+.menu-registro-empresa--formulario,
+.menu-registro-usuario--formulario {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--tipo_letra);
+}
+
+.menu-campo {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--tipo_letra);
+    margin-top: var(--margin_md);
+}
+
+.menu-inicio--enlaces {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: var(--margin_md);
+    font-family: var(--tipo_letra);
+    color: var(--color_enlace);
+}
+
+.menu-inicio--enlaces--menus {
+    font-family: var(--tipo_letra);
+    color: var(--color_enlace);
+    margin-top: var(--margin_xs);
+}
+
+.menu-inicio__enlaces--menus--registro {
+    text-decoration: none;
+}
+
+/* controladores-checkbox forms menus */
+.cuerpo>input[type="checkbox"] {
+    display: none;
+}
+
+.cuerpo__menu-registro-empresa,
+.cuerpo__menu-registro-usuario {
+    display: none;
+}
+
+.cuerpo__menu-inicio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#toggle-registro__empresa:checked~.cuerpo__menu-inicio,
+#toggle-registro__empresa:checked~.cuerpo__menu-registro-usuario {
+    display: none;
+}
+
+#toggle-registro__empresa:checked~.cuerpo__menu-registro-empresa {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#toggle-registro__usuario:checked~.cuerpo__menu-inicio,
+#toggle-registro__usuario:checked~.cuerpo__menu-registro-empresa {
+    display: none;
+}
+
+#toggle-registro__usuario:checked~.cuerpo__menu-registro-usuario {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

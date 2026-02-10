@@ -1,0 +1,19 @@
+@import url(Styles/coustom_properties.css);
+@import url(Styles/style-global.css);
+
+@import url(Styles/Inicios.css);
+@import url(Styles/Login.css);
+@import url(Styles/seleccion-rol.css);
+@import url(Styles/components/contenido_empresa.css);
+@import url(Styles/components/Listas.css);
+@import url(Styles/datos-empleado.css);
+@import url(Styles/components/modulos_menu_lista_productos.css);
+@import url(Styles/components/modulo_cerrar_sesion.css);
+@import url(Styles/components/modulo_detalle_registro.css);
+@import url(Styles/components/modulo_anadir_empleado.css);
+@import url(Styles/components/modulo_eliminar.css);
+
+/* Media Queries */
+@import url(Styles/Media_Query/media-query-portatil-1.css);
+@import url(Styles/Media_Query/media-query-portatil-2.css);
+@import url(Styles/Media_Query/media-query-tablet.css);

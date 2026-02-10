@@ -1,0 +1,16 @@
+.cuerpo__boton--interaccion {
+    background-color: var(--color_primario);
+    color: var(--color_primario-claro);
+    padding-bottom: var(--altos_boton-interacciones);
+    padding-top: var(--altos_boton-interacciones);
+    padding-left: var(--anchos_boton-interacciones);
+    padding-right: var(--anchos_boton-interacciones);
+    border-radius: var(--border_radius-botones);
+    font-size: var(--font_base);
+}
+
+.cuerpo__boton--interaccion:hover {
+    background-color: var(--color_primario-claro);
+    color: var(--color_primario);
+    cursor: pointer;
+}

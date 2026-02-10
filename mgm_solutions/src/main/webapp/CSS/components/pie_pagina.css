@@ -1,0 +1,92 @@
+@import url(components/logo_footer.css);
+@import url(components/logos_redes.css);
+
+.pie-pagina{
+    grid-area: footer;
+    height: var(--alto_footer-inicio);
+    justify-content: center;
+    align-items: center;
+}
+
+.pie-pagina__contenido-1{
+    grid-area: footer-1;
+    height: var(--alto_pie-pagina__contenido);
+    margin-left: 10%;
+    color: var(--textos_contenidos);
+    border-right:var(--linea_division_footer) solid white;
+    display: flex;
+    align-items: center;
+}
+
+.pie-pagina__contenido-1--texto{
+    font-size: var(--textos_footer);
+    font-family: var(--tipo_letra);
+    font-weight: var(--estilo_letra);
+
+}
+.pie-pagina__contenido-2{
+    grid-area: footer-2;
+    height: var(--alto_pie-pagina__contenido);
+    background-color: blue;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    background-color: var(--fondo_footer);
+    grid-template-areas: "logo logo logo"
+                        "icono-1 icono-2 icono-3";
+}
+
+.pie-pagina__contenido-2--texto{
+    font-size: var(--textos_redes);
+    font-family: var(--tipo_letra);
+    font-weight: var(--estilo_letra);
+    color: var(--textos_contenidos);
+    margin-top: 5px;
+}
+
+.pie-pagina__contenido-2--logo{
+    grid-area: logo;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pie-pagina__contenido-2--instagram{
+    grid-area: icono-1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.pie-pagina__contenido-2--facebook{
+    grid-area: icono-2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.pie-pagina__contenido-2--email{
+    grid-area: icono-3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.pie-pagina__contenido-3{
+    height: var(--alto_pie-pagina__contenido);
+    color: var(--textos_contenidos);
+    border-left:var(--linea_division_footer) solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pie-pagina__contenido-3--texto{
+    font-size: var(--textos_footer);
+    font-family: var(--tipo_letra);
+    font-weight: var(--estilo_letra);
+
+}

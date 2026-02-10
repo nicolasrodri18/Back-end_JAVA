@@ -1,0 +1,15 @@
+.boton {
+    background-color: var(--fondo_boton);
+    color: var(--textos_contenidos);
+    padding-bottom: var(--altos_boton);
+    padding-top: var(--altos_boton);
+    padding-left: var(--anchos_boton);
+    padding-right: var(--anchos_boton);
+    border-radius: var(--border_radius-botones);
+    font-size: 24px;
+}
+
+.boton:hover {
+    background-color: var(--fondo_boton-hover);
+    cursor: pointer;
+}

@@ -1,0 +1,27 @@
+@import url(boton-seleccionar.css);
+
+.card__producto {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color_fondo-card);
+    height: var(--alto_card-producto);
+    width: var(--ancho_card-producto);
+    border-radius: var(--radius_card);
+    margin: var(--margin_2xl);
+    padding: auto;
+}
+
+.card__producto--texto {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+}
+
+.card__producto--texto__contenido {
+    font-family: var(--tipo_letra);
+    font-size: var(--font_base);
+    margin: var(--margin_texto_contenido_card);
+}

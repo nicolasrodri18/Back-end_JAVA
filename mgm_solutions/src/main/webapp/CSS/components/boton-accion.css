@@ -1,0 +1,19 @@
+.card__lista__boton--accion {
+  height: var(--alto_boton-accion);
+  width: var(--ancho_boton-accion);
+  border-radius: var(--border_radius-botones);
+  background-color: var(--color_negro);
+  color: var(--textos_contenidos);
+  font-size: var(--font_base);
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  font-family: var(--tipo_letra);
+}
+
+.card__lista__boton--accion:hover {
+  background-color: var(--color_boton-accion-hover);
+}

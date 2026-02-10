@@ -1,0 +1,29 @@
+@import url(card-informacion.css);
+@import url(boton-accion.css);
+
+.grid__lista {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: var(--alto--contenido_texto) var(--alto--contenido_cards);
+  grid-template-areas:
+    "contenido__texto"
+    "contenido__cards";
+}
+
+.cuerpo--texto {
+  grid-area: contenido__texto;
+  font-size: var(--font_xl);
+  margin-top: var(--margin_xl);
+  margin-bottom: var(--margin_xl);
+}
+
+.cuerpo--cards {
+  grid-area: contenido__cards;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  overflow-y: auto;
+  align-items: center;
+  margin-top: var(--margin_md);
+  gap: var(--gap_md)
+}

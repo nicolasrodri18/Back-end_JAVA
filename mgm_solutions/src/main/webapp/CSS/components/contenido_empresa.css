@@ -1,0 +1,21 @@
+@import url(barra_de_busqueda.css);
+@import url(caja_de_productos.css);
+@import url(card-producto.css);
+@import url(boton-empresa.css);
+
+.cuerpo__accionar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  grid-area: cuerpo__accionar;
+}
+
+.cuerpo__accionar--conboton {
+  margin-left: var(--gap_4xl);
+  gap: var(--gap_4xl);
+}
+
+.cuerpo__accionar>a {
+  margin-left: var(--margin_3xl);
+}

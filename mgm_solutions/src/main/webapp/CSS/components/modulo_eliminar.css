@@ -1,0 +1,76 @@
+/* ===============================================
+   MODAL CONFIRMAR ELIMINAR
+   =============================================== */
+
+.modulo__overlay--eliminar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--overlay_oscuro);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: var(--z-index_modal);
+}
+
+.modulo__eliminar {
+    background-color: var(--color_fondo-modal);
+    border-radius: var(--radius_modal);
+    padding: var(--padding_modal-vertical) var(--padding_modal-horizontal);
+    width: var(--ancho_modal-pequeno);
+    box-shadow: var(--sombra_media);
+    text-align: center;
+}
+
+.modulo__eliminar--texto {
+    font-size: var(--font_lg);
+    font-weight: 500;
+    color: var(--color_gris-oscuro);
+    margin-bottom: var(--margin_2xl);
+    font-family: var(--tipo_letra);
+    line-height: 1.4;
+}
+
+.modulo__eliminar--botones {
+    display: flex;
+    justify-content: center;
+    gap: var(--gap_xl);
+}
+
+.modulo__eliminar .modulo__boton {
+    padding: var(--padding_boton-vertical) var(--padding_boton-horizontal);
+    border-radius: var(--border_radius-botones);
+    font-size: var(--font_md);
+    font-weight: 500;
+    cursor: pointer;
+    font-family: var(--tipo_letra);
+    transition: var(--transicion_estandar);
+    text-align: center;
+}
+
+.modulo__eliminar .modulo__boton--cancelar {
+    background-color: var(--color_blanco);
+    color: var(--color_gris-oscuro);
+    border: 2px solid var(--color_gris-oscuro);
+}
+
+.modulo__eliminar .modulo__boton--cancelar:hover {
+    background-color: var(--color_gris-hover);
+}
+
+.modulo__eliminar .modulo__boton--confirmar {
+    background-color: var(--color_blanco);
+    color: var(--color_error);
+    border: 2px solid var(--color_error);
+}
+
+.modulo__eliminar .modulo__boton--confirmar:hover {
+    background-color: var(--color_error);
+    color: var(--color_blanco);
+}
+
+#toggle-modulo-eliminar:checked~.modulo__overlay--eliminar {
+    display: flex;
+}

@@ -1,0 +1,4 @@
+.logo__navegacion{
+    height: var(--alto_logo--navbar);
+    width: var(--ancho_logo--navbar);
+}

@@ -1,0 +1,35 @@
+@import url(components/boton.css);
+@import url(components/logo.css);
+@import url(components/logo_footer.css);
+@import url(components/logos_redes.css);
+@import url(components/pie_pagina.css);
+@import url(components/encabezado_pagina_inicio.css);
+@import url(components/navbar.css);
+@import url(components/logo-navegacion.css);
+@import url(components/icon-perfil.css);
+
+.contenido__menu--inicio {
+    grid-area: contenido;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: var(--gap_3xl);
+}
+
+.cuerpo__contenido {
+    text-align: center;
+    font-family: var(--tipo_letra);
+    font-weight: var(--estilo_letra);
+    font-size: var(--font_3xl);
+    font-weight: bold;
+}
+
+.grid-cuerpo__contenidos {
+    grid-area: contenido;
+    text-align: center;
+    font-family: var(--tipo_letra);
+    font-weight: var(--estilo_letra);
+    font-size: var(--font_3xl);
+    font-weight: bold;
+}
