@@ -1,0 +1,14 @@
+@import url(logo.css);
+
+.encabezado{
+    grid-area: header;
+    height: var(--alto_header-inicio);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.encabezado__Logo{
+    height: var(--alto_Logo);
+    width: var(--ancho_Logo);
+}

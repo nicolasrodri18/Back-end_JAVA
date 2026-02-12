@@ -1,0 +1,569 @@
+@media (max-width: 720px) {
+
+    /* RESET PARA ELIMINAR ESPACIO LATERAL */
+    html,
+    body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+        margin: 0;
+        padding: 0;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    /* VARIABLES GENERALES - Para tablets */
+    :root {
+        /* Modales - reducidos para tablet */
+        --ancho_modal-medio: 280px;
+        --ancho_modal-seleccionar: 300px;
+        --ancho_modal-pequeno: 260px;
+        --padding_modal-horizontal: 20px;
+        --padding_modal-vertical: 15px;
+
+        /* Cuerpo datos - reducido */
+        --ancho_cuerpo-datos: 95%;
+        --alto_cuerpo-datos: 350px;
+
+        /* medidas contenedor listas */
+        --ancho_caja-productos: 90%;
+        /* alto sin cambiar - mantiene el original */
+
+        /* medidas cards productos - grid de 2 columnas */
+        --ancho_card-producto: 190px;
+        --alto_card-producto: 170px;
+        --font_base: 10px;
+        --margin_texto_contenido_card: 6px;
+
+        /* medidas cards informacion */
+        --ancho_card-informacion: 98%;
+        --margin_lg: 4px;
+
+        /* gaps */
+        --gap_4xl: 20px;
+        --gap_3xl: 15px;
+
+        /* Barra de búsqueda */
+        --ancho--input_busqueda: 95%;
+        --alto--input_busqueda: 40px;
+        --alto_boton-busqueda: 40px;
+
+        /* Botones */
+        --alto_boton-accion: 24px;
+        --ancho_boton-accion: 60px;
+
+        /* Botón interacciones */
+        --anchos_boton-interacciones: 15px;
+        --altos_boton-interacciones: 8px;
+
+        /* Selección rol */
+        --ancho_caja_seleccion-rol: 350px;
+        --alto_caja_seleccion-rol: 320px;
+        --ancho_campo-rol: 260px;
+        --alto_campo-rol: 55px;
+
+        /* Campo form */
+        --ancho-campo_form: 250px;
+        --alto-campo_form: 28px;
+    }
+
+    /* ==================== VARIABLES PARA PÁGINAS DE INICIO (645px de alto) ==================== */
+    .grid-inicio {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: var(--alto_header-inicio) var(--alto_main-inicio) var(--alto_footer-inicio);
+        grid-template-areas:
+            "header"
+            "main"
+            "footer";
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+        /* Mantener alturas originales proporcionales para 645px */
+        --alto_header-inicio: 100px;
+        --alto_footer-inicio: 200px;
+        --alto_main-inicio: calc(100vh - (var(--alto_footer-inicio) + var(--alto_header-inicio)));
+    }
+
+    /* Forzar asignación de áreas y anchos completos en tablet */
+    .grid-inicio .encabezado {
+        grid-area: header;
+        width: 100%;
+    }
+
+    /* Main de página de inicio */
+    .grid-inicio .cuerpo {
+        grid-area: main;
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
+        padding: 10px 15px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .grid-inicio .pie-pagina {
+        grid-area: footer;
+        width: 100%;
+    }
+
+    /* Título h1 de la página de inicio */
+    .grid-inicio .cuerpo__contenido {
+        width: 100%;
+        max-width: 100%;
+        font-size: 18px;
+        line-height: 1.4;
+        padding: 0 10px;
+        box-sizing: border-box;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        text-align: center;
+    }
+
+    .grid-inicio .encabezado__logo {
+        height: 80px;
+        width: 130px;
+    }
+
+    /* ==================== VARIABLES SOLO PARA PÁGINAS DE LISTAS (1133px de alto) ==================== */
+    .grid-navegacion {
+        /* Navbar - agrandado para 151px de altura */
+        --navbar__perfil: 200px;
+        --navbar__logo: 180px;
+        --alto_logo--navbar: 80px;
+        --ancho_logo--navbar: 130px;
+        --alto-icon__perfil: 50px;
+        --ancho-icon__perfil: 52px;
+
+        /* Footer - agrandado para 361px de altura */
+        --ancho_Logo_footer: 120px;
+        --alto_Logo_footer: 70px;
+        --alto_logos_redes: 30px;
+        --ancho_logos_redes: 30px;
+        --linea_division_footer: 3px;
+        --textos_footer: 12px;
+        --textos_redes: 11px;
+    }
+
+    /* ==================== NAVBAR (SOLO PARA PÁGINAS DE LISTAS) ==================== */
+    .grid-navegacion .navbar {
+        height: 151px;
+        flex-wrap: wrap;
+        padding: 15px 20px;
+        align-content: center;
+    }
+
+    .grid-navegacion .navbar__perfil {
+        width: var(--navbar__perfil);
+        order: 1;
+    }
+
+    .grid-navegacion .navbar__perfil--nombre {
+        font-size: 14px;
+    }
+
+    .grid-navegacion .navbar__navegacion--links {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .grid-navegacion .navegacion__links {
+        font-size: 13px;
+        padding: 8px 12px;
+    }
+
+    .grid-navegacion .navbar__logo {
+        width: var(--navbar__logo);
+        order: 2;
+    }
+
+    .grid-navegacion .logo__navegacion {
+        height: var(--alto_logo--navbar);
+        width: var(--ancho_logo--navbar);
+    }
+
+    .grid-navegacion .icon-perfil {
+        height: var(--alto-icon__perfil);
+        width: var(--ancho-icon__perfil);
+    }
+
+    .grid-navegacion .boton__cerrar-sesion {
+        width: 110px;
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+
+    /* ==================== GRID LAYOUT PARA PÁGINAS DE LISTAS ==================== */
+    .grid-navegacion {
+        display: grid;
+        grid-template-rows: 151px 1fr 361px;
+        grid-template-areas:
+            "header"
+            "main"
+            "footer";
+        min-height: 100vh;
+        width: 100%;
+    }
+
+    .grid-navegacion .navbar {
+        grid-area: header;
+        width: 100%;
+    }
+
+    .grid-navegacion .grid-cuerpo__contenidos {
+        grid-area: main;
+        overflow-y: auto;
+        width: 100%;
+    }
+
+    .grid-navegacion .pie-pagina {
+        grid-area: footer;
+        width: 100%;
+    }
+
+    /* ==================== MAIN CONTENT ==================== */
+    .grid-cuerpo__contenidos {
+        padding: 5px;
+        width: 100%;
+    }
+
+    /* Barra de acciones */
+    .cuerpo__accionar {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .cuerpo__boton--interaccion {
+        font-size: 11px;
+        padding: 8px 16px;
+    }
+
+    /* ==================== CONTENEDOR DE CARDS ==================== */
+    .cuerpo__contenido {
+        padding: 10px 5px;
+        width: 100%;
+    }
+
+    .cuerpo__contenido__cards {
+        width: 95%;
+        max-width: 100%;
+        padding: 10px;
+        margin: 0 auto;
+    }
+
+    .cuerpo--texto {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    /* Cards de productos - Grid de 2 columnas */
+    .cuerpo--cards {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 15px !important;
+        justify-items: center;
+    }
+
+    .grid__lista .cuerpo--cards {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .card__producto {
+        width: var(--ancho_card-producto);
+        height: var(--alto_card-producto);
+    }
+
+    .card__producto--imagen {
+        height: 70px;
+    }
+
+    .card__producto--nombre,
+    .card__producto--precio {
+        font-size: var(--font_base);
+    }
+
+    /* ==================== CARDS DE LISTA ==================== */
+    .grid__lista {
+        height: auto;
+        max-height: var(--alto_caja-productos);
+    }
+
+    .card__lista {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "textos"
+            "botones";
+        height: auto;
+        padding: 10px;
+    }
+
+    .card__lista--textos {
+        flex-wrap: wrap;
+        gap: 5px;
+        justify-content: flex-start;
+    }
+
+    .card--texto {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .card__lista--texto__propiedad,
+    .card__lista--texto__descripcion {
+        font-size: 10px;
+    }
+
+    /* Ocultar campos menos importantes en tablet */
+    .card__lista--textos .card--texto:nth-child(4) {
+        display: none;
+    }
+
+    .card__lista--botones {
+        justify-content: center;
+        gap: 10px;
+        margin-top: 8px;
+    }
+
+    .card__lista__boton--accion {
+        font-size: 9px;
+        width: var(--ancho_boton-accion);
+        height: var(--alto_boton-accion);
+    }
+
+    /* ==================== CUERPO DATOS (Datos Empleado) ==================== */
+    .cuerpo__datos {
+        width: var(--ancho_cuerpo-datos);
+        height: auto;
+        min-height: var(--alto_cuerpo-datos);
+        padding: 15px;
+        margin: 10px auto;
+        border-radius: 15px;
+    }
+
+    .datos__titulo {
+        font-size: 18px;
+    }
+
+    .datos__texto--titulo {
+        font-size: 14px;
+    }
+
+    .campo__texto--propiedad,
+    .campo__texto--descripcion {
+        font-size: 11px;
+    }
+
+    .datos__campos {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    /* ==================== MODALES ==================== */
+    .modulo__agregar--producto,
+    .modulo__agregar-empleado {
+        width: var(--ancho_modal-medio);
+        padding: 15px 18px;
+    }
+
+    .modulo__seleccionar--producto,
+    .modulo__detalle-registro {
+        width: var(--ancho_modal-seleccionar);
+        padding: 15px 18px;
+    }
+
+    .modulo__eliminar,
+    .modulo__cerrar-sesion {
+        width: 240px;
+        padding: 15px 18px;
+    }
+
+    .modulo__campo label {
+        font-size: 10px;
+    }
+
+    .modulo__input {
+        height: 26px;
+        font-size: 10px;
+        padding: 4px 8px;
+    }
+
+    .modulo__boton {
+        font-size: 11px;
+        padding: 5px 12px;
+    }
+
+    .modulo__detalle--texto,
+    .modulo__detalle-registro--texto {
+        font-size: 11px;
+    }
+
+    .modulo__eliminar--texto,
+    .modulo__cerrar-sesion--texto {
+        font-size: 14px;
+    }
+
+    /* ==================== PÁGINAS INICIO / LOGIN ==================== */
+    .cuerpo {
+        gap: 8px;
+        padding: 10px;
+    }
+
+    .cuerpo__bienvenida--mensaje {
+        font-size: 18px;
+    }
+
+    .campo_form {
+        width: var(--ancho-campo_form);
+        height: var(--alto-campo_form);
+        font-size: 11px;
+    }
+
+    .boton {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    .menu-inicio--enlaces {
+        font-size: 10px;
+    }
+
+    /* ==================== SELECCIÓN DE ROL ==================== */
+    .seleccion-rol {
+        width: var(--ancho_caja_seleccion-rol);
+        height: var(--alto_caja_seleccion-rol);
+        border-radius: 60px;
+        gap: 15px;
+        padding: 25px 20px;
+    }
+
+    .cuerpo__contenido--texto {
+        font-size: 40px;
+        margin-bottom: 8px;
+    }
+
+    .campo-rol {
+        width: var(--ancho_campo-rol);
+        height: var(--alto_campo-rol);
+        font-size: 28px;
+        border-radius: 25px;
+    }
+
+    .contenido__menu--inicio {
+        gap: 20px;
+    }
+
+    /* ==================== ENCABEZADO INICIO ==================== */
+    .encabezado {
+        height: var(--alto_header-inicio);
+    }
+
+    .encabezado__Logo {
+        height: 70px;
+        width: 100px;
+    }
+
+    /* ==================== PIE DE PÁGINA - 2 FILAS (SOLO PARA PÁGINAS DE LISTAS) ==================== */
+    .grid-navegacion .pie-pagina {
+        height: 361px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        grid-template-areas:
+            "redes redes"
+            "info1 info2";
+        gap: 5px 10px;
+        padding: 8px 15px;
+        align-items: center;
+    }
+
+    /* FILA 1: Logo y Redes sociales - centrado */
+    .grid-navegacion .pie-pagina__contenido-2 {
+        grid-area: redes;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 25px;
+        border-bottom: var(--linea_division_footer) solid var(--color_linea-division);
+        padding-bottom: 15px;
+    }
+
+    .grid-navegacion .pie-pagina__contenido-2--logo {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .grid-navegacion .pie-pagina__contenido-2--instagram,
+    .grid-navegacion .pie-pagina__contenido-2--facebook,
+    .grid-navegacion .pie-pagina__contenido-2--email {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .grid-navegacion .pie-pagina__contenido-2--texto {
+        font-size: var(--textos_redes);
+    }
+
+    .grid-navegacion .logo-footer {
+        height: var(--alto_Logo_footer);
+        width: var(--ancho_Logo_footer);
+    }
+
+    .grid-navegacion .logo-redes {
+        height: var(--alto_logos_redes);
+        width: var(--ancho_logos_redes);
+    }
+
+    /* FILA 2: Información dividida en 2 columnas */
+    .grid-navegacion .pie-pagina__contenido-1 {
+        grid-area: info1;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        margin: 0;
+        padding: 15px 10px;
+    }
+
+    .grid-navegacion .pie-pagina__contenido-3 {
+        grid-area: info2;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 15px 10px;
+    }
+
+    .grid-navegacion .pie-pagina__contenido-1--texto {
+        font-size: var(--textos_footer);
+        line-height: 1.5;
+        text-align: center;
+    }
+
+    .grid-navegacion .pie-pagina__contenido-3--texto {
+        font-size: var(--textos_footer);
+        line-height: 1.5;
+        text-align: center;
+    }
+
+    /* Barra de búsqueda - altura consistente */
+    .cuerpo__boton--busqueda {
+        height: var(--alto_boton-busqueda);
+    }
+}

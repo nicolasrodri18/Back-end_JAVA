@@ -1,0 +1,103 @@
+.modulo__overlay--agregar-empleado {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--overlay_oscuro);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: var(--z-index_modal);
+}
+
+.modulo__agregar-empleado {
+    background-color: var(--color_fondo-modal);
+    border-radius: var(--radius_modal);
+    padding: var(--padding_modal-vertical) var(--padding_modal-horizontal);
+    width: var(--ancho_modal-medio);
+    box-shadow: var(--sombra_media);
+}
+
+.modulo__agregar-empleado .modulo__formulario {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap_lg);
+    font-family: var(--tipo_letra);
+}
+
+.modulo__agregar-empleado .modulo__campo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap_sm);
+}
+
+.modulo__agregar-empleado .modulo__campo label {
+    font-weight: bold;
+    font-size: var(--font_sm);
+    color: var(--color_gris-oscuro);
+}
+
+.modulo__agregar-empleado .modulo__input {
+    width: 100%;
+    height: var(--alto_input);
+    padding: var(--padding_input-vertical) var(--padding_input-horizontal);
+    border: 1px solid var(--color_gris-borde);
+    border-radius: var(--radius_pequeno);
+    background-color: var(--color_fondo-input);
+    font-size: var(--font_sm);
+    font-family: var(--tipo_letra);
+}
+
+.modulo__agregar-empleado .modulo__input:focus {
+    outline: none;
+    border-color: var(--color_primario);
+    background-color: var(--color_blanco);
+}
+
+.modulo__agregar-empleado .modulo__input::placeholder {
+    color: var(--color_gris-placeholder);
+}
+
+.modulo__agregar-empleado .modulo__botones {
+    display: flex;
+    justify-content: center;
+    gap: var(--gap_xl);
+    margin-top: var(--margin_lg);
+}
+
+.modulo__agregar-empleado .modulo__boton {
+    padding: var(--padding_boton-vertical) var(--padding_boton-horizontal);
+    border-radius: var(--border_radius-botones);
+    font-size: var(--font_md);
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    font-family: var(--tipo_letra);
+    transition: var(--transicion_estandar);
+    text-align: center;
+}
+
+.modulo__agregar-empleado .modulo__boton--cancelar {
+    background-color: var(--color_blanco);
+    color: var(--color_gris-oscuro);
+    border: 2px solid var(--color_gris-oscuro);
+}
+
+.modulo__agregar-empleado .modulo__boton--cancelar:hover {
+    background-color: var(--color_gris-hover);
+}
+
+.modulo__agregar-empleado .modulo__boton--agregar {
+    background-color: var(--color_primario);
+    color: var(--color_primario-claro);
+}
+
+.modulo__agregar-empleado .modulo__boton--agregar:hover {
+    background-color: var(--color_primario-claro);
+    color: var(--color_primario);
+}
+
+#toggle-modulo-agregar-empleado:checked~.modulo__overlay--agregar-empleado {
+    display: flex;
+}

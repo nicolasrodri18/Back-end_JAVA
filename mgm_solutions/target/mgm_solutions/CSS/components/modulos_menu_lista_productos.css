@@ -1,0 +1,275 @@
+/* ===============================================
+   MODAL AGREGAR PRODUCTO (EMPRESA)
+   =============================================== */
+
+.modulo__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--overlay_oscuro);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: var(--z-index_modal);
+}
+
+.modulo__agregar--producto {
+    background-color: var(--color_fondo-modal);
+    border-radius: var(--radius_modal);
+    padding: var(--padding_modal-vertical) var(--padding_modal-horizontal);
+    width: var(--ancho_modal-medio);
+    box-shadow: var(--sombra_media);
+}
+
+.modulo__formulario {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap_lg);
+    font-family: var(--tipo_letra);
+}
+
+.modulo__campo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap_sm);
+}
+
+.modulo__campo label {
+    font-weight: bold;
+    font-size: var(--font_sm);
+    color: var(--color_gris-oscuro);
+}
+
+.modulo__input {
+    width: 100%;
+    height: var(--alto_input);
+    padding: var(--padding_input-vertical) var(--padding_input-horizontal);
+    border: 1px solid var(--color_gris-borde);
+    border-radius: var(--radius_pequeno);
+    background-color: var(--color_fondo-input);
+    font-size: var(--font_sm);
+    font-family: var(--tipo_letra);
+}
+
+.modulo__input:focus {
+    outline: none;
+    border-color: var(--color_primario);
+    background-color: var(--color_blanco);
+}
+
+.modulo__input::placeholder {
+    color: var(--color_gris-placeholder);
+}
+
+.modulo__botones {
+    display: flex;
+    justify-content: center;
+    gap: var(--gap_xl);
+    margin-top: var(--margin_lg);
+}
+
+.modulo__boton {
+    padding: var(--padding_boton-vertical) var(--padding_boton-horizontal);
+    border-radius: var(--border_radius-botones);
+    font-size: var(--font_md);
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    font-family: var(--tipo_letra);
+    transition: var(--transicion_estandar);
+    text-align: center;
+}
+
+.modulo__boton--cancelar {
+    background-color: var(--color_blanco);
+    color: var(--color_gris-oscuro);
+    border: 2px solid var(--color_gris-oscuro);
+}
+
+.modulo__boton--cancelar:hover {
+    background-color: var(--color_gris-hover);
+}
+
+.modulo__boton--agregar {
+    background-color: var(--color_primario);
+    color: var(--color_primario-claro);
+}
+
+.modulo__boton--agregar:hover {
+    background-color: var(--color_primario-claro);
+    color: var(--color_primario);
+}
+
+#toggle-modulo-agregar:checked~.modulo__overlay {
+    display: flex;
+}
+
+#toggle-modulo-agregar-empleado:checked~.modulo__overlay {
+    display: flex;
+}
+
+
+.modulo__overlay--seleccionar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--overlay_oscuro);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: var(--z-index_modal);
+}
+
+.modulo__seleccionar--producto {
+    background-color: var(--color_gris-oscuro);
+    border-radius: var(--radius_modal);
+    padding: var(--padding_modal-vertical) var(--padding_modal-horizontal);
+    width: var(--ancho_modal-seleccionar);
+    box-shadow: var(--sombra_grande);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap_xl);
+}
+
+.modulo__detalle {
+    display: flex;
+    flex-direction: column;
+    gap: var(--radius_medio);
+}
+
+.modulo__detalle--texto {
+    color: var(--color_blanco);
+    font-size: var(--font_md);
+    font-family: var(--tipo_letra);
+    margin: 0;
+}
+
+.modulo__detalle--texto strong {
+    font-weight: bold;
+}
+
+.modulo__cantidad {
+    display: flex;
+    align-items: center;
+    gap: var(--gap_lg);
+    margin-top: var(--margin_md);
+}
+
+.modulo__cantidad--texto {
+    color: var(--color_blanco);
+    font-size: var(--font_sm);
+    font-family: var(--tipo_letra);
+}
+
+.modulo__cantidad--controles {
+    display: flex;
+    align-items: center;
+    gap: var(--gap_sm);
+}
+
+.modulo__cantidad--btn {
+    width: var(--ancho_boton-cantidad);
+    height: var(--alto_boton-cantidad);
+    background-color: var(--color_cantidad-fondo);
+    color: var(--color_blanco);
+    border: none;
+    border-radius: var(--radius_pequeno);
+    font-size: var(--font_lg);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modulo__cantidad--btn:hover {
+    background-color: var(--color_cantidad-hover);
+}
+
+.modulo__cantidad--input {
+    width: var(--ancho_input-cantidad);
+    height: var(--alto_boton-cantidad);
+    text-align: center;
+    border: none;
+    border-radius: var(--radius_pequeno);
+    font-size: var(--font_sm);
+    background-color: var(--color_cantidad-fondo);
+    color: var(--color_blanco);
+}
+
+.modulo__total {
+    margin-top: var(--margin_sm);
+}
+
+.modulo__botones--seleccionar {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--margin_md);
+}
+
+.modulo__botones--acciones {
+    display: flex;
+    justify-content: center;
+    gap: var(--gap_xl);
+}
+
+.modulo__boton--eliminar {
+    background-color: var(--color_gris-oscuro);
+    color: var(--color_blanco);
+    border: 2px solid var(--color_blanco);
+    padding: var(--padding_boton-vertical) var(--padding_boton-horizontal);
+    border-radius: var(--border_radius-botones);
+    font-size: var(--font_md);
+    font-weight: 500;
+    cursor: pointer;
+    font-family: var(--tipo_letra);
+    transition: var(--transicion_estandar);
+}
+
+.modulo__boton--eliminar:hover {
+    background-color: var(--color_error-hover);
+    border-color: var(--color_error-hover);
+}
+
+.modulo__boton--anadir {
+    background-color: var(--color_gris-oscuro);
+    color: var(--color_blanco);
+    border: 2px solid var(--color_blanco);
+    padding: var(--padding_boton-vertical) var(--padding_boton-horizontal);
+    border-radius: var(--border_radius-botones);
+    font-size: var(--font_md);
+    font-weight: 500;
+    cursor: pointer;
+    font-family: var(--tipo_letra);
+    transition: var(--transicion_estandar);
+}
+
+.modulo__boton--anadir:hover {
+    background-color: var(--color_primario);
+    border-color: var(--color_primario);
+}
+
+.modulo__boton--vender {
+    background-color: var(--color_gris-oscuro);
+    color: var(--color_blanco);
+    border: 2px solid var(--color_blanco);
+    padding: var(--padding_boton-vertical) var(--padding_boton-horizontal);
+    border-radius: var(--border_radius-botones);
+    font-size: var(--font_md);
+    font-weight: 500;
+    cursor: pointer;
+    font-family: var(--tipo_letra);
+    transition: var(--transicion_estandar);
+}
+
+.modulo__boton--vender:hover {
+    background-color: var(--color_primario);
+    border-color: var(--color_primario);
+}
+
+#toggle-modulo-seleccionar:checked~.modulo__overlay--seleccionar {
+    display: flex;
+}

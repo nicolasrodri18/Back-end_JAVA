@@ -1,0 +1,7 @@
+.campo_form {
+    width: var(--ancho-campo_form);
+    height: var(--alto-campo_form);
+    background-color: var(--fondo__campo_form);
+    border-radius: var(--radius_pequeno);
+    padding-left: var(--padding_md);
+}

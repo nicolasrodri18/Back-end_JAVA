@@ -1,0 +1,15 @@
+.card__producto--boton-seleccionar {
+    background-color: var(--fondo_boton);
+    color: var(--textos_contenidos);
+    padding-bottom: var(--altos_boton-seleccionar);
+    padding-top: var(--altos_boton-seleccionar);
+    padding-left: var(--anchos_boton-seleccionar);
+    padding-right: var(--anchos_boton-seleccionar);
+    border-radius: var(--border_radius-botones);
+    font-size: var(--font_base);
+}
+
+.card__producto--boton-seleccionar:hover {
+    background-color: var(--fondo_boton-hover);
+    cursor: pointer;
+}

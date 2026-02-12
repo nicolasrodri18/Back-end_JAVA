@@ -1,0 +1,301 @@
+@media (max-width: 1070px) {
+
+    /* VARIABLES - Ajustadas para viewport portatil-2 */
+    :root {
+        /* ALTURAS HEADER Y FOOTER - Para pantalla de 745px */
+        --alto_header-navegacion: 90px;
+        --alto_footer-navegacion: 150px;
+        --alto_main-navegacion: calc(100vh - (var(--alto_footer-navegacion) + var(--alto_header-navegacion)));
+        --alto_header-inicio: 140px;
+        --alto_footer-inicio: 150px;
+        --alto_main-inicio: calc(100vh - (var(--alto_footer-inicio) + var(--alto_header-inicio)));
+
+        /* Modales - más pequeños para portatil-2 */
+        --ancho_modal-medio: 300px;
+        --ancho_modal-seleccionar: 320px;
+        --ancho_modal-pequeno: 280px;
+        --padding_modal-horizontal: 25px;
+        --padding_modal-vertical: 20px;
+
+        /* Cuerpo datos - reducido */
+        --ancho_cuerpo-datos: 750px;
+        --alto_cuerpo-datos: 400px;
+
+        /* medidas contenedor listas - reducido para portatil-2 */
+        --ancho_caja-productos: 95%;
+        --alto_caja-productos: 380px;
+
+        /* medidas cards productos - más compactas para portatil-2 */
+        --ancho_card-producto: 190px;
+        --alto_card-producto: 170px;
+        --font_base: 12px;
+        --margin_texto_contenido_card: 5px;
+
+        /* medidas cards informacion - ajustadas para portatil-2 */
+        --ancho_card-informacion: 95%;
+        --alto_card-informacion: 55px;
+        --margin_lg: 5px;
+
+        /* medidas grid informacion - ajustadas para portatil-2 */
+        --gap_4xl: 30px;
+
+        /* tamaño letra pie de pagina - reducido para portatil-2 */
+        --textos_footer: 10px;
+        --textos_redes: 8px;
+
+        /* Navbar - reducido para portatil-2 */
+        --navbar__perfil: 250px;
+        --navbar__logo: 220px;
+        --alto_logo--navbar: 70px;
+        --ancho_logo--navbar: 120px;
+        --alto-icon__perfil: 45px;
+        --ancho-icon__perfil: 47px;
+
+        /* Footer - ajustadas para portatil-2 */
+        --ancho_Logo_footer: 80px;
+        --alto_Logo_footer: 45px;
+        --alto_logos_redes: 18px;
+        --ancho_logos_redes: 18px;
+        --linea_division_footer: 3px;
+
+        /* Barra de búsqueda - ajustada para portatil-2 */
+        --ancho--input_busqueda: 450px;
+        /* --alto--input_busqueda: 40px; */
+
+        /* Botones - ajustados para portatil-2 */
+        --alto_boton-accion: 26px;
+        --ancho_boton-accion: 70px;
+
+        /* Botón interacciones - ajustado para portatil-2 */
+        --anchos_boton-interacciones: 20px;
+        --altos_boton-interacciones: 10px;
+
+        /* Selección rol - ajustado para portatil-2 */
+        --ancho_caja_seleccion-rol: 450px;
+        --alto_caja_seleccion-rol: 380px;
+        --ancho_campo-rol: 320px;
+        --alto_campo-rol: 65px;
+
+        /* Campo form - ajustado para portatil-2 */
+        --ancho-campo_form: 280px;
+        --alto-campo_form: 30px;
+    }
+
+    .card__lista {
+        grid-template-columns: calc(var(--ancho_card-informacion) - 200px) 200px;
+    }
+
+    .cuerpo__contenido__cards {
+        justify-content: space-evenly;
+    }
+
+    /* NAVBAR */
+    .navbar__perfil--nombre {
+        font-size: 14px;
+    }
+
+    .navegacion__links {
+        font-size: 14px;
+        padding: 10px 8px;
+    }
+
+    .boton__cerrar-sesion {
+        width: 120px;
+        font-size: 12px;
+    }
+
+    /* CUERPO DATOS */
+    .cuerpo__datos {
+        width: var(--ancho_cuerpo-datos);
+        height: var(--alto_cuerpo-datos);
+        padding: 15px;
+        margin: 8px auto;
+        border-radius: 18px;
+    }
+
+    .datos__titulo {
+        font-size: 20px;
+    }
+
+    .datos__texto--titulo {
+        font-size: 16px;
+    }
+
+    .campo__texto--propiedad,
+    .campo__texto--descripcion {
+        font-size: 13px;
+    }
+
+    /* CARDS DE LISTA */
+    .card__lista--texto__propiedad,
+    .card__lista--texto__descripcion {
+        font-size: 13px;
+    }
+
+    .card__lista__boton--accion {
+        font-size: 10px;
+        width: var(--ancho_boton-accion);
+        height: var(--alto_boton-accion);
+    }
+
+    /* OCULTAR 4to CAMPO (Correo) en pantallas pequeñas para evitar superposición */
+    .card__lista--textos .card--texto:nth-child(4) {
+        display: none;
+    }
+
+    /* MODALES */
+    .modulo__agregar--producto,
+    .modulo__agregar-empleado {
+        width: var(--ancho_modal-medio);
+        padding: 18px 22px;
+    }
+
+    .modulo__seleccionar--producto,
+    .modulo__detalle-registro {
+        width: var(--ancho_modal-seleccionar);
+        padding: 18px 22px;
+    }
+
+    .modulo__eliminar,
+    .modulo__cerrar-sesion {
+        width: 260px;
+        padding: 18px 22px;
+    }
+
+    .modulo__campo label {
+        font-size: 11px;
+    }
+
+    .modulo__input {
+        height: 28px;
+        font-size: 11px;
+        padding: 4px 8px;
+    }
+
+    .modulo__boton {
+        font-size: 12px;
+        padding: 6px 16px;
+    }
+
+    .modulo__detalle--texto {
+        font-size: 12px;
+    }
+
+    .modulo__eliminar--texto,
+    .modulo__cerrar-sesion--texto {
+        font-size: 16px;
+    }
+
+    /* PÁGINAS INICIO / LOGIN */
+    .cuerpo {
+        gap: 10px;
+        padding: 5px;
+    }
+
+    .cuerpo__bienvenida--mensaje {
+        font-size: 22px;
+    }
+
+    .campo_form {
+        width: var(--ancho-campo_form);
+        height: var(--alto-campo_form);
+        font-size: 12px;
+    }
+
+    .boton {
+        font-size: 16px;
+        padding: 8px 14px;
+    }
+
+    .menu-inicio--enlaces {
+        font-size: 12px;
+    }
+
+    /* SELECCIÓN DE ROL */
+    .seleccion-rol {
+        width: var(--ancho_caja_seleccion-rol);
+        height: var(--alto_caja_seleccion-rol);
+        border-radius: 80px;
+        gap: 20px;
+        padding: 30px 25px;
+    }
+
+    .cuerpo__contenido--texto {
+        font-size: 52px;
+        margin-bottom: 10px;
+    }
+
+    .campo-rol {
+        width: var(--ancho_campo-rol);
+        height: var(--alto_campo-rol);
+        font-size: 36px;
+        border-radius: 30px;
+    }
+
+    .contenido__menu--inicio {
+        gap: 25px;
+    }
+
+    /* BOTÓN INTERACCIÓN (Agregar) */
+    .cuerpo__boton--interaccion {
+        font-size: 11px;
+        padding: var(--altos_boton-interacciones) var(--anchos_boton-interacciones);
+    }
+
+    /* PIE DE PÁGINA */
+    .pie-pagina__contenido-1--texto,
+    .pie-pagina__contenido-3--texto {
+        font-size: var(--textos_footer);
+    }
+
+    .pie-pagina__contenido-2--texto {
+        font-size: var(--textos_redes);
+    }
+
+    .pie-pagina__contenido-1 {
+        margin-left: 5%;
+    }
+
+    /* HEADER/NAVBAR - Altura reducida */
+    .navbar {
+        height: var(--alto_header-navegacion);
+    }
+
+    /* FOOTER - Altura reducida */
+    .pie-pagina {
+        height: var(--alto_footer-navegacion);
+    }
+
+    /* ENCABEZADO INICIO - Altura reducida */
+    .encabezado {
+        height: var(--alto_header-inicio);
+    }
+
+    .encabezado__Logo {
+        height: 100px;
+        width: 150px;
+    }
+
+    /* corrección layout inicio portatil-2 */
+    .grid-inicio .encabezado {
+        grid-area: header;
+        width: 100%;
+    }
+
+    .grid-inicio .cuerpo {
+        grid-area: main;
+        width: 100%;
+    }
+
+    .grid-inicio .pie-pagina {
+        grid-area: footer;
+        width: 100%;
+    }
+
+}
+
+@media (max-width: 955px) {
+    :root {
+        --textos_footer: 8px;
+    }
+}

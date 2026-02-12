@@ -1,0 +1,5 @@
+
+.icon-perfil{
+    height: var(--alto-icon__perfil);
+    width: var(--ancho-icon__perfil);
+}

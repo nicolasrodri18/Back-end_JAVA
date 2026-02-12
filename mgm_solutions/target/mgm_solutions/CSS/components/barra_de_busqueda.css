@@ -1,0 +1,29 @@
+.cuerpo__busqueda {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: center;
+}
+
+.cuerpo__Barra__busqueda {
+    display: flex;
+}
+
+.cuerpo__input--busqueda {
+    width: var(--ancho--input_busqueda);
+    height: var(--alto--input_busqueda);
+    padding-left: var(--padding_md);
+}
+
+.cuerpo__boton--busqueda {
+    height: var(--alto_boton-busqueda);
+    width: var(--ancho_boton-busqueda);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cuerpo__icono--busqueda {
+    width: var(--ancho_icono-busqueda);
+    height: var(--alto_icono-busqueda);
+}

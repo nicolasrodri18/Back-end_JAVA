@@ -1,0 +1,163 @@
+@media (max-width: 1440px) {
+
+    /* VARIABLES - Ajustadas para viewport portátil-1 */
+    :root {
+        /* Modales */
+        --ancho_modal-medio: 330px;
+        --ancho_modal-seleccionar: 350px;
+
+        /* Cuerpo datos */
+        --ancho_cuerpo-datos: 900px;
+        --alto_cuerpo-datos: 450px;
+
+        /* medidas contenedor listas */
+        --ancho_caja-productos: 1065px;
+        --alto_caja-productos: 424px;
+
+        /* medidas cards productos */
+        --ancho_card-producto: 230px;
+        --alto_card-producto: 190px;
+        --font_base: 13px;
+        --margin_texto_contenido_card: 8px;
+        --margin_2xl: 8px;
+
+        /* medidas cards informacion */
+        --ancho_card-informacion: 95%;
+        --alto_card-informacion: 62px;
+        --margin_lg: 8px;
+
+        /* medidas grid informacion */
+        --gap_4xl: 50px;
+
+        /* tamaño letra pie de pagina */
+        --textos_footer: 12px;
+    }
+
+    .card__lista {
+        grid-template-columns: calc(var(--ancho_card-informacion) - 250px) 250px;
+    }
+
+    .cuerpo__datos {
+        width: var(--ancho_cuerpo-datos);
+        height: var(--alto_cuerpo-datos);
+        padding: 18px;
+        margin: 10px auto;
+        border-radius: 20px;
+    }
+
+    .datos__titulo {
+        font-size: 24px;
+    }
+
+    .datos__texto--titulo {
+        font-size: 18px;
+    }
+
+    .campo__texto--propiedad,
+    .campo__texto--descripcion {
+        font-size: 15px;
+    }
+
+    .modulo__agregar--producto,
+    .modulo__agregar-empleado {
+        width: var(--ancho_modal-medio);
+        padding: 20px 25px;
+    }
+
+    .modulo__seleccionar--producto,
+    .modulo__detalle-registro {
+        width: var(--ancho_modal-seleccionar);
+        padding: 20px 25px;
+    }
+
+    .modulo__eliminar,
+    .modulo__cerrar-sesion {
+        width: 290px;
+        padding: 20px 25px;
+    }
+
+    .modulo__campo label {
+        font-size: 12px;
+    }
+
+    .modulo__input {
+        height: 30px;
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+
+    .modulo__boton {
+        font-size: 13px;
+        padding: 8px 20px;
+    }
+
+    .modulo__detalle--texto {
+        font-size: 13px;
+    }
+
+    .modulo__eliminar--texto,
+    .modulo__cerrar-sesion--texto {
+        font-size: 15px;
+    }
+
+    .cuerpo {
+        gap: 12px;
+        padding: 8px;
+    }
+
+    .cuerpo__bienvenida--mensaje {
+        font-size: 26px;
+    }
+
+    .campo_form {
+        width: 300px;
+        height: 30px;
+        font-size: 13px;
+    }
+
+    .boton {
+        font-size: 18px;
+        padding: 10px 16px;
+    }
+
+    .seleccion-rol {
+        width: 480px;
+        height: 400px;
+        border-radius: 90px;
+        gap: 25px;
+        padding: 35px 30px;
+    }
+
+    .cuerpo__contenido--texto {
+        font-size: 68px;
+        margin-bottom: 12px;
+    }
+
+    .campo-rol {
+        width: 320px;
+        height: 65px;
+        font-size: 44px;
+        border-radius: 32px;
+    }
+
+    .contenido__menu--inicio {
+        gap: 35px;
+    }
+
+    /* corrección layout inicio portatil */
+    .grid-inicio .encabezado {
+        grid-area: header;
+        width: 100%;
+    }
+
+    .grid-inicio .cuerpo {
+        grid-area: main;
+        width: 100%;
+    }
+
+    .grid-inicio .pie-pagina {
+        grid-area: footer;
+        width: 100%;
+    }
+
+}

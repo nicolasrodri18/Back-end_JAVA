@@ -1,0 +1,48 @@
+.card__lista {
+  display: grid;
+  grid-template-columns: calc(var(--ancho_card-informacion) - 300px) 300px;
+  grid-template-areas:
+    "textos botones";
+  background-color: var(--color_fondo-card-lista);
+  padding-top: var(--radius_medio);
+  padding-bottom: var(--radius_medio);
+  width: var(--ancho_card-informacion);
+  height: var(--alto_card-informacion);
+  border-radius: var(--radius_card);
+  margin: var(--margin_lg);
+  flex-shrink: 0;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.card__lista--textos {
+  grid-area: textos;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.card--texto {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap_xs);
+}
+
+.card__lista--texto__propiedad {
+  font-size: var(--font_base);
+  font-weight: bold;
+}
+
+.card__lista--texto__descripcion {
+  font-size: var(--font_base);
+  font-weight: lighter;
+}
+
+.card__lista--botones {
+  width: 100%;
+  grid-area: botones;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}

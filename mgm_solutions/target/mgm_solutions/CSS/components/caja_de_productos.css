@@ -1,0 +1,20 @@
+.cuerpo__contenido {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: center;
+    grid-area: cuerpo__contenido;
+}
+
+.cuerpo__contenido__cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:center;
+    width: var(--ancho_caja-productos);
+    height: var(--alto_caja-productos);
+    border-top-left-radius: var(--border_radius-botones);
+    border-bottom-left-radius: var(--border_radius-botones);
+    background-color: var(--color_fondo-productos);
+    border: var(--fondo_boton) 2px solid;
+    overflow-y: scroll;
+}

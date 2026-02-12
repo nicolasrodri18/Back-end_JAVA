@@ -1,0 +1,88 @@
+.cuerpo__datos {
+    display: grid;
+    width: var(--ancho_cuerpo-datos);
+    height: var(--alto_cuerpo-datos);
+    background-color: var(--color_fondo-card);
+    grid-template-columns: 1fr 5px 1fr;
+    grid-template-rows: var(--alto--cuerpo__titulo) var(--alto--cuerpo__contenido) var(--alto--cuerpo__vacio);
+    grid-template-areas:
+        "datos__titulo datos__titulo datos__titulo"
+        "datos__empleado datos__linea--divisora datos__empresa"
+        "vacio vacio vacio";
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius_card);
+}
+
+.datos__titulo {
+    grid-area: datos__titulo;
+    font-size: var(--font_3xl);
+    font-weight: bold;
+    text-align: center;
+    font-family: var(--tipo_letra);
+}
+
+.datos {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: var(--alto--datos_texto) var(--alto--datos_campos);
+    grid-template-areas:
+        "datos__texto"
+        "datos__campos";
+}
+
+.datos__empleado {
+    grid-area: datos__empleado;
+}
+
+.datos__empresa {
+    grid-area: datos__empresa;
+}
+
+.datos__texto--titulo {
+    grid-area: datos__texto;
+    display: flex;
+    font-size: var(--font_2xl);
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--tipo_letra);
+}
+
+.datos__campos {
+    grid-area: datos__campos;
+    height: 85%;
+    justify-content: space-around;
+    align-items: self-start;
+    margin-left: 23%;
+    display: flex;
+    flex-direction: column;
+}
+
+.campo__texto {
+    display: flex;
+    height: var(--alto_campo-texto);
+    gap: var(--gap_sm);
+    justify-content: center;
+    align-items: center;
+}
+
+.campo__texto--propiedad {
+    font-weight: bold;
+    font-size: var(--font_xl);
+    font-family: var(--tipo_letra);
+}
+
+.campo__texto--descripcion {
+    font-size: var(--font_xl);
+    font-weight: lighter;
+    font-family: var(--tipo_letra);
+}
+
+.datos__linea--divisora {
+    grid-area: datos__linea--divisora;
+    background-color: var(--fondo_boton);
+    width: var(--medida_linea-divisora);
+    height: var(--medida_linea-divisora);
+}
