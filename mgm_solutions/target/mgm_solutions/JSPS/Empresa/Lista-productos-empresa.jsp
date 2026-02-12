@@ -128,7 +128,7 @@
                     <input type="text" class="cuerpo__input--busqueda"
                         placeholder="Buscar Producto: ID Producto, Nombre, Etc" name="search_query">
                     <button type="submit" class="cuerpo__boton--busqueda">
-                        <img src="../../Img/icon-lupa.png" alt="Buscar" class="cuerpo__icono--busqueda">
+                        <img src="../../IMG/icon-lupa.png" alt="Buscar" class="cuerpo__icono--busqueda">
                     </button>
                 </form>
             </div>

@@ -17,7 +17,7 @@
             <p class="modulo__cerrar-sesion--texto">Cerraras Sesion deseas Continuar?</p>
             <div class="modulo__cerrar-sesion--botones">
                 <label for="toggle-modulo-cerrar-sesion" class="modulo__boton modulo__boton--cancelar">Cancelar</label>
-                <a href="../Login.html" class="modulo__boton modulo__boton--continuar">Continuar</a>
+                <a href="../Login.jsp" class="modulo__boton modulo__boton--continuar">Continuar</a>
             </div>
         </div>
     </div>
