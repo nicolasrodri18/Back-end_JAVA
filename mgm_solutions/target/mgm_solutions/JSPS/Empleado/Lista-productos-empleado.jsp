@@ -63,9 +63,9 @@
         </div>
 
         <div class="navbar__navegacion--links">
-            <a href="Datos-empleado.html" class="navegacion__links">Datos</a>
-            <a href="Lista-productos-empleado.html" class="navegacion__links">Lista de Precios y Productos</a>
-            <a href="inicio-empleado.html" class="navegacion__links">Inicio</a>
+            <a href="Datos-empleado.jsp" class="navegacion__links">Datos</a>
+            <a href="Lista-productos-empleado.jsp" class="navegacion__links">Lista de Precios y Productos</a>
+            <a href="inicio-empleado.jsp" class="navegacion__links">Inicio</a>
         </div>
         <div class="navbar__logo">
             <img src="../../IMG/Logo.png" alt="Logo.png" class="encabezado__logo logo__navegacion">
