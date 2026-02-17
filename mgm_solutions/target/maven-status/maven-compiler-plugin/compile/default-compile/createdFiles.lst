@@ -1,2 +1,9 @@
+com\mgm_solutions\config\SecurityUtils.class
+com\mgm_solutions\controllers\RegistroUsuarioServlet.class
+com\mgm_solutions\controllers\RegistroEmpresaServlet.class
+com\mgm_solutions\models\Ciudad.class
+com\mgm_solutions\dao\CiudadDAO.class
+com\mgm_solutions\controllers\TestConnectionServlet.class
+com\mgm_solutions\controllers\LoginServlet.class
 com\mgm_solutions\config\ConnectionDB.class
 com\mgm_solutions\Main.class

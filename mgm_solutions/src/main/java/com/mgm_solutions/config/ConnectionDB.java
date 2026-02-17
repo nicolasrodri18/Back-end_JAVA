@@ -10,13 +10,21 @@ public class ConnectionDB {
     private static String PASSWD = "#Aprendiz2024";
 
     public static Connection gConnectionDB() {
+        Connection connection = null;
         try {
-            Connection connection = DriverManager.getConnection(URL, USER, PASSWD);
-            System.out.print("¡La conexión fue realizada con exito!");
-            return connection;
-        } catch (SQLException e) {
+            // Esto busca el driver de MySQL que pusiste en el pom.xml
+            Class.forName("com.mysql.cj.jdbc.Driver"); 
+            
+            connection = DriverManager.getConnection(URL, USER, PASSWD);
+            System.out.println("¡La conexión fue realizada con éxito!");
+            
+        } catch (ClassNotFoundException e) {
+            System.out.println("Error: No se encontró el Driver de MySQL.");
             e.printStackTrace();
-            return null;
+        } catch (SQLException e) {
+            System.out.println("Error: No se pudo conectar a la base de datos.");
+            e.printStackTrace();
         }
+        return connection;
     }
 }
