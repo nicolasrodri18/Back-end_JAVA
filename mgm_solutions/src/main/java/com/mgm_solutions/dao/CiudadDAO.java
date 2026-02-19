@@ -19,7 +19,7 @@ public class CiudadDAO {
 
             while (rs.next()) {
                 ciudades.add(new Ciudad(
-                    rs.getInt("ID_Ciudad"), 
+                    rs.getInt("ID_Ciudad"),
                     rs.getString("Nombre")
                 ));
             }

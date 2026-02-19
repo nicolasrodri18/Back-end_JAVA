@@ -1,6 +1,13 @@
-create database MGM_Solucions;
 
-use MGM_Solucions;
+create database mgm_solucions;
+
+create user "mgm_solutions"@"localhost" identified by "mgm_solutions";
+
+grant all privileges on mgm_solucions.* to "mgm_solutions"@"localhost";
+
+flush privileges;
+
+use mgm_solucions;
 
 -- 1. TBL_CIUDADES
 CREATE TABLE TBL_CIUDADES (
@@ -55,7 +62,7 @@ CREATE TABLE TBL_Producto (
 
 -- 8. TBL_Almacen
 CREATE TABLE TBL_Almacen (
-    Registro_Almacen INT auto_increment unique PRIMARY KEY,
+    Registro_Almacen INT auto_increment unique PRIMARY KEY, -- Se asume un ID de registro de inventario/almacenamiento
     DOCUMENTO_NIT VARCHAR(20) NOT NULL,
     ID_Producto INT NOT NULL,
     Precio_Asignado DECIMAL(10, 2) NOT NULL,
@@ -109,10 +116,19 @@ INSERT INTO TBL_CIUDADES (ID_Ciudad, Nombre) VALUES (8, 'Pereira');
 INSERT INTO TBL_CIUDADES (ID_Ciudad, Nombre) VALUES (9, 'Barrancabermeja');
 INSERT INTO TBL_CIUDADES (ID_Ciudad, Nombre) VALUES (10, 'Barrancabermeja');
 
-INSERT INTO TBL_USUARIOS (DOCUMENTO_NIT, ID_ROL, Nombre, Direccion, Contraseña, Ciudad) VALUES (1097765431, 1, 'Administrador', 'Calle 123 # 45-67', 'Administrador', 1);
-INSERT INTO TBL_USUARIOS (DOCUMENTO_NIT, ID_ROL, Nombre, Direccion, Contraseña, Ciudad) VALUES (1097765432, 2, 'Empresa', 'Cra 43 # 56-78', 'Empresa', 2);
-INSERT INTO TBL_USUARIOS (DOCUMENTO_NIT, ID_ROL, Nombre, Direccion, Contraseña, Ciudad) VALUES (1097765433, 3, 'Usuario', 'Calle 123 # 45-67', 'Usuario', 3);
+INSERT INTO TBL_USUARIOS (DOCUMENTO_NIT, ID_ROL, Nombre, Direccion, Contraseña, Ciudad) VALUES (1097765432, 1, 'Administrador', 'Calle 123 # 45-67', '$2a$10$TeOHFsUohFDT9EIR86xTnefja7oEzBOyuaag2kawWA6rdHdAVJdPe', 1);
+INSERT INTO TBL_USUARIOS (DOCUMENTO_NIT, ID_ROL, Nombre, Direccion, Contraseña, Ciudad) VALUES (1097765431, 2, 'Empresa', 'Cra 43 # 56-78', '$2a$10$J8Y8EDdieYa6V6nTV0afYeDkfPCv9g7RjB1L1h0sYIJMbWBQ4Hlo2', 2);
+INSERT INTO TBL_USUARIOS (DOCUMENTO_NIT, ID_ROL, Nombre, Direccion, Contraseña, Ciudad) VALUES (1097765433, 3, 'Usuario', 'Calle 123 # 45-67', '$2a$10$RPD0AO3qoWvwxjy8DG/8fONS1WLNrFTaaf.evmZyX1pv59Q2g9JnG', 3);
 
-INSERT INTO TBL_Correos (Correo, DOCUMENTO_NIT) VALUES ('Administrador@gmail.com', 1097765431);
+INSERT INTO TBL_Correos (Correo, DOCUMENTO_NIT) VALUES ('Administrador@gmail.com', 1097765432);
 INSERT INTO TBL_Correos (Correo, DOCUMENTO_NIT) VALUES ('Empresa@gmail.com', 1097765432);
-INSERT INTO TBL_Correos (Correo, DOCUMENTO_NIT) VALUES ('Usuario@gmail.com', 1097765433);
+INSERT INTO TBL_Correos (Correo, DOCUMENTO_NIT) VALUES ('Usuario@gmail.com', 1097765432);
+select * from tbl_usuarios;
+select * from tbl_correos;
+
+delete from tbl_ciudades where ID_Ciudad = 10;
+
+
+delete from tbl_correos;
+
+delete from tbl_usuarios;

@@ -54,7 +54,12 @@
 
                 <div class="menu-campo">
                     <label for="nit-empresa">NIT de la Empresa</label>
-                    <input type="text" id="nit-empresa" name="nit-empresa" placeholder="NIT de la Empresa" class="campo_form" required>
+                    <input type="text" id="nit-empresa" name="nit-empresa"
+                           placeholder="Ej: 900123456-7"
+                           class="campo_form" required
+                           minlength="11" maxlength="13"
+                           pattern="[0-9\-]{11,13}"
+                           title="NIT: entre 11 y 13 caracteres, solo números y guión (-)">
                 </div>
 
                 <div class="menu-campo">
@@ -121,7 +126,13 @@
 
                 <div class="menu-campo">
                     <label for="doc-usuario">N° de Documento</label>
-                    <input type="text" id="doc-usuario" name="nit-documento" placeholder="N° de Documento" class="campo_form" required>
+                    <input type="text" id="doc-usuario" name="nit-documento"
+                           placeholder="Ej: 12345678"
+                           class="campo_form" required
+                           minlength="8" maxlength="10"
+                           pattern="[0-9]{8,10}"
+                           inputmode="numeric"
+                           title="Documento: entre 8 y 10 dígitos, solo números">
                 </div>
 
                 <div class="menu-campo">

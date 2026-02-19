@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,11 +20,11 @@ import java.sql.ResultSet;
 public class LoginServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        // 1. Obtener los datos del formulario JSP
-        // Usamos los nombres que pusimos en el HTML: 'nit-documento' y 'password'
+
+        boolean esAjax = "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
+
         String nitInput = request.getParameter("nit-documento");
         String passInput = request.getParameter("password");
 
@@ -33,10 +34,7 @@ public class LoginServlet extends HttpServlet {
 
         try {
             conn = ConnectionDB.gConnectionDB();
-            
-            // 2. Consulta SQL ajustada a tu script:
-            // Buscamos en TBL_USUARIOS comparando DOCUMENTO_NIT y Contraseña
-           // 1. Buscamos al usuario solo por NIT
+
             String sql = "SELECT DOCUMENTO_NIT, Nombre, Contraseña, ID_ROL FROM TBL_USUARIOS WHERE DOCUMENTO_NIT = ?";
             ps = conn.prepareStatement(sql);
             ps.setString(1, nitInput);
@@ -44,31 +42,97 @@ public class LoginServlet extends HttpServlet {
 
             if (rs.next()) {
                 String hashAlmacenado = rs.getString("Contraseña");
-                
-                // 2. Verificamos si la contraseña coincide
+
                 if (SecurityUtils.checkPassword(passInput, hashAlmacenado)) {
-                    // LOGIN EXITOSO
+                    // LOGIN EXITOSO: guardar sesión
                     HttpSession session = request.getSession();
                     session.setAttribute("userName", rs.getString("Nombre"));
-                    session.setAttribute("userRol", rs.getInt("ID_ROL"));
-                    response.sendRedirect("JSPS/seleccion-rol.jsp");
+                    int rol = rs.getInt("ID_ROL");
+                    session.setAttribute("userRol", rol);
+
+                    // Mensaje de éxito (flash en sesión) para que la JSP lo muestre si lo desea
+                    session.setAttribute("successMessage", "Inicio de sesión exitoso");
+
+                    // Determinar redirección según rol
+                    String redirectUrl;
+                    String jsonRedirect;
+                    switch (rol) {
+                        case 1: // Administrador -> seleccionar rol
+                            redirectUrl = "JSPS/seleccion-rol.jsp?loginSuccess=1";
+                            jsonRedirect = request.getContextPath() + "/JSPS/seleccion-rol.jsp";
+                            break;
+                        case 2: // Empresa
+                            redirectUrl = "JSPS/Empresa/inicio-empresa.jsp?loginSuccess=1";
+                            jsonRedirect = request.getContextPath() + "/JSPS/Empresa/inicio-empresa.jsp";
+                            break;
+                        case 3: // Usuario/Empleado
+                            redirectUrl = "JSPS/Empleado/inicio-empleado.jsp?loginSuccess=1";
+                            jsonRedirect = request.getContextPath() + "/JSPS/Empleado/inicio-empleado.jsp";
+                            break;
+                        default:
+                            redirectUrl = "JSPS/seleccion-rol.jsp?loginSuccess=1";
+                            jsonRedirect = request.getContextPath() + "/JSPS/seleccion-rol.jsp";
+                            break;
+                    }
+
+                    responder(esAjax, response, "ok", null, redirectUrl, jsonRedirect);
                 } else {
                     // Contraseña incorrecta
-                    response.sendRedirect("index.jsp?loginError=1");
+                    responder(esAjax, response, "error", "contrasena_incorrecta",
+                            "index.jsp?loginError=1", null);
                 }
             } else {
                 // Usuario no encontrado
-                response.sendRedirect("index.jsp?loginError=1");
+                responder(esAjax, response, "error", "usuario_no_encontrado",
+                        "index.jsp?loginError=2", null);
             }
+
         } catch (Exception e) {
             e.printStackTrace();
-            // En caso de error de DB, avisamos al usuario
-            response.sendRedirect("index.jsp?loginError=db");
+            responder(esAjax, response, "error", "error_servidor",
+                    "index.jsp?loginError=db", null);
         } finally {
-            // Cierre de recursos para evitar fugas de memoria
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (ps != null) ps.close(); } catch (Exception e) {}
-            try { if (conn != null) conn.close(); } catch (Exception e) {}
+            try {
+                if (rs != null)
+                    rs.close();
+            } catch (Exception e) {
+            }
+            try {
+                if (ps != null)
+                    ps.close();
+            } catch (Exception e) {
+            }
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (Exception e) {
+            }
+        }
+    }
+
+    /**
+     * Si la petición viene de fetch() devuelve JSON;
+     * si es un submit tradicional, redirige.
+     *
+     * @param redirectUrl  URL para redirect normal
+     * @param jsonRedirect URL que el JS usará para navegar en caso de éxito (puede
+     *                     ser null en errores)
+     */
+    private void responder(boolean esAjax, HttpServletResponse response,
+            String status, String codigo,
+            String redirectUrl, String jsonRedirect) throws IOException {
+
+        if (esAjax) {
+            response.setContentType("application/json;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            if ("ok".equals(status)) {
+                out.print("{\"status\":\"ok\",\"redirect\":\"" + jsonRedirect + "\"}");
+            } else {
+                out.print("{\"status\":\"error\",\"codigo\":\"" + codigo + "\"}");
+            }
+            out.flush();
+        } else {
+            response.sendRedirect(redirectUrl);
         }
     }
 }
