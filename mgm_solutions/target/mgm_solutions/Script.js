@@ -275,8 +275,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 var data = await resp.json();
 
                 if (data.status === "ok") {
-                    // El servlet ya guardó la sesión; navegamos a la URL devuelta
-                    window.location.href = data.redirect;
+                    // Mostrar mensaje de bienvenida exitoso
+                    Swal.fire({
+                        title: "¡Bienvenida exitosa!",
+                        html: `Hola <b>${data.nombre}</b>, has iniciado sesión como <b>${data.rol}</b>`,
+                        icon: "success",
+                        confirmButtonText: "Continuar",
+                        confirmButtonColor: "#4CAF50",
+                        timer: 3000,
+                        timerProgressBar: true
+                    }).then(function () {
+                        // El servlet ya guardó la sesión; navegamos a la URL devuelta
+                        window.location.href = data.redirect;
+                    });
                 } else {
                     var info = erroresLogin[data.codigo] || erroresLogin["error_servidor"];
                     marcarCampoError(info.campo);

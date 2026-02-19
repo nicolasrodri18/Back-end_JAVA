@@ -56,41 +56,47 @@ public class LoginServlet extends HttpServlet {
                     // Determinar redirección según rol
                     String redirectUrl;
                     String jsonRedirect;
+                    String rolNombre;
                     switch (rol) {
                         case 1: // Administrador -> seleccionar rol
+                            rolNombre = "Administrador";
                             redirectUrl = "JSPS/seleccion-rol.jsp?loginSuccess=1";
                             jsonRedirect = request.getContextPath() + "/JSPS/seleccion-rol.jsp";
                             break;
                         case 2: // Empresa
+                            rolNombre = "Empresa";
                             redirectUrl = "JSPS/Empresa/inicio-empresa.jsp?loginSuccess=1";
                             jsonRedirect = request.getContextPath() + "/JSPS/Empresa/inicio-empresa.jsp";
                             break;
                         case 3: // Usuario/Empleado
+                            rolNombre = "Usuario/Empleado";
                             redirectUrl = "JSPS/Empleado/inicio-empleado.jsp?loginSuccess=1";
                             jsonRedirect = request.getContextPath() + "/JSPS/Empleado/inicio-empleado.jsp";
                             break;
                         default:
+                            rolNombre = "Rol Desconocido";
                             redirectUrl = "JSPS/seleccion-rol.jsp?loginSuccess=1";
                             jsonRedirect = request.getContextPath() + "/JSPS/seleccion-rol.jsp";
                             break;
                     }
 
-                    responder(esAjax, response, "ok", null, redirectUrl, jsonRedirect);
+                    String userName = rs.getString("Nombre");
+                    responder(esAjax, response, "ok", null, redirectUrl, jsonRedirect, userName, rolNombre);
                 } else {
                     // Contraseña incorrecta
                     responder(esAjax, response, "error", "contrasena_incorrecta",
-                            "index.jsp?loginError=1", null);
+                            "index.jsp?loginError=1", null, null, null);
                 }
             } else {
                 // Usuario no encontrado
                 responder(esAjax, response, "error", "usuario_no_encontrado",
-                        "index.jsp?loginError=2", null);
+                        "index.jsp?loginError=2", null, null, null);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
             responder(esAjax, response, "error", "error_servidor",
-                    "index.jsp?loginError=db", null);
+                    "index.jsp?loginError=db", null, null, null);
         } finally {
             try {
                 if (rs != null)
@@ -117,16 +123,20 @@ public class LoginServlet extends HttpServlet {
      * @param redirectUrl  URL para redirect normal
      * @param jsonRedirect URL que el JS usará para navegar en caso de éxito (puede
      *                     ser null en errores)
+     * @param nombre       Nombre del usuario para el mensaje de bienvenida
+     * @param rolNombre    Nombre del rol para el mensaje de bienvenida
      */
     private void responder(boolean esAjax, HttpServletResponse response,
             String status, String codigo,
-            String redirectUrl, String jsonRedirect) throws IOException {
+            String redirectUrl, String jsonRedirect,
+            String nombre, String rolNombre) throws IOException {
 
         if (esAjax) {
             response.setContentType("application/json;charset=UTF-8");
             PrintWriter out = response.getWriter();
             if ("ok".equals(status)) {
-                out.print("{\"status\":\"ok\",\"redirect\":\"" + jsonRedirect + "\"}");
+                out.print("{\"status\":\"ok\",\"redirect\":\"" + jsonRedirect + "\",\"nombre\":\"" + nombre
+                        + "\",\"rol\":\"" + rolNombre + "\"}");
             } else {
                 out.print("{\"status\":\"error\",\"codigo\":\"" + codigo + "\"}");
             }
