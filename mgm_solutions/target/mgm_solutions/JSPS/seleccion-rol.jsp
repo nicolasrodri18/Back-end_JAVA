@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MGM_SOLUTIONS</title>
     <link rel="stylesheet" href="../styles.css">
 </head>
+
 <body class="grid-inicio">
     <header class="encabezado">
         <img src="../IMG/Logo.png" alt="Logo.png" class="encabezado__logo logo">
     </header>
     <main class="cuerpo">
         <div class="seleccion-rol">
-            <h1 class="cuerpo__contenido--texto">Rol</h1>
+            <h1 class="cuerpo__contenido--texto">Hola <%= session.getAttribute("userName") %>, Selecciona tu Rol</h1>
             <a class="seleccion-rol__empleado campo-rol" href="Empleado/inicio-empleado.jsp">
                 Empleado
             </a>
@@ -29,12 +31,12 @@
                 Llevamos el control de tu productos
                 <br>
                 - Almacenamiento
-                <br> 
+                <br>
                 - Costes
-                <br> 
+                <br>
                 - Balances
-                <br> 
-                - Ventas 
+                <br>
+                - Ventas
                 <br>
                 - Finanzas
             </h5>
@@ -73,4 +75,5 @@
         </div>
     </footer>
 </body>
+
 </html>

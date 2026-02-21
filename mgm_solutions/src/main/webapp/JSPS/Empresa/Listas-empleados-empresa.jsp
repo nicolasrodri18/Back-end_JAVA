@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MGM_SOLUTIONS</title>
   <link rel="stylesheet" href="../../styles.css">
+  <script src="../../JS/perfil-empresa.js" defer></script>
 </head>
 
 <body class="grid-navegacion">
@@ -33,7 +34,9 @@
       <p class="modulo__detalle-registro--texto"><strong>Fecha de Inicio:</strong> 12/05/2023</p>
       <p class="modulo__detalle-registro--texto"><strong>Direccion:</strong> Calle 43 #19-30</p>
       <p class="modulo__detalle-registro--texto"><strong>Cantidad:</strong> 2</p>
-      <p class="modulo__detalle-registro--texto"><strong>Empresa:</strong> MGM Solutions</p>
+      <p class="modulo__detalle-registro--texto"><strong>Empresa:</strong>
+        <%= session.getAttribute("userName") %>
+      </p>
       <div class="modulo__detalle-registro--botones">
         <label for="toggle-modulo-detalle" class="modulo__boton--cerrar">Cerrar</label>
       </div>
@@ -80,7 +83,8 @@
     <div class="navbar__perfil">
       <div class="navbar__perfil--usuario">
         <img src="../../IMG/icono-perfil.png" alt="Perfil" class="navbar__perfil--imagen icon-perfil">
-        <h5 class="navbar__perfil--nombre">Hi, Cafeteria Sol</h5>
+        <h5 class="navbar__perfil--nombre">Hi, <%= session.getAttribute("userName") %>
+        </h5>
       </div>
 
       <div class="navbar__desplegable">

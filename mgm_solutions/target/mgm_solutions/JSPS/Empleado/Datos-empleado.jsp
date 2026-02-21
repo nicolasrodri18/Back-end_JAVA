@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MGM_SOLUTIONS</title>
     <link rel="stylesheet" href="../../styles.css">
+    <script src="../../JS/perfil-empleado.js" defer></script>
 </head>
 
 <body class="grid-navegacion">
@@ -25,7 +26,8 @@
         <div class="navbar__perfil">
             <div class="navbar__perfil--usuario">
                 <img src="../../IMG/icono-perfil.png" alt="Perfil" class="navbar__perfil--imagen icon-perfil">
-                <h5 class="navbar__perfil--nombre">Hi, Nicolas Rodri</h5>
+                <h5 class="navbar__perfil--nombre">Hi, <%= session.getAttribute("userName") %>
+                </h5>
             </div>
 
             <div class="navbar__desplegable">
@@ -71,7 +73,10 @@
                     </div>
                     <div class="campo__texto">
                         <h4 class="campo__texto--propiedad">Empresa:</h4>
-                        <h4 class="campo__texto--descripcion">Cafeteria Sol</h4>
+                        <h4 class="campo__texto--descripcion">
+                            <%= session.getAttribute("nombreEmpresa") !=null ? session.getAttribute("nombreEmpresa")
+                                : "No cuentas con empresa" %>
+                        </h4>
                     </div>
                 </div>
             </div>
@@ -85,7 +90,10 @@
                     </div>
                     <div class="campo__texto">
                         <h4 class="campo__texto--propiedad">Nombre:</h4>
-                        <h4 class="campo__texto--descripcion">Cafeteria Sol</h4>
+                        <h4 class="campo__texto--descripcion">
+                            <%= session.getAttribute("nombreEmpresa") !=null ? session.getAttribute("nombreEmpresa")
+                                : "Sin Empresa" %>
+                        </h4>
                     </div>
                     <div class="campo__texto">
                         <h4 class="campo__texto--propiedad">Correo:</h4>

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MGM_SOLUTIONS</title>
     <link rel="stylesheet" href="../../styles.css">
+    <script src="../../JS/perfil-empresa.js" defer></script>
 </head>
 
 <body class="grid-navegacion">
@@ -103,7 +104,8 @@
         <div class="navbar__perfil">
             <div class="navbar__perfil--usuario">
                 <img src="../../IMG/icono-perfil.png" alt="Perfil" class="navbar__perfil--imagen icon-perfil">
-                <h5 class="navbar__perfil--nombre">Hi, Cafeteria Sol</h5>
+                <h5 class="navbar__perfil--nombre">Hi, <%= session.getAttribute("userName") %>
+                </h5>
             </div>
 
             <div class="navbar__desplegable">
@@ -317,7 +319,7 @@
                         <h3 class="card__producto--texto__contenido">Valor: $2.500</h3>
                     </div>
                     <label for="toggle-modulo-seleccionar" class="card__producto--boton-seleccionar">Seleccionar</label>
-                </div>  
+                </div>
             </div>
         </section>
     </main>

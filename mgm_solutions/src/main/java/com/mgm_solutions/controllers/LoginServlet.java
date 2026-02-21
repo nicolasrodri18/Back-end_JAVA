@@ -57,6 +57,8 @@ public class LoginServlet extends HttpServlet {
                     String redirectUrl;
                     String jsonRedirect;
                     String rolNombre;
+                    String nombreEmpresa = null;
+
                     switch (rol) {
                         case 1: // Administrador -> seleccionar rol
                             rolNombre = "Administrador";
@@ -72,6 +74,22 @@ public class LoginServlet extends HttpServlet {
                             rolNombre = "Usuario/Empleado";
                             redirectUrl = "JSPS/Empleado/inicio-empleado.jsp?loginSuccess=1";
                             jsonRedirect = request.getContextPath() + "/JSPS/Empleado/inicio-empleado.jsp";
+
+                            // FETCH COMPANY NAME
+                            String sqlEmpresa = "SELECT U.Nombre FROM TBL_USUARIOS U "
+                                    + "JOIN TBL_RELACION_LABORAL R ON U.DOCUMENTO_NIT = R.NIT_EMPRESA "
+                                    + "WHERE R.NIT_EMPLEADO = ?";
+                            try (PreparedStatement psEmp = conn.prepareStatement(sqlEmpresa)) {
+                                psEmp.setString(1, nitInput);
+                                try (ResultSet rsEmp = psEmp.executeQuery()) {
+                                    if (rsEmp.next()) {
+                                        nombreEmpresa = rsEmp.getString("Nombre");
+                                    }
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            session.setAttribute("nombreEmpresa", nombreEmpresa);
                             break;
                         default:
                             rolNombre = "Rol Desconocido";
@@ -81,22 +99,23 @@ public class LoginServlet extends HttpServlet {
                     }
 
                     String userName = rs.getString("Nombre");
-                    responder(esAjax, response, "ok", null, redirectUrl, jsonRedirect, userName, rolNombre);
+                    responder(esAjax, response, "ok", null, redirectUrl, jsonRedirect, userName, rolNombre,
+                            nombreEmpresa);
                 } else {
                     // Contraseña incorrecta
                     responder(esAjax, response, "error", "contrasena_incorrecta",
-                            "index.jsp?loginError=1", null, null, null);
+                            "index.jsp?loginError=1", null, null, null, null);
                 }
             } else {
                 // Usuario no encontrado
                 responder(esAjax, response, "error", "usuario_no_encontrado",
-                        "index.jsp?loginError=2", null, null, null);
+                        "index.jsp?loginError=2", null, null, null, null);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
             responder(esAjax, response, "error", "error_servidor",
-                    "index.jsp?loginError=db", null, null, null);
+                    "index.jsp?loginError=db", null, null, null, null);
         } finally {
             try {
                 if (rs != null)
@@ -116,27 +135,23 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
-    /**
+    /*
      * Si la petición viene de fetch() devuelve JSON;
      * si es un submit tradicional, redirige.
-     *
-     * @param redirectUrl  URL para redirect normal
-     * @param jsonRedirect URL que el JS usará para navegar en caso de éxito (puede
-     *                     ser null en errores)
-     * @param nombre       Nombre del usuario para el mensaje de bienvenida
-     * @param rolNombre    Nombre del rol para el mensaje de bienvenida
      */
     private void responder(boolean esAjax, HttpServletResponse response,
             String status, String codigo,
             String redirectUrl, String jsonRedirect,
-            String nombre, String rolNombre) throws IOException {
+            String nombre, String rolNombre,
+            String nombreEmpresa) throws IOException {
 
         if (esAjax) {
             response.setContentType("application/json;charset=UTF-8");
             PrintWriter out = response.getWriter();
             if ("ok".equals(status)) {
                 out.print("{\"status\":\"ok\",\"redirect\":\"" + jsonRedirect + "\",\"nombre\":\"" + nombre
-                        + "\",\"rol\":\"" + rolNombre + "\"}");
+                        + "\",\"rol\":\"" + rolNombre + "\",\"nombreEmpresa\":\""
+                        + (nombreEmpresa != null ? nombreEmpresa : "") + "\"}");
             } else {
                 out.print("{\"status\":\"error\",\"codigo\":\"" + codigo + "\"}");
             }
