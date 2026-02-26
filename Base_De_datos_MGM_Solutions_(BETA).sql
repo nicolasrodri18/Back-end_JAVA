@@ -1,12 +1,6 @@
 
 create database mgm_solucions;
 
-create user "mgm_solutions"@"localhost" identified by "mgm_solutions";
-
-grant all privileges on mgm_solucions.* to "mgm_solutions"@"localhost";
-
-flush privileges;
-
 use mgm_solucions;
 
 -- 1. TBL_CIUDADES
@@ -133,12 +127,21 @@ INSERT INTO TBL_USUARIOS (DOCUMENTO_NIT, ID_ROL, Nombre, Direccion, Contraseña,
 INSERT INTO TBL_Correos (Correo, DOCUMENTO_NIT) VALUES ('Administrador@gmail.com', 1097765432);
 INSERT INTO TBL_Correos (Correo, DOCUMENTO_NIT) VALUES ('Empresa@gmail.com', 1097765431);
 INSERT INTO TBL_Correos (Correo, DOCUMENTO_NIT) VALUES ('Usuario@gmail.com', 1097765433);
+
 select * from tbl_usuarios;
 select * from tbl_correos;
+select * from tbl_relacion_laboral;
+select * from tbl_venta;
+select * from tbl_productos_vendidos;
+select * from tbl_almacen;
+select * from tbl_producto;
 
 delete from tbl_ciudades where ID_Ciudad = 10;
 
-
-delete from tbl_correos;
-
 delete from tbl_usuarios;
+delete from tbl_correos;
+delete from tbl_relacion_laboral;
+delete from tbl_venta;
+delete from tbl_productos_vendidos;
+delete from tbl_almacen;
+delete from tbl_producto;
