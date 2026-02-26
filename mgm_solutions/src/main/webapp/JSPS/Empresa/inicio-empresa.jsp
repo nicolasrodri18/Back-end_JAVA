@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MGM_SOLUTIONS</title>
+    <title>MGM_SOLUTIONS - Inicio Empresa</title>
     <link rel="stylesheet" href="../../styles.css">
     <script src="../../JS/perfil-empresa.js" defer></script>
 </head>
@@ -26,8 +26,7 @@
         <div class="navbar__perfil">
             <div class="navbar__perfil--usuario">
                 <img src="../../IMG/icono-perfil.png" alt="Perfil" class="navbar__perfil--imagen icon-perfil">
-                <h5 class="navbar__perfil--nombre">Hi, <%= session.getAttribute("userName") %>
-                </h5>
+                <h5 class="navbar__perfil--nombre" id="navbar-nombre">Hi, ...</h5>
             </div>
 
             <div class="navbar__desplegable">
@@ -47,12 +46,11 @@
     </header>
     <main class="contenido__menu--inicio">
         <h1 class="cuerpo__contenido">
-            Hola <%= session.getAttribute("userName") %>, Bienvenid@
+            Hola <span id="welcome-name">...</span>, Bienvenid@
         </h1>
         <h1 class="cuerpo__contenido">
             Puedes dirigirte a los menus pertinentes
-            <br>
-            para realizar tus actividades
+            <br> para realizar tus actividades
         </h1>
         <h1 class="cuerpo__contenido">
             Gracias por preferirnos
@@ -62,18 +60,12 @@
         <div class="pie-pagina__contenido-1">
             <h5 class="pie-pagina__contenido-1--texto">
                 Que Hacemos?
-                <br>
-                Llevamos el control de tu productos
-                <br>
-                - Almacenamiento
-                <br>
-                - Costes
-                <br>
-                - Balances
-                <br>
-                - Ventas
-                <br>
-                - Finanzas
+                <br> Llevamos el control de tu productos
+                <br> - Almacenamiento
+                <br> - Costes
+                <br> - Balances
+                <br> - Ventas
+                <br> - Finanzas
             </h5>
         </div>
         <div class="pie-pagina__contenido-2">
@@ -84,31 +76,10 @@
                 <img src="../../IMG/Logo_instagram.png" alt="Instagram" class="pie-pagina__intagram logo-redes">
                 <h5 class="pie-pagina__contenido-2--texto">@MGM_SOLUTIONS</h5>
             </div>
-            <div class="pie-pagina__contenido-2--facebook">
-                <img src="../../IMG/Logo_facebook.png" alt="Facebook" class="pie-pagina__intagram logo-redes">
-                <h5 class="pie-pagina__contenido-2--texto">@MGM_SOLUTIONS</h5>
-            </div>
-            <div class="pie-pagina__contenido-2--email">
-                <img src="../../IMG/Logo_email.png" alt="Email" class="pie-pagina__intagram logo-redes">
-                <h5 class="pie-pagina__contenido-2--texto">MGM_SOLUTIONS@gmail.com</h5>
-            </div>
-        </div>
-        <div class="pie-pagina__contenido-3">
-            <h5 class="pie-pagina__contenido-1--texto">
-                Contactanos:
-                <br>
-                Telefono: +57 318 748 2675
-                <br>
-                Direccion: Calle 42 # 18 - 52 Rincon de Giron
-                <br>
-                Segundo Piso
-                <br>
-                Ubicacion: Bucaramanga / Giron
-                <br>
-                ©2025 - MGM Solutions
-            </h5>
         </div>
     </footer>
+
+</body>
 </body>
 
 </html>

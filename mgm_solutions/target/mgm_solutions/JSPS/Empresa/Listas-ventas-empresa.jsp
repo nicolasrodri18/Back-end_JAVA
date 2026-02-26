@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MGM_SOLUTIONS</title>
+  <title>MGM_SOLUTIONS - Registro de Ventas</title>
   <link rel="stylesheet" href="../../styles.css">
   <script src="../../JS/perfil-empresa.js" defer></script>
 </head>
@@ -26,27 +26,13 @@
 
   <div class="modulo__overlay--detalle">
     <div class="modulo__detalle-registro">
-      <p class="modulo__detalle-registro--texto"><strong>ID Registro:</strong> 1</p>
-      <p class="modulo__detalle-registro--texto"><strong>Producto ID:</strong> P-45678901234</p>
-      <p class="modulo__detalle-registro--texto"><strong>Nombre Producto:</strong> Laptop Ejecutiva X10</p>
-      <p class="modulo__detalle-registro--texto"><strong>Empleado ID:</strong> 1097496493</p>
-      <p class="modulo__detalle-registro--texto"><strong>Fecha:</strong> 12/05/2024</p>
-      <p class="modulo__detalle-registro--texto"><strong>Hora:</strong> 12:00 a.m</p>
-      <p class="modulo__detalle-registro--texto"><strong>Cantidad:</strong> 2</p>
-      <p class="modulo__detalle-registro--texto"><strong>Monto:</strong> $7.500</p>
-      <p class="modulo__detalle-registro--texto"><strong>Valor Producto:</strong> $2.500</p>
+      <h2 class="modulo__titulo" style="color: var(--color_primario); margin-bottom: 20px;">Detalle de Venta</h2>
+      <div id="detalle-venta-contenido">
+        <!-- Se puede poblar vía JS si es necesario -->
+        <p class="modulo__detalle-registro--texto">Cargando detalles...</p>
+      </div>
       <div class="modulo__detalle-registro--botones">
         <label for="toggle-modulo-detalle" class="modulo__boton--cerrar">Cerrar</label>
-      </div>
-    </div>
-  </div>
-
-  <div class="modulo__overlay--eliminar">
-    <div class="modulo__eliminar">
-      <p class="modulo__eliminar--texto">Seguro que deseas borrar<br>este registro?</p>
-      <div class="modulo__eliminar--botones">
-        <label for="toggle-modulo-eliminar" class="modulo__boton modulo__boton--cancelar">Cancelar</label>
-        <label for="toggle-modulo-eliminar" class="modulo__boton modulo__boton--confirmar">Confirmar</label>
       </div>
     </div>
   </div>
@@ -55,8 +41,7 @@
     <div class="navbar__perfil">
       <div class="navbar__perfil--usuario">
         <img src="../../IMG/icono-perfil.png" alt="Perfil" class="navbar__perfil--imagen icon-perfil">
-        <h5 class="navbar__perfil--nombre">Hi, <%= session.getAttribute("userName") %>
-        </h5>
+        <h5 class="navbar__perfil--nombre" id="navbar-nombre">Hi, ...</h5>
       </div>
 
       <div class="navbar__desplegable">
@@ -74,12 +59,13 @@
       <img src="../../IMG/Logo.png" alt="Logo.png" class="encabezado__logo logo__navegacion">
     </div>
   </header>
+
   <main class="grid-cuerpo__contenidos">
     <section class="cuerpo__accionar">
       <div class="cuerpo__busqueda">
         <form class="cuerpo__Barra__busqueda">
           <input type="text" class="cuerpo__input--busqueda"
-            placeholder="Buscar Registro de Venta: ID Registro, ID Producto, ID Empleado, Etc" name="search_query">
+            placeholder="Buscar Registro de Venta: ID, Producto, Empleado, Etc" name="search_query">
           <button type="submit" class="cuerpo__boton--busqueda">
             <img src="../../IMG/icon-lupa.png" alt="Buscar" class="cuerpo__icono--busqueda">
           </button>
@@ -90,166 +76,24 @@
       <div class="cuerpo__contenido__cards grid__lista">
         <h1 class="cuerpo--texto">Registro de venta</h1>
         <div class="cuerpo--cards">
-          <div class="card__lista">
-            <div class="card__lista--textos">
-              <div class="card--texto">
-                <h4 class="card__lista--texto__propiedad">ID Registro:</h4>
-                <h5 class="card__lista--texto__descripcion">1</h5>
-              </div>
-              <div class="card--texto">
-                <h4 class="card__lista--texto__propiedad">Empleado ID:</h4>
-                <h5 class="card__lista--texto__descripcion">1097496493</h5>
-              </div>
-              <div class="card--texto">
-                <h4 class="card__lista--texto__propiedad">Producto ID:</h4>
-                <h5 class="card__lista--texto__descripcion">P-45678901234</h5>
-              </div>
-              <div class="card--texto">
-                <h4 class="card__lista--texto__propiedad">Fecha:</h4>
-                <h5 class="card__lista--texto__descripcion">12/05/2024</h5>
-              </div>
-              <div class="card--texto">
-                <h4 class="card__lista--texto__propiedad">Monto:</h4>
-                <h5 class="card__lista--texto__descripcion">$7.500</h5>
-              </div>
-            </div>
-            <div class="card__lista--botones">
-              <label for="toggle-modulo-detalle" class="card__lista__boton--accion">Detalles</label>
-              <label for="toggle-modulo-eliminar" class="card__lista__boton--accion">Eliminar</label>
-            </div>
-          </div>
-          <div class="card__lista">
-            <div class="card__lista--textos">
-              <div class="card--texto">
-                <h4 class="card__lista--texto__propiedad">ID Registro:</h4>
-                <h5 class="card__lista--texto__descripcion">2</h5>
-              </div>
-              <div class="card--texto">
-                <h4 class="card__lista--texto__propiedad">Empleado ID:</h4>
-                <h5 class="card__lista--texto__descripcion">1097496493</h5>
-              </div>
-              <div class="card--texto">
-                <h4 class="card__lista--texto__propiedad">Producto ID:</h4>
-                <h5 class="card__lista--texto__descripcion">P-45678901234</h5>
-              </div>
-              <div class="card--texto">
-                <h4 class="card__lista--texto__propiedad">Fecha:</h4>
-                <h5 class="card__lista--texto__descripcion">12/05/2024</h5>
-              </div>
-              <div class="card--texto">
-                <h4 class="card__lista--texto__propiedad">Monto:</h4>
-                <h5 class="card__lista--texto__descripcion">$7.500</h5>
-              </div>
-            </div>
-            <div class="card__lista--botones">
-              <label for="toggle-modulo-detalle" class="card__lista__boton--accion">Detalles</label>
-              <label for="toggle-modulo-eliminar" class="card__lista__boton--accion">Eliminar</label>
-            </div>
-          </div>
-          <div class="card__lista">
-            <div class="card__lista--textos">
-              <div class="card--texto">
-                <h4 class="card__lista--texto__propiedad">ID Registro:</h4>
-                <h5 class="card__lista--texto__descripcion">3</h5>
-              </div>
-              <div class="card--texto">
-                <h4 class="card__lista--texto__propiedad">Empleado ID:</h4>
-                <h5 class="card__lista--texto__descripcion">1097496493</h5>
-              </div>
-              <div class="card--texto">
-                <h4 class="card__lista--texto__propiedad">Producto ID:</h4>
-                <h5 class="card__lista--texto__descripcion">P-45678901234</h5>
-              </div>
-              <div class="card--texto">
-                <h4 class="card__lista--texto__propiedad">Fecha:</h4>
-                <h5 class="card__lista--texto__descripcion">12/05/2024</h5>
-              </div>
-              <div class="card--texto">
-                <h4 class="card__lista--texto__propiedad">Monto:</h4>
-                <h5 class="card__lista--texto__descripcion">$7.500</h5>
-              </div>
-            </div>
-            <div class="card__lista--botones">
-              <label for="toggle-modulo-detalle" class="card__lista__boton--accion">Detalles</label>
-              <label for="toggle-modulo-eliminar" class="card__lista__boton--accion">Eliminar</label>
-            </div>
-          </div>
-          <div class="card__lista">
-            <div class="card__lista--textos">
-              <div class="card--texto">
-                <h4 class="card__lista--texto__propiedad">ID Registro:</h4>
-                <h5 class="card__lista--texto__descripcion">4</h5>
-              </div>
-              <div class="card--texto">
-                <h4 class="card__lista--texto__propiedad">Empleado ID:</h4>
-                <h5 class="card__lista--texto__descripcion">1097496493</h5>
-              </div>
-              <div class="card--texto">
-                <h4 class="card__lista--texto__propiedad">Producto ID:</h4>
-                <h5 class="card__lista--texto__descripcion">P-45678901234</h5>
-              </div>
-              <div class="card--texto">
-                <h4 class="card__lista--texto__propiedad">Fecha:</h4>
-                <h5 class="card__lista--texto__descripcion">12/05/2024</h5>
-              </div>
-              <div class="card--texto">
-                <h4 class="card__lista--texto__propiedad">Monto:</h4>
-                <h5 class="card__lista--texto__descripcion">$7.500</h5>
-              </div>
-            </div>
-            <div class="card__lista--botones">
-              <label for="toggle-modulo-detalle" class="card__lista__boton--accion">Detalles</label>
-              <label for="toggle-modulo-eliminar" class="card__lista__boton--accion">Eliminar</label>
-            </div>
-          </div>
-          <div class="card__lista">
-            <div class="card__lista--textos">
-              <div class="card--texto">
-                <h4 class="card__lista--texto__propiedad">ID Registro:</h4>
-                <h5 class="card__lista--texto__descripcion">5</h5>
-              </div>
-              <div class="card--texto">
-                <h4 class="card__lista--texto__propiedad">Empleado ID:</h4>
-                <h5 class="card__lista--texto__descripcion">1097496493</h5>
-              </div>
-              <div class="card--texto">
-                <h4 class="card__lista--texto__propiedad">Producto ID:</h4>
-                <h5 class="card__lista--texto__descripcion">P-45678901234</h5>
-              </div>
-              <div class="card--texto">
-                <h4 class="card__lista--texto__propiedad">Fecha:</h4>
-                <h5 class="card__lista--texto__descripcion">12/05/2024</h5>
-              </div>
-              <div class="card--texto">
-                <h4 class="card__lista--texto__propiedad">Monto:</h4>
-                <h5 class="card__lista--texto__descripcion">$7.500</h5>
-              </div>
-            </div>
-            <div class="card__lista--botones">
-              <label for="toggle-modulo-detalle" class="card__lista__boton--accion">Detalles</label>
-              <label for="toggle-modulo-eliminar" class="card__lista__boton--accion">Eliminar</label>
-            </div>
-          </div>
+          <!-- JS poblará esto dinámicamente -->
+          <p style="text-align: center; width: 100%; grid-column: 1 / -1; padding: 2rem;">Cargando historial de
+            ventas...</p>
         </div>
       </div>
     </section>
   </main>
+
   <footer class="pie-pagina">
     <div class="pie-pagina__contenido-1">
       <h5 class="pie-pagina__contenido-1--texto">
         Que Hacemos?
-        <br>
-        Llevamos el control de tu productos
-        <br>
-        - Almacenamiento
-        <br>
-        - Costes
-        <br>
-        - Balances
-        <br>
-        - Ventas
-        <br>
-        - Finanzas
+        <br> Llevamos el control de tu productos
+        <br> - Almacenamiento
+        <br> - Costes
+        <br> - Balances
+        <br> - Ventas
+        <br> - Finanzas
       </h5>
     </div>
     <div class="pie-pagina__contenido-2">
@@ -260,29 +104,6 @@
         <img src="../../IMG/Logo_instagram.png" alt="Instagram" class="pie-pagina__intagram logo-redes">
         <h5 class="pie-pagina__contenido-2--texto">@MGM_SOLUTIONS</h5>
       </div>
-      <div class="pie-pagina__contenido-2--facebook">
-        <img src="../../IMG/Logo_facebook.png" alt="Facebook" class="pie-pagina__intagram logo-redes">
-        <h5 class="pie-pagina__contenido-2--texto">@MGM_SOLUTIONS</h5>
-      </div>
-      <div class="pie-pagina__contenido-2--email">
-        <img src="../../IMG/Logo_email.png" alt="Email" class="pie-pagina__intagram logo-redes">
-        <h5 class="pie-pagina__contenido-2--texto">MGM_SOLUTIONS@gmail.com</h5>
-      </div>
-    </div>
-    <div class="pie-pagina__contenido-3">
-      <h5 class="pie-pagina__contenido-1--texto">
-        Contactanos:
-        <br>
-        Telefono: +57 318 748 2675
-        <br>
-        Direccion: Calle 42 # 18 - 52 Rincon de Giron
-        <br>
-        Segundo Piso
-        <br>
-        Ubicacion: Bucaramanga / Giron
-        <br>
-        ©2025 - MGM Solutions
-      </h5>
     </div>
   </footer>
 </body>

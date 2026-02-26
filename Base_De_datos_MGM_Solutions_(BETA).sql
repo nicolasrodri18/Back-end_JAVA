@@ -98,6 +98,7 @@ CREATE TABLE TBL_RELACION_LABORAL (
     ID_Relacion INT auto_increment unique PRIMARY KEY,
     NIT_EMPLEADO VARCHAR(20) NOT NULL,
     NIT_EMPRESA VARCHAR(20) NOT NULL,
+    Estado VARCHAR(20) DEFAULT 'Activo',
     FOREIGN KEY (NIT_EMPLEADO) REFERENCES TBL_USUARIOS(DOCUMENTO_NIT),
     FOREIGN KEY (NIT_EMPRESA) REFERENCES TBL_USUARIOS(DOCUMENTO_NIT)
 );
@@ -130,8 +131,8 @@ INSERT INTO TBL_USUARIOS (DOCUMENTO_NIT, ID_ROL, Nombre, Direccion, Contraseña,
 INSERT INTO TBL_USUARIOS (DOCUMENTO_NIT, ID_ROL, Nombre, Direccion, Contraseña, Ciudad) VALUES (1097765433, 3, 'Usuario', 'Calle 123 # 45-67', '$2a$10$RPD0AO3qoWvwxjy8DG/8fONS1WLNrFTaaf.evmZyX1pv59Q2g9JnG', 3);
 
 INSERT INTO TBL_Correos (Correo, DOCUMENTO_NIT) VALUES ('Administrador@gmail.com', 1097765432);
-INSERT INTO TBL_Correos (Correo, DOCUMENTO_NIT) VALUES ('Empresa@gmail.com', 1097765432);
-INSERT INTO TBL_Correos (Correo, DOCUMENTO_NIT) VALUES ('Usuario@gmail.com', 1097765432);
+INSERT INTO TBL_Correos (Correo, DOCUMENTO_NIT) VALUES ('Empresa@gmail.com', 1097765431);
+INSERT INTO TBL_Correos (Correo, DOCUMENTO_NIT) VALUES ('Usuario@gmail.com', 1097765433);
 select * from tbl_usuarios;
 select * from tbl_correos;
 

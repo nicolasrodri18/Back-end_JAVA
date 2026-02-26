@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MGM_SOLUTIONS</title>
+    <title>MGM_SOLUTIONS - Perfil Empleado</title>
     <link rel="stylesheet" href="../../styles.css">
     <script src="../../JS/perfil-empleado.js" defer></script>
 </head>
@@ -26,8 +26,7 @@
         <div class="navbar__perfil">
             <div class="navbar__perfil--usuario">
                 <img src="../../IMG/icono-perfil.png" alt="Perfil" class="navbar__perfil--imagen icon-perfil">
-                <h5 class="navbar__perfil--nombre">Hi, <%= session.getAttribute("userName") %>
-                </h5>
+                <h5 class="navbar__perfil--nombre">Hi, Cargando...</h5>
             </div>
 
             <div class="navbar__desplegable">
@@ -44,73 +43,71 @@
             <img src="../../IMG/Logo.png" alt="Logo.png" class="encabezado__logo logo__navegacion">
         </div>
     </header>
+
     <main class="contenido__menu--inicio">
         <div class="cuerpo__datos">
-            <h1 class="datos__titulo">Informacion y Contacto de tu empresa</h1>
+            <h1 class="datos__titulo">Cargando informacion...</h1>
 
             <div class="datos__empleado datos">
                 <h3 class="datos__texto--titulo">Informacion Personal</h3>
                 <div class="datos__campos">
                     <div class="campo__texto">
                         <h4 class="campo__texto--propiedad">Documento:</h4>
-                        <h4 class="campo__texto--descripcion">1097496493</h4>
+                        <h4 id="user-doc" class="campo__texto--descripcion">---</h4>
                     </div>
                     <div class="campo__texto">
                         <h4 class="campo__texto--propiedad">Nombre:</h4>
-                        <h4 class="campo__texto--descripcion">Nicolas Rodriguez</h4>
+                        <h4 id="user-name" class="campo__texto--descripcion">---</h4>
                     </div>
                     <div class="campo__texto">
                         <h4 class="campo__texto--propiedad">Correo:</h4>
-                        <h4 class="campo__texto--descripcion">pufiavila@gmail.com</h4>
+                        <h4 id="user-email" class="campo__texto--descripcion">---</h4>
                     </div>
                     <div class="campo__texto">
                         <h4 class="campo__texto--propiedad">Direccion:</h4>
-                        <h4 class="campo__texto--descripcion">Calle 43 #19-30</h4>
+                        <h4 id="user-direc" class="campo__texto--descripcion">---</h4>
                     </div>
                     <div class="campo__texto">
                         <h4 class="campo__texto--propiedad">Estado:</h4>
-                        <h4 class="campo__texto--descripcion">No Disponible</h4>
+                        <h4 id="status-relacion" class="campo__texto--descripcion">---</h4>
                     </div>
                     <div class="campo__texto">
                         <h4 class="campo__texto--propiedad">Empresa:</h4>
-                        <h4 class="campo__texto--descripcion">
-                            <%= session.getAttribute("nombreEmpresa") !=null ? session.getAttribute("nombreEmpresa")
-                                : "No cuentas con empresa" %>
-                        </h4>
+                        <h4 id="nombre-empresa-personal" class="campo__texto--descripcion">---</h4>
                     </div>
                 </div>
             </div>
+
             <div class="datos__linea--divisora"></div>
+
             <div class="datos__empresa datos">
                 <h3 class="datos__texto--titulo">Informacion Empresa</h3>
                 <div class="datos__campos">
                     <div class="campo__texto">
                         <h4 class="campo__texto--propiedad">Nit:</h4>
-                        <h4 class="campo__texto--descripcion">899999034-1</h4>
+                        <h4 id="cia-nit" class="campo__texto--descripcion">---</h4>
                     </div>
                     <div class="campo__texto">
                         <h4 class="campo__texto--propiedad">Nombre:</h4>
-                        <h4 class="campo__texto--descripcion">
-                            <%= session.getAttribute("nombreEmpresa") !=null ? session.getAttribute("nombreEmpresa")
-                                : "Sin Empresa" %>
-                        </h4>
+                        <h4 id="cia-nombre" class="campo__texto--descripcion">---</h4>
                     </div>
                     <div class="campo__texto">
                         <h4 class="campo__texto--propiedad">Correo:</h4>
-                        <h4 class="campo__texto--descripcion">CafeteriaSol@gmail.com</h4>
+                        <h4 id="cia-email" class="campo__texto--descripcion">---</h4>
                     </div>
                     <div class="campo__texto">
                         <h4 class="campo__texto--propiedad">Direccion:</h4>
-                        <h4 class="campo__texto--descripcion">Carrera 32 #1-150</h4>
+                        <h4 id="cia-direc" class="campo__texto--descripcion">---</h4>
                     </div>
                     <div class="campo__texto">
                         <h4 class="campo__texto--propiedad">Ciudad:</h4>
-                        <h4 class="campo__texto--descripcion">Bucaramanga</h4>
+                        <h4 id="cia-ciudad" class="campo__texto--descripcion">---</h4>
                     </div>
                 </div>
             </div>
         </div>
     </main>
+
     <footer class="pie-pagina">
         <div class="pie-pagina__contenido-1">
             <h5 class="pie-pagina__contenido-1--texto">
@@ -137,29 +134,6 @@
                 <img src="../../IMG/Logo_instagram.png" alt="Instagram" class="pie-pagina__intagram logo-redes">
                 <h5 class="pie-pagina__contenido-2--texto">@MGM_SOLUTIONS</h5>
             </div>
-            <div class="pie-pagina__contenido-2--facebook">
-                <img src="../../IMG/Logo_facebook.png" alt="Facebook" class="pie-pagina__intagram logo-redes">
-                <h5 class="pie-pagina__contenido-2--texto">@MGM_SOLUTIONS</h5>
-            </div>
-            <div class="pie-pagina__contenido-2--email">
-                <img src="../../IMG/Logo_email.png" alt="Email" class="pie-pagina__intagram logo-redes">
-                <h5 class="pie-pagina__contenido-2--texto">MGM_SOLUTIONS@gmail.com</h5>
-            </div>
-        </div>
-        <div class="pie-pagina__contenido-3">
-            <h5 class="pie-pagina__contenido-1--texto">
-                Contactanos:
-                <br>
-                Telefono: +57 318 748 2675
-                <br>
-                Direccion: Calle 42 # 18 - 52 Rincon de Giron
-                <br>
-                Segundo Piso
-                <br>
-                Ubicacion: Bucaramanga / Giron
-                <br>
-                ©2025 - MGM Solutions
-            </h5>
         </div>
     </footer>
 </body>

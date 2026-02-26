@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MGM_SOLUTIONS</title>
+    <title>MGM_SOLUTIONS - Gestión de Productos</title>
     <link rel="stylesheet" href="../../styles.css">
     <script src="../../JS/perfil-empresa.js" defer></script>
 </head>
@@ -24,78 +24,56 @@
         </div>
     </div>
 
-    <div class="modulo__overlay">
+    <!-- Modal Agregar Producto -->
+    <div class="modulo__overlay" id="modal-agregar">
         <div class="modulo__agregar--producto">
-            <form class="modulo__formulario">
-                <div class="modulo__campo">
-                    <label for="id-producto">ID Producto:</label>
-                    <input type="text" id="id-producto" name="id-producto" placeholder="ID Producto"
-                        class="modulo__input">
-                </div>
-
+            <form class="modulo__formulario" id="form-agregar-producto">
+                <h2 class="modulo__titulo" style="color: var(--color_primario); margin-bottom: 20px;">Nuevo Producto
+                </h2>
                 <div class="modulo__campo">
                     <label for="nombre-producto">Nombre del Producto:</label>
                     <input type="text" id="nombre-producto" name="nombre-producto" placeholder="Nombre del Producto"
-                        class="modulo__input">
+                        class="modulo__input" required>
                 </div>
 
                 <div class="modulo__campo">
-                    <label for="stock">Stock:</label>
-                    <input type="number" id="stock" name="stock" placeholder="Stock" class="modulo__input">
+                    <label for="stock">Stock Inicial:</label>
+                    <input type="number" id="stock" name="stock" placeholder="Stock" class="modulo__input" required>
                 </div>
 
                 <div class="modulo__campo">
-                    <label for="valor-venta">Valor de Venta:</label>
-                    <input type="text" id="valor-venta" name="valor-venta" placeholder="Valor de Venta"
-                        class="modulo__input">
-                </div>
-
-                <div class="modulo__campo">
-                    <label for="porcentaje-ganancia">Porcentaje de Ganancia:</label>
-                    <input type="text" id="porcentaje-ganancia" name="porcentaje-ganancia"
-                        placeholder="Porcentaje de Ganancia" class="modulo__input">
-                </div>
-
-                <div class="modulo__campo">
-                    <label for="precio-compra">Precio de Compra:</label>
-                    <input type="text" id="precio-compra" name="precio-compra" placeholder="Precio de Compra"
-                        class="modulo__input">
+                    <label for="valor-venta">Precio de Venta:</label>
+                    <input type="number" id="valor-venta" name="valor-venta" placeholder="Valor de Venta"
+                        class="modulo__input" required>
                 </div>
 
                 <div class="modulo__botones">
                     <label for="toggle-modulo-agregar" class="modulo__boton modulo__boton--cancelar">Cancelar</label>
-                    <label for="toggle-modulo-agregar" class="modulo__boton modulo__boton--agregar">Agregar</label>
+                    <button type="submit" class="modulo__boton modulo__boton--agregar"
+                        style="border:none;">Guardar</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <div class="modulo__overlay--seleccionar">
+    <!-- Modal Detalle/Editar Producto -->
+    <div class="modulo__overlay--seleccionar" id="modal-detalle">
         <div class="modulo__seleccionar--producto">
-            <div class="modulo__detalle">
-                <p class="modulo__detalle--texto"><strong>ID Producto:</strong> P-45678901234</p>
-                <p class="modulo__detalle--texto"><strong>Nombre:</strong> Laptop Ejecutiva X10</p>
-                <p class="modulo__detalle--texto"><strong>Stock:</strong> 50</p>
-                <p class="modulo__detalle--texto"><strong>Valor:</strong> $2.500</p>
-                <p class="modulo__detalle--texto"><strong>Porcentaje de Ganancia:</strong> 25%</p>
-                <p class="modulo__detalle--texto"><strong>Precio de Compra:</strong> $1.875</p>
-            </div>
-
-            <div class="modulo__cantidad">
-                <span class="modulo__cantidad--texto">Selecciona una cantidad:</span>
-                <div class="modulo__cantidad--controles">
-                    <button type="button" class="modulo__cantidad--btn">-</button>
-                    <input type="number" value="0" min="0" class="modulo__cantidad--input">
-                    <button type="button" class="modulo__cantidad--btn">+</button>
-                </div>
+            <div class="modulo__detalle" id="detalle-producto-empresa">
+                <p class="modulo__detalle--texto"><strong>ID Producto:</strong> <span id="det-prod-id">---</span></p>
+                <p class="modulo__detalle--texto"><strong>Nombre:</strong> <span id="det-prod-nombre">---</span></p>
+                <p class="modulo__detalle--texto"><strong>Stock:</strong> <span id="det-prod-stock">---</span></p>
+                <p class="modulo__detalle--texto"><strong>Precio:</strong> $<span id="det-prod-precio">---</span></p>
             </div>
 
             <div class="modulo__botones--seleccionar">
-                <label for="toggle-modulo-seleccionar" class="modulo__boton modulo__boton--cancelar">Cancelar</label>
+                <label for="toggle-modulo-seleccionar" class="modulo__boton modulo__boton--cancelar">Cerrar</label>
             </div>
             <div class="modulo__botones--acciones">
-                <label for="toggle-modulo-seleccionar" class="modulo__boton modulo__boton--eliminar">Eliminar</label>
-                <label for="toggle-modulo-seleccionar" class="modulo__boton modulo__boton--anadir">Añadir</label>
+                <button type="button" id="btn-eliminar-producto" class="modulo__boton modulo__boton--eliminar"
+                    style="border:none;">Eliminar</button>
+                <button type="button" id="btn-editar-producto" class="modulo__boton modulo__boton--anadir"
+                    style="border:none;">Editar</button>
             </div>
         </div>
     </div>
@@ -104,8 +82,7 @@
         <div class="navbar__perfil">
             <div class="navbar__perfil--usuario">
                 <img src="../../IMG/icono-perfil.png" alt="Perfil" class="navbar__perfil--imagen icon-perfil">
-                <h5 class="navbar__perfil--nombre">Hi, <%= session.getAttribute("userName") %>
-                </h5>
+                <h5 class="navbar__perfil--nombre" id="navbar-nombre">Hi, ...</h5>
             </div>
 
             <div class="navbar__desplegable">
@@ -123,222 +100,37 @@
             <img src="../../IMG/Logo.png" alt="Logo.png" class="encabezado__logo logo__navegacion">
         </div>
     </header>
+
     <main class="grid-cuerpo__contenidos">
         <section class="cuerpo__accionar cuerpo__accionar--conboton">
             <div class="cuerpo__busqueda">
                 <form class="cuerpo__Barra__busqueda">
-                    <input type="text" class="cuerpo__input--busqueda"
-                        placeholder="Buscar Producto: ID Producto, Nombre, Etc" name="search_query">
+                    <input type="text" class="cuerpo__input--busqueda" placeholder="Buscar Producto: ID, Nombre, Etc"
+                        name="search_query">
                     <button type="submit" class="cuerpo__boton--busqueda">
                         <img src="../../IMG/icon-lupa.png" alt="Buscar" class="cuerpo__icono--busqueda">
                     </button>
                 </form>
             </div>
-            <label for="toggle-modulo-agregar" class="cuerpo__boton--interaccion">
-                Agregar
-            </label>
+            <label for="toggle-modulo-agregar" class="cuerpo__boton--interaccion">Agregar Producto</label>
         </section>
         <section class="cuerpo__contenido">
             <div class="cuerpo__contenido__cards">
-                <div class="card__producto">
-                    <div class="card__producto--texto">
-                        <h3 class="card__producto--texto__contenido">ID Producto: P-45678901234</h3>
-                        <h3 class="card__producto--texto__contenido">Nombre: Laptop Ejecutiva X10</h3>
-                        <h3 class="card__producto--texto__contenido">Stock: 50</h3>
-                        <h3 class="card__producto--texto__contenido">Valor: $2.500</h3>
-                    </div>
-                    <label for="toggle-modulo-seleccionar" class="card__producto--boton-seleccionar">Seleccionar</label>
-                </div>
-                <div class="card__producto">
-                    <div class="card__producto--texto">
-                        <h3 class="card__producto--texto__contenido">ID Producto: P-45678901234</h3>
-                        <h3 class="card__producto--texto__contenido">Nombre: Laptop Ejecutiva X10</h3>
-                        <h3 class="card__producto--texto__contenido">Stock: 50</h3>
-                        <h3 class="card__producto--texto__contenido">Valor: $2.500</h3>
-                    </div>
-                    <label for="toggle-modulo-seleccionar" class="card__producto--boton-seleccionar">Seleccionar</label>
-                </div>
-                <div class="card__producto">
-                    <div class="card__producto--texto">
-                        <h3 class="card__producto--texto__contenido">ID Producto: P-45678901234</h3>
-                        <h3 class="card__producto--texto__contenido">Nombre: Laptop Ejecutiva X10</h3>
-                        <h3 class="card__producto--texto__contenido">Stock: 50</h3>
-                        <h3 class="card__producto--texto__contenido">Valor: $2.500</h3>
-                    </div>
-                    <label for="toggle-modulo-seleccionar" class="card__producto--boton-seleccionar">Seleccionar</label>
-                </div>
-                <div class="card__producto">
-                    <div class="card__producto--texto">
-                        <h3 class="card__producto--texto__contenido">ID Producto: P-45678901234</h3>
-                        <h3 class="card__producto--texto__contenido">Nombre: Laptop Ejecutiva X10</h3>
-                        <h3 class="card__producto--texto__contenido">Stock: 50</h3>
-                        <h3 class="card__producto--texto__contenido">Valor: $2.500</h3>
-                    </div>
-                    <label for="toggle-modulo-seleccionar" class="card__producto--boton-seleccionar">Seleccionar</label>
-                </div>
-                <div class="card__producto">
-                    <div class="card__producto--texto">
-                        <h3 class="card__producto--texto__contenido">ID Producto: P-45678901234</h3>
-                        <h3 class="card__producto--texto__contenido">Nombre: Laptop Ejecutiva X10</h3>
-                        <h3 class="card__producto--texto__contenido">Stock: 50</h3>
-                        <h3 class="card__producto--texto__contenido">Valor: $2.500</h3>
-                    </div>
-                    <label for="toggle-modulo-seleccionar" class="card__producto--boton-seleccionar">Seleccionar</label>
-                </div>
-                <div class="card__producto">
-                    <div class="card__producto--texto">
-                        <h3 class="card__producto--texto__contenido">ID Producto: P-45678901234</h3>
-                        <h3 class="card__producto--texto__contenido">Nombre: Laptop Ejecutiva X10</h3>
-                        <h3 class="card__producto--texto__contenido">Stock: 50</h3>
-                        <h3 class="card__producto--texto__contenido">Valor: $2.500</h3>
-                    </div>
-                    <label for="toggle-modulo-seleccionar" class="card__producto--boton-seleccionar">Seleccionar</label>
-                </div>
-                <div class="card__producto">
-                    <div class="card__producto--texto">
-                        <h3 class="card__producto--texto__contenido">ID Producto: P-45678901234</h3>
-                        <h3 class="card__producto--texto__contenido">Nombre: Laptop Ejecutiva X10</h3>
-                        <h3 class="card__producto--texto__contenido">Stock: 50</h3>
-                        <h3 class="card__producto--texto__contenido">Valor: $2.500</h3>
-                    </div>
-                    <label for="toggle-modulo-seleccionar" class="card__producto--boton-seleccionar">Seleccionar</label>
-                </div>
-                <div class="card__producto">
-                    <div class="card__producto--texto">
-                        <h3 class="card__producto--texto__contenido">ID Producto: P-45678901234</h3>
-                        <h3 class="card__producto--texto__contenido">Nombre: Laptop Ejecutiva X10</h3>
-                        <h3 class="card__producto--texto__contenido">Stock: 50</h3>
-                        <h3 class="card__producto--texto__contenido">Valor: $2.500</h3>
-                    </div>
-                    <label for="toggle-modulo-seleccionar" class="card__producto--boton-seleccionar">Seleccionar</label>
-                </div>
-                <div class="card__producto">
-                    <div class="card__producto--texto">
-                        <h3 class="card__producto--texto__contenido">ID Producto: P-45678901234</h3>
-                        <h3 class="card__producto--texto__contenido">Nombre: Laptop Ejecutiva X10</h3>
-                        <h3 class="card__producto--texto__contenido">Stock: 50</h3>
-                        <h3 class="card__producto--texto__contenido">Valor: $2.500</h3>
-                    </div>
-                    <label for="toggle-modulo-seleccionar" class="card__producto--boton-seleccionar">Seleccionar</label>
-                </div>
-                <div class="card__producto">
-                    <div class="card__producto--texto">
-                        <h3 class="card__producto--texto__contenido">ID Producto: P-45678901234</h3>
-                        <h3 class="card__producto--texto__contenido">Nombre: Laptop Ejecutiva X10</h3>
-                        <h3 class="card__producto--texto__contenido">Stock: 50</h3>
-                        <h3 class="card__producto--texto__contenido">Valor: $2.500</h3>
-                    </div>
-                    <label for="toggle-modulo-seleccionar" class="card__producto--boton-seleccionar">Seleccionar</label>
-                </div>
-                <div class="card__producto">
-                    <div class="card__producto--texto">
-                        <h3 class="card__producto--texto__contenido">ID Producto: P-45678901234</h3>
-                        <h3 class="card__producto--texto__contenido">Nombre: Laptop Ejecutiva X10</h3>
-                        <h3 class="card__producto--texto__contenido">Stock: 50</h3>
-                        <h3 class="card__producto--texto__contenido">Valor: $2.500</h3>
-                    </div>
-                    <label for="toggle-modulo-seleccionar" class="card__producto--boton-seleccionar">Seleccionar</label>
-                </div>
-                <div class="card__producto">
-                    <div class="card__producto--texto">
-                        <h3 class="card__producto--texto__contenido">ID Producto: P-45678901234</h3>
-                        <h3 class="card__producto--texto__contenido">Nombre: Laptop Ejecutiva X10</h3>
-                        <h3 class="card__producto--texto__contenido">Stock: 50</h3>
-                        <h3 class="card__producto--texto__contenido">Valor: $2.500</h3>
-                    </div>
-                    <label for="toggle-modulo-seleccionar" class="card__producto--boton-seleccionar">Seleccionar</label>
-                </div>
-                <div class="card__producto">
-                    <div class="card__producto--texto">
-                        <h3 class="card__producto--texto__contenido">ID Producto: P-45678901234</h3>
-                        <h3 class="card__producto--texto__contenido">Nombre: Laptop Ejecutiva X10</h3>
-                        <h3 class="card__producto--texto__contenido">Stock: 50</h3>
-                        <h3 class="card__producto--texto__contenido">Valor: $2.500</h3>
-                    </div>
-                    <label for="toggle-modulo-seleccionar" class="card__producto--boton-seleccionar">Seleccionar</label>
-                </div>
-                <div class="card__producto">
-                    <div class="card__producto--texto">
-                        <h3 class="card__producto--texto__contenido">ID Producto: P-45678901234</h3>
-                        <h3 class="card__producto--texto__contenido">Nombre: Laptop Ejecutiva X10</h3>
-                        <h3 class="card__producto--texto__contenido">Stock: 50</h3>
-                        <h3 class="card__producto--texto__contenido">Valor: $2.500</h3>
-                    </div>
-                    <label for="toggle-modulo-seleccionar" class="card__producto--boton-seleccionar">Seleccionar</label>
-                </div>
-                <div class="card__producto">
-                    <div class="card__producto--texto">
-                        <h3 class="card__producto--texto__contenido">ID Producto: P-45678901234</h3>
-                        <h3 class="card__producto--texto__contenido">Nombre: Laptop Ejecutiva X10</h3>
-                        <h3 class="card__producto--texto__contenido">Stock: 50</h3>
-                        <h3 class="card__producto--texto__contenido">Valor: $2.500</h3>
-                    </div>
-                    <label for="toggle-modulo-seleccionar" class="card__producto--boton-seleccionar">Seleccionar</label>
-                </div>
-                <div class="card__producto">
-                    <div class="card__producto--texto">
-                        <h3 class="card__producto--texto__contenido">ID Producto: P-45678901234</h3>
-                        <h3 class="card__producto--texto__contenido">Nombre: Laptop Ejecutiva X10</h3>
-                        <h3 class="card__producto--texto__contenido">Stock: 50</h3>
-                        <h3 class="card__producto--texto__contenido">Valor: $2.500</h3>
-                    </div>
-                    <label for="toggle-modulo-seleccionar" class="card__producto--boton-seleccionar">Seleccionar</label>
-                </div>
-                <div class="card__producto">
-                    <div class="card__producto--texto">
-                        <h3 class="card__producto--texto__contenido">ID Producto: P-45678901234</h3>
-                        <h3 class="card__producto--texto__contenido">Nombre: Laptop Ejecutiva X10</h3>
-                        <h3 class="card__producto--texto__contenido">Stock: 50</h3>
-                        <h3 class="card__producto--texto__contenido">Valor: $2.500</h3>
-                    </div>
-                    <label for="toggle-modulo-seleccionar" class="card__producto--boton-seleccionar">Seleccionar</label>
-                </div>
-                <div class="card__producto">
-                    <div class="card__producto--texto">
-                        <h3 class="card__producto--texto__contenido">ID Producto: P-45678901234</h3>
-                        <h3 class="card__producto--texto__contenido">Nombre: Laptop Ejecutiva X10</h3>
-                        <h3 class="card__producto--texto__contenido">Stock: 50</h3>
-                        <h3 class="card__producto--texto__contenido">Valor: $2.500</h3>
-                    </div>
-                    <label for="toggle-modulo-seleccionar" class="card__producto--boton-seleccionar">Seleccionar</label>
-                </div>
-                <div class="card__producto">
-                    <div class="card__producto--texto">
-                        <h3 class="card__producto--texto__contenido">ID Producto: P-45678901234</h3>
-                        <h3 class="card__producto--texto__contenido">Nombre: Laptop Ejecutiva X10</h3>
-                        <h3 class="card__producto--texto__contenido">Stock: 50</h3>
-                        <h3 class="card__producto--texto__contenido">Valor: $2.500</h3>
-                    </div>
-                    <label for="toggle-modulo-seleccionar" class="card__producto--boton-seleccionar">Seleccionar</label>
-                </div>
-                <div class="card__producto">
-                    <div class="card__producto--texto">
-                        <h3 class="card__producto--texto__contenido">ID Producto: P-45678901234</h3>
-                        <h3 class="card__producto--texto__contenido">Nombre: Laptop Ejecutiva X10</h3>
-                        <h3 class="card__producto--texto__contenido">Stock: 50</h3>
-                        <h3 class="card__producto--texto__contenido">Valor: $2.500</h3>
-                    </div>
-                    <label for="toggle-modulo-seleccionar" class="card__producto--boton-seleccionar">Seleccionar</label>
-                </div>
+                <p style="text-align: center; width: 100%; padding: 2rem;">Cargando inventario...</p>
             </div>
         </section>
     </main>
+
     <footer class="pie-pagina">
         <div class="pie-pagina__contenido-1">
             <h5 class="pie-pagina__contenido-1--texto">
                 Que Hacemos?
-                <br>
-                Llevamos el control de tu productos
-                <br>
-                - Almacenamiento
-                <br>
-                - Costes
-                <br>
-                - Balances
-                <br>
-                - Ventas
-                <br>
-                - Finanzas
+                <br> Llevamos el control de tu productos
+                <br> - Almacenamiento
+                <br> - Costes
+                <br> - Balances
+                <br> - Ventas
+                <br> - Finanzas
             </h5>
         </div>
         <div class="pie-pagina__contenido-2">
@@ -349,29 +141,6 @@
                 <img src="../../IMG/Logo_instagram.png" alt="Instagram" class="pie-pagina__intagram logo-redes">
                 <h5 class="pie-pagina__contenido-2--texto">@MGM_SOLUTIONS</h5>
             </div>
-            <div class="pie-pagina__contenido-2--facebook">
-                <img src="../../IMG/Logo_facebook.png" alt="Facebook" class="pie-pagina__intagram logo-redes">
-                <h5 class="pie-pagina__contenido-2--texto">@MGM_SOLUTIONS</h5>
-            </div>
-            <div class="pie-pagina__contenido-2--email">
-                <img src="../../IMG/Logo_email.png" alt="Email" class="pie-pagina__intagram logo-redes">
-                <h5 class="pie-pagina__contenido-2--texto">MGM_SOLUTIONS@gmail.com</h5>
-            </div>
-        </div>
-        <div class="pie-pagina__contenido-3">
-            <h5 class="pie-pagina__contenido-1--texto">
-                Contactanos:
-                <br>
-                Telefono: +57 318 748 2675
-                <br>
-                Direccion: Calle 42 # 18 - 52 Rincon de Giron
-                <br>
-                Segundo Piso
-                <br>
-                Ubicacion: Bucaramanga / Giron
-                <br>
-                ©2025 - MGM Solutions
-            </h5>
         </div>
     </footer>
 </body>
