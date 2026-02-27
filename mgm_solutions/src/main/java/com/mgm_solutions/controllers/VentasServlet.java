@@ -101,6 +101,13 @@ public class VentasServlet extends HttpServlet {
             return;
         }
 
+        String status = (String) session.getAttribute("statusRelacion");
+        if ("Inactivo".equals(status)) {
+            response.setStatus(403);
+            out.print("{\"status\":\"error\", \"message\":\"Tu cuenta está inactiva. No puedes realizar ventas.\"}");
+            return;
+        }
+
         try (Connection conn = ConnectionDB.gConnectionDB()) {
             conn.setAutoCommit(false);
             try {

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,13 +8,14 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://fontawesome.com/icons/instagram?f=brands&s=solid">
 </head>
+
 <body class="grid-inicio">
     <header class="encabezado">
         <img src="IMG/Logo.png" alt="Logo.png" class="encabezado__logo logo">
     </header>
     <main class="cuerpo">
         <h1 class="cuerpo__contenido">
-            Bienvenido/a a MGM Solutions 
+            Bienvenido/a a MGM Solutions
             <br>
             Tu controlador de Finanzas y Gestion de Almacenamiento Completo
         </h1>
@@ -41,7 +43,7 @@
         </div>
         <div class="pie-pagina__contenido-2">
             <div class="pie-pagina__contenido-2--logo">
-                <img src="IMG/Logo.png" alt="Logo.png" class="pie-pagina__logo logo-footer">
+                <img src="IMG/Logo_footer.png" alt="Logo" class="pie-pagina__logo logo-footer">
             </div>
             <div class="pie-pagina__contenido-2--instagram">
                 <img src="IMG/Logo_instagram.png" alt="Instagram" class="pie-pagina__intagram logo-redes">
@@ -73,4 +75,5 @@
         </div>
     </footer>
 </body>
+
 </html>

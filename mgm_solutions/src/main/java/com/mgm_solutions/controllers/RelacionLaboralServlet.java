@@ -40,6 +40,8 @@ public class RelacionLaboralServlet extends HttpServlet {
             aceptarInvitacion(request, response);
         } else if ("eliminarRelacion".equals(action)) {
             eliminarRelacion(request, response);
+        } else if ("actualizarEstado".equals(action)) {
+            actualizarEstado(request, response);
         }
     }
 
@@ -140,11 +142,11 @@ public class RelacionLaboralServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try (Connection conn = ConnectionDB.gConnectionDB()) {
-            String sql = "SELECT R.ID_Relacion, U.DOCUMENTO_NIT, U.Nombre, C.Correo, R.Estado " +
+            String sql = "SELECT R.ID_Relacion, U.DOCUMENTO_NIT, U.Nombre, C.Correo, R.Estado, U.Direccion " +
                     "FROM TBL_RELACION_LABORAL R " +
                     "JOIN TBL_USUARIOS U ON R.NIT_EMPLEADO = U.DOCUMENTO_NIT " +
                     "LEFT JOIN TBL_Correos C ON U.DOCUMENTO_NIT = C.DOCUMENTO_NIT " +
-                    "WHERE R.NIT_EMPRESA = ? AND R.Estado = 'Activo'";
+                    "WHERE R.NIT_EMPRESA = ?";
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setString(1, nitEmpresa);
                 try (ResultSet rs = ps.executeQuery()) {
@@ -158,7 +160,9 @@ public class RelacionLaboralServlet extends HttpServlet {
                         out.print("\"documento\":\"" + rs.getString("DOCUMENTO_NIT") + "\",");
                         out.print("\"nombre\":\"" + rs.getString("Nombre") + "\",");
                         out.print("\"correo\":\"" + rs.getString("Correo") + "\",");
-                        out.print("\"estado\":\"" + rs.getString("Estado") + "\"");
+                        out.print("\"estado\":\"" + rs.getString("Estado") + "\",");
+                        out.print("\"direccion\":\""
+                                + (rs.getString("Direccion") != null ? rs.getString("Direccion") : "") + "\"");
                         out.print("}");
                         primero = false;
                     }
@@ -176,15 +180,36 @@ public class RelacionLaboralServlet extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
         PrintWriter out = response.getWriter();
 
-        String nombreEmpresa = (String) session.getAttribute("nombreEmpresa");
+        String userDoc = (String) session.getAttribute("userDoc");
         String statusRelacion = (String) session.getAttribute("statusRelacion");
+
+        // Refresh status from DB to ensure it's up to date
+        if (userDoc != null) {
+            try (Connection conn = ConnectionDB.gConnectionDB()) {
+                String sql = "SELECT Estado FROM TBL_RELACION_LABORAL WHERE NIT_EMPLEADO = ?";
+                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                    ps.setString(1, userDoc);
+                    try (ResultSet rs = ps.executeQuery()) {
+                        if (rs.next()) {
+                            statusRelacion = rs.getString("Estado");
+                            session.setAttribute("statusRelacion", statusRelacion);
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         if (statusRelacion == null || statusRelacion.isEmpty()) {
             statusRelacion = "Disponible";
         }
 
+        String nombreEmpresa = (String) session.getAttribute("nombreEmpresa");
+
         out.print("{");
         out.print("\"userName\":\"" + session.getAttribute("userName") + "\",");
-        out.print("\"userDoc\":\"" + session.getAttribute("userDoc") + "\",");
+        out.print("\"userDoc\":\"" + userDoc + "\",");
         out.print("\"userEmail\":\"" + session.getAttribute("userEmail") + "\",");
         out.print("\"userDirec\":\"" + session.getAttribute("userDirec") + "\",");
         out.print("\"userRol\":\"" + session.getAttribute("userRol") + "\",");
@@ -212,6 +237,30 @@ public class RelacionLaboralServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
             out.print("{\"status\":\"error\"}");
+        }
+    }
+
+    private void actualizarEstado(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String idRelacion = request.getParameter("idRelacion");
+        String nuevoEstado = request.getParameter("estado");
+        response.setContentType("application/json;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+
+        try (Connection conn = ConnectionDB.gConnectionDB()) {
+            String sql = "UPDATE TBL_RELACION_LABORAL SET Estado = ? WHERE ID_Relacion = ?";
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, nuevoEstado);
+                ps.setString(2, idRelacion);
+                int result = ps.executeUpdate();
+                if (result > 0) {
+                    out.print("{\"status\":\"success\", \"message\":\"Estado actualizado correctamente.\"}");
+                } else {
+                    out.print("{\"status\":\"error\", \"message\":\"No se pudo actualizar el estado.\"}");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            out.print("{\"status\":\"error\", \"message\":\"Error de servidor.\"}");
         }
     }
 }

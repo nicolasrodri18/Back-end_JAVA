@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             </div>
                         </div>
                         <div class="card__lista--botones">
-                            <label for="toggle-modulo-detalle" class="card__lista__boton--accion">Detalles</label>
+                            <label for="toggle-modulo-detalle" class="card__lista__boton--accion" onclick="verDetalleEmpleado('${encodeURIComponent(JSON.stringify(emp))}')">Detalles</label>
                             <label for="toggle-modulo-eliminar" class="card__lista__boton--accion" onclick="prepararEliminarEmpleado('${emp.id}')">Eliminar</label>
                         </div>
                     `;
@@ -185,6 +185,60 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
+    window.verDetalleEmpleado = function (empJson) {
+        const emp = JSON.parse(decodeURIComponent(empJson));
+        const detalleContenido = document.getElementById('detalle-empleado-contenido');
+        if (detalleContenido) {
+            detalleContenido.innerHTML = `
+                <p class="modulo__detalle--texto"><strong>ID Registro:</strong> ${emp.id}</p>
+                <p class="modulo__detalle--texto"><strong>Nombre:</strong> ${emp.nombre}</p>
+                <p class="modulo__detalle--texto"><strong>Documento:</strong> ${emp.documento}</p>
+                <p class="modulo__detalle--texto"><strong>Correo:</strong> ${emp.correo || "No registrado"}</p>
+                <div id="contenedor-estado">
+                    <p class="modulo__detalle--texto"><strong>Estado:</strong> ${emp.estado}</p>
+                    <button class="modulo__boton modulo__boton--seleccionar" style="margin-top:10px; width:auto; padding:5px 15px;" onclick="cambiarAEdicionEstado('${emp.id}', '${emp.estado}')">Editar Estado</button>
+                </div>
+                ${emp.direccion ? `<p class="modulo__detalle--texto"><strong>Dirección:</strong> ${emp.direccion}</p>` : ""}
+            `;
+        }
+    };
+
+    window.cambiarAEdicionEstado = function (id, estadoActual) {
+        const contenedor = document.getElementById('contenedor-estado');
+        if (contenedor) {
+            contenedor.innerHTML = `
+                <p class="modulo__detalle--texto"><strong>Estado:</strong></p>
+                <select id="select-estado-${id}" class="modulo__input" style="margin-bottom:10px;">
+                    <option value="Activo" ${estadoActual === 'Activo' ? 'selected' : ''}>Activo</option>
+                    <option value="Inactivo" ${estadoActual === 'Inactivo' ? 'selected' : ''}>Inactivo</option>
+                </select>
+                <div style="display:flex; gap:10px;">
+                    <button class="modulo__boton modulo__boton--agregar" style="width:auto; padding:5px 15px;" onclick="actualizarEstadoEmpleado('${id}')">Guardar</button>
+                    <button class="modulo__boton modulo__boton--cancelar" style="width:auto; padding:5px 15px;" onclick="location.reload()">Cancelar</button>
+                </div>
+            `;
+        }
+    };
+
+    window.actualizarEstadoEmpleado = function (id) {
+        const nuevoEstado = document.getElementById(`select-estado-${id}`).value;
+        const formData = new URLSearchParams();
+        formData.append('idRelacion', id);
+        formData.append('estado', nuevoEstado);
+
+        fetch(`../../RelacionLaboralServlet?action=actualizarEstado`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: formData
+        })
+            .then(res => res.json())
+            .then(data => {
+                alert(data.message);
+                if (data.status === "success") location.reload();
+            })
+            .catch(err => alert("Error al actualizar estado"));
+    };
+
     window.verDetalleVenta = function (id) {
         console.log("Ver detalle de venta:", id);
     };
@@ -194,6 +248,7 @@ document.addEventListener("DOMContentLoaded", function () {
         formProducto.addEventListener('submit', function (e) {
             e.preventDefault();
             const formData = new URLSearchParams();
+            formData.append('id', document.getElementById('id-producto').value);
             formData.append('nombre', document.getElementById('nombre-producto').value);
             formData.append('stock', document.getElementById('stock').value);
             formData.append('precio', document.getElementById('valor-venta').value);

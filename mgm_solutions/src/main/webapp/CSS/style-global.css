@@ -44,7 +44,7 @@
 footer{
     display: grid;
     grid-template-columns: var(--anchos_grids) calc(2*var(--anchos_grids)) var(--anchos_grids);
-    grid-template-rows: var(--altos_footer);
+    grid-template-rows: var(--alto_footer-inicio);
     background-color: var(--fondo_footer);
     grid-template-areas: "footer-1 footer-2 footer-3";
 }

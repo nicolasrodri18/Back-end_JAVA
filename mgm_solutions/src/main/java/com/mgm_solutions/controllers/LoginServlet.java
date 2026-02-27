@@ -102,7 +102,7 @@ public class LoginServlet extends HttpServlet {
                                     + "JOIN TBL_RELACION_LABORAL R ON U.DOCUMENTO_NIT = R.NIT_EMPRESA "
                                     + "JOIN TBL_CIUDADES C ON U.Ciudad = C.ID_Ciudad "
                                     + "LEFT JOIN TBL_Correos Corr ON U.DOCUMENTO_NIT = Corr.DOCUMENTO_NIT "
-                                    + "WHERE R.NIT_EMPLEADO = ? AND R.Estado = 'Activo'";
+                                    + "WHERE R.NIT_EMPLEADO = ?";
                             try (PreparedStatement psEmp = conn.prepareStatement(sqlEmpresa)) {
                                 psEmp.setString(1, nitInput);
                                 try (ResultSet rsEmp = psEmp.executeQuery()) {

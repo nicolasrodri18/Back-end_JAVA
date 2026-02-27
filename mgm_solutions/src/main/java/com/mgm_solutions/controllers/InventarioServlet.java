@@ -39,12 +39,19 @@ public class InventarioServlet extends HttpServlet {
 
     private void listarInventario(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
+        response.setContentType("application/json;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+
+        String status = (String) session.getAttribute("statusRelacion");
+        if ("Inactivo".equals(status)) {
+            response.setStatus(403);
+            out.print("{\"status\":\"error\", \"message\":\"Tu cuenta está inactiva. No puedes acceder al almacén.\"}");
+            return;
+        }
+
         String nitEmpresa = (String) session.getAttribute("ciaNit");
         if (nitEmpresa == null)
             nitEmpresa = (String) session.getAttribute("userDoc");
-
-        response.setContentType("application/json;charset=UTF-8");
-        PrintWriter out = response.getWriter();
 
         if (nitEmpresa == null) {
             out.print("[]");
@@ -84,25 +91,25 @@ public class InventarioServlet extends HttpServlet {
 
     private void agregarProducto(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
+        response.setContentType("application/json;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+
+        String status = (String) session.getAttribute("statusRelacion");
+        if ("Inactivo".equals(status)) {
+            response.setStatus(403);
+            out.print("{\"status\":\"error\", \"message\":\"Tu cuenta está inactiva. No puedes agregar productos.\"}");
+            return;
+        }
+
         String nitEmpresa = (String) session.getAttribute("userDoc");
+        int idProducto = Integer.parseInt(request.getParameter("id"));
         String nombre = request.getParameter("nombre");
         int stock = Integer.parseInt(request.getParameter("stock"));
         double precio = Double.parseDouble(request.getParameter("precio"));
 
-        response.setContentType("application/json;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-
         try (Connection conn = ConnectionDB.gConnectionDB()) {
             conn.setAutoCommit(false);
             try {
-                int idProducto = 0;
-                try (PreparedStatement psP = conn.prepareStatement("SELECT MAX(ID_Producto) FROM TBL_Producto")) {
-                    try (ResultSet rs = psP.executeQuery()) {
-                        if (rs.next())
-                            idProducto = rs.getInt(1) + 1;
-                    }
-                }
-
                 String sqlProd = "INSERT INTO TBL_Producto (ID_Producto, Nombre_Producto) VALUES (?, ?)";
                 try (PreparedStatement psP2 = conn.prepareStatement(sqlProd)) {
                     psP2.setInt(1, idProducto);
@@ -133,9 +140,19 @@ public class InventarioServlet extends HttpServlet {
     }
 
     private void eliminarProducto(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int idRegistro = Integer.parseInt(request.getParameter("id"));
+        HttpSession session = request.getSession();
         response.setContentType("application/json;charset=UTF-8");
         PrintWriter out = response.getWriter();
+
+        String status = (String) session.getAttribute("statusRelacion");
+        if ("Inactivo".equals(status)) {
+            response.setStatus(403);
+            out.print(
+                    "{\"status\":\"error\", \"message\":\"Tu cuenta está inactiva. No puedes realizar esta acción.\"}");
+            return;
+        }
+
+        int idRegistro = Integer.parseInt(request.getParameter("id"));
 
         try (Connection conn = ConnectionDB.gConnectionDB()) {
             String sql = "DELETE FROM TBL_Almacen WHERE Registro_Almacen = ?";
