@@ -88,7 +88,8 @@
         </section>
         <section class="cuerpo__contenido">
             <div class="cuerpo__contenido__cards">
-                <p style="text-align: center; width: 100%; padding: 2rem;">Cargando productos...</p>
+                <h2 style="text-align: center; width: 100%; padding: 1rem; color: var(--color_primario);">Lista de
+                    productos</h2>
             </div>
         </section>
     </main>

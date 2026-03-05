@@ -102,11 +102,15 @@
     color: var(--color_primario);
 }
 
-#toggle-modulo-agregar:checked~.modulo__overlay {
+#toggle-modulo-agregar:checked~#modal-agregar {
     display: flex;
 }
 
 #toggle-modulo-agregar-empleado:checked~.modulo__overlay {
+    display: flex;
+}
+
+#toggle-modulo-editar:checked~#modal-editar {
     display: flex;
 }
 

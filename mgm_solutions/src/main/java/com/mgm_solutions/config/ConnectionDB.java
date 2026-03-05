@@ -6,8 +6,8 @@ import java.sql.Connection;
 
 public class ConnectionDB {
     private static String URL = "jdbc:mysql://localhost:3306/mgm_solucions";
-    private static String USER = "mgm_solutions";
-    private static String PASSWD = "mgm_solutions";
+    private static String USER = "mgm_solucions";
+    private static String PASSWD = "mgm_solucions";
 
     public static Connection gConnectionDB() {
         Connection connection = null;

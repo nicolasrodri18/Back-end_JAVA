@@ -63,10 +63,10 @@
   <main class="grid-cuerpo__contenidos">
     <section class="cuerpo__accionar">
       <div class="cuerpo__busqueda">
-        <form class="cuerpo__Barra__busqueda">
+        <form class="cuerpo__Barra__busqueda" onsubmit="return false;">
           <input type="text" class="cuerpo__input--busqueda"
             placeholder="Buscar Registro de Venta: ID, Producto, Empleado, Etc" name="search_query">
-          <button type="submit" class="cuerpo__boton--busqueda">
+          <button type="button" class="cuerpo__boton--busqueda" id="btn-buscar-ventas">
             <img src="../../IMG/icon-lupa.png" alt="Buscar" class="cuerpo__icono--busqueda">
           </button>
         </form>

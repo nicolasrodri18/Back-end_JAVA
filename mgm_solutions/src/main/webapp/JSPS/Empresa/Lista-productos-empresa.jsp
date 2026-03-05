@@ -12,7 +12,68 @@
 <body class="grid-navegacion">
     <input type="checkbox" id="toggle-modulo-agregar" hidden>
     <input type="checkbox" id="toggle-modulo-seleccionar" hidden>
+    <input type="checkbox" id="toggle-modulo-editar" hidden>
     <input type="checkbox" id="toggle-modulo-cerrar-sesion" hidden>
+
+    <!-- Modal Editar Producto -->
+    <div class="modulo__overlay" id="modal-editar">
+        <div class="modulo__agregar--producto">
+            <form class="modulo__formulario" id="form-editar-producto">
+                <h2 class="modulo__titulo" style="color: var(--color_primario); margin-bottom: 20px;">Editar Producto
+                </h2>
+
+                <input type="hidden" id="edit-registro-id">
+
+                <div class="modulo__campo">
+                    <label for="edit-id-producto">ID del Producto (Solo Lectura):</label>
+                    <input type="number" id="edit-id-producto" name="edit-id-producto" class="modulo__input" readonly
+                        style="background-color: rgba(255,255,255,0.1); cursor: not-allowed;">
+                </div>
+
+                <div class="modulo__campo">
+                    <label for="edit-nombre-producto">Nombre del Producto:</label>
+                    <input type="text" id="edit-nombre-producto" name="edit-nombre-producto"
+                        placeholder="Nombre del Producto" class="modulo__input" required>
+                </div>
+
+                <div class="modulo__campo">
+                    <label for="edit-stock">Stock Actual:</label>
+                    <input type="number" id="edit-stock" name="edit-stock" placeholder="Stock" class="modulo__input"
+                        required>
+                </div>
+
+                <div class="modulo__campo">
+                    <label for="edit-valor-venta">Precio de Venta (Asignado):</label>
+                    <input type="number" id="edit-valor-venta" name="edit-valor-venta" placeholder="Valor de Venta"
+                        class="modulo__input" step="0.01" required>
+                </div>
+
+                <div class="modulo__campo">
+                    <label for="edit-precio-compra">Precio de Compra:</label>
+                    <input type="number" id="edit-precio-compra" name="edit-precio-compra"
+                        placeholder="Precio de Compra" class="modulo__input" step="0.01">
+                </div>
+
+                <div class="modulo__campo">
+                    <label for="edit-porcentaje-ganancia">Porcentaje de Ganancia (%):</label>
+                    <input type="number" id="edit-porcentaje-ganancia" name="edit-porcentaje-ganancia"
+                        placeholder="Cálculo automático" class="modulo__input" step="0.01" readonly
+                        style="background-color: rgba(255,255,255,0.1); cursor: not-allowed;">
+                </div>
+
+                <div class="modulo__campo">
+                    <label for="edit-fecha-vencimiento">Fecha de Vencimiento:</label>
+                    <input type="date" id="edit-fecha-vencimiento" name="edit-fecha-vencimiento" class="modulo__input">
+                </div>
+
+                <div class="modulo__botones">
+                    <label for="toggle-modulo-editar" class="modulo__boton modulo__boton--cancelar">Cancelar</label>
+                    <button type="submit" class="modulo__boton modulo__boton--agregar" style="border: none;">Guardar
+                        Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <div class="modulo__overlay--cerrar-sesion">
         <div class="modulo__cerrar-sesion">
@@ -48,9 +109,27 @@
                 </div>
 
                 <div class="modulo__campo">
-                    <label for="valor-venta">Precio de Venta:</label>
+                    <label for="valor-venta">Precio de Venta (Asignado):</label>
                     <input type="number" id="valor-venta" name="valor-venta" placeholder="Valor de Venta"
-                        class="modulo__input" required>
+                        class="modulo__input" step="0.01" required>
+                </div>
+
+                <div class="modulo__campo">
+                    <label for="precio-compra">Precio de Compra:</label>
+                    <input type="number" id="precio-compra" name="precio-compra" placeholder="Precio de Compra"
+                        class="modulo__input" step="0.01">
+                </div>
+
+                <div class="modulo__campo">
+                    <label for="porcentaje-ganancia">Porcentaje de Ganancia (%):</label>
+                    <input type="number" id="porcentaje-ganancia" name="porcentaje-ganancia"
+                        placeholder="Se calcula automaticamente" class="modulo__input" step="0.01" readonly
+                        style="background-color: rgba(255,255,255,0.05); cursor: not-allowed;">
+                </div>
+
+                <div class="modulo__campo">
+                    <label for="fecha-vencimiento">Fecha de Vencimiento:</label>
+                    <input type="date" id="fecha-vencimiento" name="fecha-vencimiento" class="modulo__input">
                 </div>
 
                 <div class="modulo__botones">
@@ -69,17 +148,25 @@
                 <p class="modulo__detalle--texto"><strong>ID Producto:</strong> <span id="det-prod-id">---</span></p>
                 <p class="modulo__detalle--texto"><strong>Nombre:</strong> <span id="det-prod-nombre">---</span></p>
                 <p class="modulo__detalle--texto"><strong>Stock:</strong> <span id="det-prod-stock">---</span></p>
-                <p class="modulo__detalle--texto"><strong>Precio:</strong> $<span id="det-prod-precio">---</span></p>
+                <p class="modulo__detalle--texto"><strong>Precio Venta:</strong> $<span id="det-prod-precio">---</span>
+                </p>
+                <p class="modulo__detalle--texto"><strong>Precio Compra:</strong> $<span id="det-prod-compra">---</span>
+                </p>
+                <p class="modulo__detalle--texto"><strong>Ganancia Estimada:</strong> <span
+                        id="det-prod-ganancia">---</span></p>
+                <p class="modulo__detalle--texto"><strong>Fecha Vencimiento:</strong> <span
+                        id="det-prod-vencimiento">---</span></p>
             </div>
 
             <div class="modulo__botones--seleccionar">
                 <label for="toggle-modulo-seleccionar" class="modulo__boton modulo__boton--cancelar">Cerrar</label>
             </div>
-            <div class="modulo__botones--acciones">
+            <div class="modulo__botones--acciones"
+                style="display: flex; gap: 1rem; justify-content: center; margin-top: 1rem;">
                 <button type="button" id="btn-eliminar-producto" class="modulo__boton modulo__boton--eliminar"
                     style="border:none;">Eliminar</button>
-                <button type="button" id="btn-editar-producto" class="modulo__boton modulo__boton--anadir"
-                    style="border:none;">Editar</button>
+                <label for="toggle-modulo-editar" class="modulo__boton modulo__boton--anadir" id="btn-abrir-editar"
+                    style="cursor: pointer; text-align: center; line-height: normal; display: flex; align-items: center; justify-content: center;">Editar</label>
             </div>
         </div>
     </div>
@@ -110,10 +197,10 @@
     <main class="grid-cuerpo__contenidos">
         <section class="cuerpo__accionar cuerpo__accionar--conboton">
             <div class="cuerpo__busqueda">
-                <form class="cuerpo__Barra__busqueda">
+                <form class="cuerpo__Barra__busqueda" onsubmit="return false;">
                     <input type="text" class="cuerpo__input--busqueda" placeholder="Buscar Producto: ID, Nombre, Etc"
-                        name="search_query">
-                    <button type="submit" class="cuerpo__boton--busqueda">
+                        name="search_query" id="input-buscar-productos">
+                    <button type="button" class="cuerpo__boton--busqueda" id="btn-buscar-productos">
                         <img src="../../IMG/icon-lupa.png" alt="Buscar" class="cuerpo__icono--busqueda">
                     </button>
                 </form>
@@ -122,7 +209,8 @@
         </section>
         <section class="cuerpo__contenido">
             <div class="cuerpo__contenido__cards">
-                <p style="text-align: center; width: 100%; padding: 2rem;">Cargando inventario...</p>
+                <h2 style="text-align: center; width: 100%; padding: 1rem; color: var(--color_primario);">Lista de
+                    productos</h2>
             </div>
         </section>
     </main>

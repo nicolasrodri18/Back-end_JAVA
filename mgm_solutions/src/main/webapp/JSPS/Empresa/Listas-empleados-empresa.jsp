@@ -108,10 +108,10 @@
   <main class="grid-cuerpo__contenidos">
     <section class="cuerpo__accionar cuerpo__accionar--conboton">
       <div class="cuerpo__busqueda">
-        <form class="cuerpo__Barra__busqueda">
+        <form class="cuerpo__Barra__busqueda" onsubmit="return false;">
           <input type="text" class="cuerpo__input--busqueda"
             placeholder="Buscar Empleado: ID Registro, Nombre, Documento, Correo, Etc" name="search_query">
-          <button type="submit" class="cuerpo__boton--busqueda">
+          <button type="button" class="cuerpo__boton--busqueda" id="btn-buscar-lista">
             <img src="../../IMG/icon-lupa.png" alt="Buscar" class="cuerpo__icono--busqueda">
           </button>
         </form>

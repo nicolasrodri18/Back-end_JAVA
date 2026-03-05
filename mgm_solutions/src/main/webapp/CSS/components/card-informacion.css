@@ -15,6 +15,14 @@
   align-items: center;
 }
 
+.card__lista--activo {
+  background-color: rgba(76, 175, 80, 0.45);
+}
+
+.card__lista--inactivo {
+  background-color: rgba(244, 67, 54, 0.45);
+}
+
 .card__lista--textos {
   grid-area: textos;
   display: flex;
