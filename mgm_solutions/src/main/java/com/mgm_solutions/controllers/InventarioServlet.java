@@ -109,7 +109,12 @@ public class InventarioServlet extends HttpServlet {
         }
 
         String nitEmpresa = (String) session.getAttribute("userDoc");
-        int idProducto = Integer.parseInt(request.getParameter("id"));
+        String idStr = request.getParameter("id");
+        if (idStr != null && idStr.length() > 9) {
+            out.print("{\"status\":\"error\", \"message\":\"El ID del producto no puede exceder los 9 dígitos.\"}");
+            return;
+        }
+        int idProducto = Integer.parseInt(idStr);
         String nombre = request.getParameter("nombre");
         int stock = Integer.parseInt(request.getParameter("stock"));
         double precio = Double.parseDouble(request.getParameter("precio"));
@@ -175,6 +180,10 @@ public class InventarioServlet extends HttpServlet {
 
                 conn.commit();
                 out.print("{\"status\":\"success\", \"message\":\"Producto agregado correctamente.\"}");
+            } catch (java.sql.SQLIntegrityConstraintViolationException e) {
+                conn.rollback();
+                out.print("{\"status\":\"error\", \"message\":\"ID de producto ya registrado.\"}");
+                return;
             } catch (Exception e) {
                 conn.rollback();
                 throw e;

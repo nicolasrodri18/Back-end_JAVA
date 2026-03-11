@@ -1,12 +1,12 @@
-C:\Users\pepeg\OneDrive\Escritorio\ADSO - 2994281\Proyecto\Back-end_JAVA\mgm_solutions\src\main\java\com\mgm_solutions\config\ConnectionDB.java
-C:\Users\pepeg\OneDrive\Escritorio\ADSO - 2994281\Proyecto\Back-end_JAVA\mgm_solutions\src\main\java\com\mgm_solutions\config\SecurityUtils.java
-C:\Users\pepeg\OneDrive\Escritorio\ADSO - 2994281\Proyecto\Back-end_JAVA\mgm_solutions\src\main\java\com\mgm_solutions\controllers\InventarioServlet.java
-C:\Users\pepeg\OneDrive\Escritorio\ADSO - 2994281\Proyecto\Back-end_JAVA\mgm_solutions\src\main\java\com\mgm_solutions\controllers\LoginServlet.java
-C:\Users\pepeg\OneDrive\Escritorio\ADSO - 2994281\Proyecto\Back-end_JAVA\mgm_solutions\src\main\java\com\mgm_solutions\controllers\RegistroEmpresaServlet.java
-C:\Users\pepeg\OneDrive\Escritorio\ADSO - 2994281\Proyecto\Back-end_JAVA\mgm_solutions\src\main\java\com\mgm_solutions\controllers\RegistroUsuarioServlet.java
-C:\Users\pepeg\OneDrive\Escritorio\ADSO - 2994281\Proyecto\Back-end_JAVA\mgm_solutions\src\main\java\com\mgm_solutions\controllers\RelacionLaboralServlet.java
-C:\Users\pepeg\OneDrive\Escritorio\ADSO - 2994281\Proyecto\Back-end_JAVA\mgm_solutions\src\main\java\com\mgm_solutions\controllers\TestConnectionServlet.java
-C:\Users\pepeg\OneDrive\Escritorio\ADSO - 2994281\Proyecto\Back-end_JAVA\mgm_solutions\src\main\java\com\mgm_solutions\controllers\VentasServlet.java
-C:\Users\pepeg\OneDrive\Escritorio\ADSO - 2994281\Proyecto\Back-end_JAVA\mgm_solutions\src\main\java\com\mgm_solutions\dao\CiudadDAO.java
-C:\Users\pepeg\OneDrive\Escritorio\ADSO - 2994281\Proyecto\Back-end_JAVA\mgm_solutions\src\main\java\com\mgm_solutions\Main.java
-C:\Users\pepeg\OneDrive\Escritorio\ADSO - 2994281\Proyecto\Back-end_JAVA\mgm_solutions\src\main\java\com\mgm_solutions\models\Ciudad.java
+C:\Nicolas_Proyecto\Back-end_JAVA\mgm_solutions\src\main\java\com\mgm_solutions\config\ConnectionDB.java
+C:\Nicolas_Proyecto\Back-end_JAVA\mgm_solutions\src\main\java\com\mgm_solutions\config\SecurityUtils.java
+C:\Nicolas_Proyecto\Back-end_JAVA\mgm_solutions\src\main\java\com\mgm_solutions\controllers\InventarioServlet.java
+C:\Nicolas_Proyecto\Back-end_JAVA\mgm_solutions\src\main\java\com\mgm_solutions\controllers\LoginServlet.java
+C:\Nicolas_Proyecto\Back-end_JAVA\mgm_solutions\src\main\java\com\mgm_solutions\controllers\RegistroEmpresaServlet.java
+C:\Nicolas_Proyecto\Back-end_JAVA\mgm_solutions\src\main\java\com\mgm_solutions\controllers\RegistroUsuarioServlet.java
+C:\Nicolas_Proyecto\Back-end_JAVA\mgm_solutions\src\main\java\com\mgm_solutions\controllers\RelacionLaboralServlet.java
+C:\Nicolas_Proyecto\Back-end_JAVA\mgm_solutions\src\main\java\com\mgm_solutions\controllers\TestConnectionServlet.java
+C:\Nicolas_Proyecto\Back-end_JAVA\mgm_solutions\src\main\java\com\mgm_solutions\controllers\VentasServlet.java
+C:\Nicolas_Proyecto\Back-end_JAVA\mgm_solutions\src\main\java\com\mgm_solutions\dao\CiudadDAO.java
+C:\Nicolas_Proyecto\Back-end_JAVA\mgm_solutions\src\main\java\com\mgm_solutions\Main.java
+C:\Nicolas_Proyecto\Back-end_JAVA\mgm_solutions\src\main\java\com\mgm_solutions\models\Ciudad.java

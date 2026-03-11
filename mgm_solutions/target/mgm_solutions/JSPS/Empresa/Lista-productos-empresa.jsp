@@ -93,8 +93,8 @@
                 </h2>
                 <div class="modulo__campo">
                     <label for="id-producto">ID del Producto:</label>
-                    <input type="number" id="id-producto" name="id-producto" placeholder="ID del Producto"
-                        class="modulo__input" required>
+                    <input type="number" id="id-producto" name="id-producto" placeholder="ID del Producto (Máx 9 dígitos)"
+                        class="modulo__input" max="999999999" required>
                 </div>
 
                 <div class="modulo__campo">

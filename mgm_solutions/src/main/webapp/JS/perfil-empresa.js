@@ -597,7 +597,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const formProducto = document.getElementById('form-agregar-producto');
     if (formProducto) {
         // Auto-calcular porcentaje de ganancia cuando cambian los precios
+        const inputIdProducto = document.getElementById('id-producto');
         const inputPrecioVenta = document.getElementById('valor-venta');
+
+        // Restricción de 9 dígitos en tiempo real
+        if (inputIdProducto) {
+            inputIdProducto.addEventListener('input', function () {
+                if (this.value.length > 9) {
+                    this.value = this.value.slice(0, 9);
+                }
+            });
+        }
         const inputPrecioCompra = document.getElementById('precio-compra');
         const inputPorcentaje = document.getElementById('porcentaje-ganancia');
 
@@ -619,8 +629,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         formProducto.addEventListener('submit', function (e) {
             e.preventDefault();
+            const idVal = document.getElementById('id-producto').value;
+            if (idVal.length > 9) {
+                alert("El ID del producto no puede exceder los 9 dígitos.");
+                return;
+            }
             const formData = new URLSearchParams();
-            formData.append('id', document.getElementById('id-producto').value);
+            formData.append('id', idVal);
             formData.append('nombre', document.getElementById('nombre-producto').value);
             formData.append('stock', document.getElementById('stock').value);
             formData.append('precio', document.getElementById('valor-venta').value);
