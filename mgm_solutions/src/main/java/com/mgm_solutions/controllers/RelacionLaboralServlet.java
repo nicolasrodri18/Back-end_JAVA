@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 @WebServlet("/RelacionLaboralServlet")
 public class RelacionLaboralServlet extends HttpServlet {
@@ -42,6 +43,8 @@ public class RelacionLaboralServlet extends HttpServlet {
             eliminarRelacion(request, response);
         } else if ("actualizarEstado".equals(action)) {
             actualizarEstado(request, response);
+        } else if ("actualizarPerfil".equals(action)) {
+            actualizarPerfil(request, response);
         }
     }
 
@@ -207,19 +210,100 @@ public class RelacionLaboralServlet extends HttpServlet {
 
         String nombreEmpresa = (String) session.getAttribute("nombreEmpresa");
 
+        String userName = (String) session.getAttribute("userName");
+        String userEmail = (String) session.getAttribute("userEmail");
+        String userDirec = (String) session.getAttribute("userDirec");
+        Object rolObj = session.getAttribute("userRol");
+        String userRol = (rolObj != null) ? String.valueOf(rolObj) : null;
+
         out.print("{");
-        out.print("\"userName\":\"" + session.getAttribute("userName") + "\",");
-        out.print("\"userDoc\":\"" + userDoc + "\",");
-        out.print("\"userEmail\":\"" + session.getAttribute("userEmail") + "\",");
-        out.print("\"userDirec\":\"" + session.getAttribute("userDirec") + "\",");
-        out.print("\"userRol\":\"" + session.getAttribute("userRol") + "\",");
-        out.print("\"statusRelacion\":\"" + statusRelacion + "\",");
+        out.print("\"userName\":" + (userName != null ? "\"" + userName + "\"" : "null") + ",");
+        out.print("\"userDoc\":" + (userDoc != null ? "\"" + userDoc + "\"" : "null") + ",");
+        out.print("\"userEmail\":" + (userEmail != null ? "\"" + userEmail + "\"" : "null") + ",");
+        out.print("\"userDirec\":" + (userDirec != null ? "\"" + userDirec + "\"" : "null") + ",");
+        out.print("\"userRol\":" + (userRol != null ? "\"" + userRol + "\"" : "null") + ",");
+        out.print("\"statusRelacion\":" + (statusRelacion != null ? "\"" + statusRelacion + "\"" : "null") + ",");
         out.print("\"nombreEmpresa\":" + (nombreEmpresa != null ? "\"" + nombreEmpresa + "\"" : "null") + ",");
-        out.print("\"ciaNit\":\"" + session.getAttribute("ciaNit") + "\",");
-        out.print("\"ciaEmail\":\"" + session.getAttribute("ciaEmail") + "\",");
-        out.print("\"ciaDirec\":\"" + session.getAttribute("ciaDirec") + "\",");
-        out.print("\"ciaCiudad\":\"" + session.getAttribute("ciaCiudad") + "\"");
+        out.print("\"ciaNit\":" + (session.getAttribute("ciaNit") != null ? "\"" + session.getAttribute("ciaNit") + "\"" : "null") + ",");
+        out.print("\"ciaEmail\":" + (session.getAttribute("ciaEmail") != null ? "\"" + session.getAttribute("ciaEmail") + "\"" : "null") + ",");
+        out.print("\"ciaDirec\":" + (session.getAttribute("ciaDirec") != null ? "\"" + session.getAttribute("ciaDirec") + "\"" : "null") + ",");
+        out.print("\"ciaCiudad\":" + (session.getAttribute("ciaCiudad") != null ? "\"" + session.getAttribute("ciaCiudad") + "\"" : "null"));
         out.print("}");
+    }
+
+    private void actualizarPerfil(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("application/json;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        HttpSession session = request.getSession();
+        String userDoc = (String) session.getAttribute("userDoc");
+
+        if (userDoc == null) {
+            out.print("{\"status\":\"error\", \"message\":\"Sesión expirada.\"}");
+            return;
+        }
+
+        String nombre = request.getParameter("nombre");
+        String email = request.getParameter("email");
+        String direccion = request.getParameter("direccion");
+        String pass = request.getParameter("pass");
+
+        Connection conn = null;
+        try {
+            conn = ConnectionDB.gConnectionDB();
+            conn.setAutoCommit(false);
+
+            String sqlUser = "UPDATE TBL_USUARIOS SET Nombre = ?, Direccion = ? WHERE DOCUMENTO_NIT = ?";
+            if (pass != null && !pass.trim().isEmpty()) {
+                sqlUser = "UPDATE TBL_USUARIOS SET Nombre = ?, Direccion = ?, Contraseña = ? WHERE DOCUMENTO_NIT = ?";
+            }
+
+            try (PreparedStatement psUser = conn.prepareStatement(sqlUser)) {
+                psUser.setString(1, nombre);
+                psUser.setString(2, direccion);
+                if (pass != null && !pass.trim().isEmpty()) {
+                    psUser.setString(3, com.mgm_solutions.config.SecurityUtils.hashPassword(pass));
+                    psUser.setString(4, userDoc);
+                } else {
+                    psUser.setString(3, userDoc);
+                }
+                psUser.executeUpdate();
+            }
+
+            String sqlEmail = "UPDATE TBL_Correos SET Correo = ? WHERE DOCUMENTO_NIT = ?";
+            try (PreparedStatement psEmail = conn.prepareStatement(sqlEmail)) {
+                psEmail.setString(1, email);
+                psEmail.setString(2, userDoc);
+                psEmail.executeUpdate();
+            }
+
+            conn.commit();
+
+            session.setAttribute("userName", nombre);
+            session.setAttribute("userEmail", email);
+            session.setAttribute("userDirec", direccion);
+
+            out.print("{\"status\":\"success\", \"message\":\"Perfil actualizado correctamente.\"}");
+
+        } catch (Exception e) {
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            e.printStackTrace();
+            out.print("{\"status\":\"error\", \"message\":\"Error en la base de datos.\"}");
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     private void eliminarRelacion(HttpServletRequest request, HttpServletResponse response) throws IOException {

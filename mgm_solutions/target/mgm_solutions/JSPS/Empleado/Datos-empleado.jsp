@@ -75,6 +75,10 @@
                         <h4 class="campo__texto--propiedad">Empresa:</h4>
                         <h4 id="nombre-empresa-personal" class="campo__texto--descripcion">---</h4>
                     </div>
+                    <!-- Botón centrado usando clases CSS -->
+                    <div class="datos__contenedor-boton">
+                        <label id="btn-abrir-editar-perfil" class="modulo__boton modulo__boton--anadir modulo__boton--editar-perfil">Editar Perfil</label>
+                    </div>
                 </div>
             </div>
 
@@ -148,6 +152,37 @@
             </h5>
         </div>
     </footer>
+    <!-- Modales y Toggles al final para evitar conflictos de Grid/Z-index -->
+    <input type="checkbox" id="toggle-modulo-editar-perfil" hidden>
+
+    <!-- Modal Editar Perfil -->
+    <div class="modulo__overlay" id="modal-editar-perfil">
+        <div class="modulo__agregar--producto">
+            <form class="modulo__formulario" id="form-editar-perfil">
+                <h2 class="modulo__titulo">Editar Mi Perfil</h2>
+                <div class="modulo__campo">
+                    <label for="edit-user-nombre">Nombre Completo:</label>
+                    <input type="text" id="edit-user-nombre" name="nombre" class="modulo__input" required>
+                </div>
+                <div class="modulo__campo">
+                    <label for="edit-user-email">Correo Electrónico:</label>
+                    <input type="email" id="edit-user-email" name="email" class="modulo__input" required>
+                </div>
+                <div class="modulo__campo">
+                    <label for="edit-user-direc">Dirección:</label>
+                    <input type="text" id="edit-user-direc" name="direccion" class="modulo__input">
+                </div>
+                <div class="modulo__campo">
+                    <label for="edit-user-pass">Nueva Contraseña (dejar en blanco para no cambiar):</label>
+                    <input type="password" id="edit-user-pass" name="password" class="modulo__input">
+                </div>
+                <div class="modulo__botones">
+                    <label for="toggle-modulo-editar-perfil" class="modulo__boton modulo__boton--cancelar">Cancelar</label>
+                    <button type="submit" class="modulo__boton modulo__boton--agregar" style="border: none;">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 
 </html>

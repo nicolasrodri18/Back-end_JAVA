@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (formBusqueda) {
             formBusqueda.addEventListener('submit', (e) => {
                 e.preventDefault();
-                filtr();
+                filtrar();
             });
         }
         inputBusqueda.addEventListener('input', filtrar);
@@ -244,6 +244,85 @@ document.addEventListener("DOMContentLoaded", function () {
                 .catch(err => alert("Error al registrar la venta."));
         };
     };
+
+    function abrirModalEdicion() {
+        const nombreInput = document.getElementById('edit-user-nombre');
+        const emailInput = document.getElementById('edit-user-email');
+        const direcInput = document.getElementById('edit-user-direc');
+        const passInput = document.getElementById('edit-user-pass');
+
+        const currentName = document.getElementById('user-name');
+        const currentEmail = document.getElementById('user-email');
+        const currentDirec = document.getElementById('user-direc');
+
+        if (nombreInput && currentName) nombreInput.value = currentName.textContent;
+        if (emailInput && currentEmail) emailInput.value = currentEmail.textContent !== "No registrado" ? currentEmail.textContent : "";
+        if (direcInput && currentDirec) direcInput.value = currentDirec.textContent !== "No registrada" ? currentDirec.textContent : "";
+        if (passInput) passInput.value = ""; // No mostrar clave actual
+    }
+
+    // Escuchar el cambio en el checkbox para poblar datos automáticamente
+    const toggleEditar = document.getElementById('toggle-modulo-editar-perfil');
+    const btnAbrirEditar = document.getElementById('btn-abrir-editar-perfil');
+
+    if (btnAbrirEditar && toggleEditar) {
+        btnAbrirEditar.addEventListener('click', function (e) {
+            e.preventDefault();
+            const modal = document.getElementById('modal-editar-perfil');
+            console.log("Abriendo modal de edición...");
+
+            toggleEditar.checked = true;
+            abrirModalEdicion();
+
+            if (modal) {
+                modal.style.setProperty('display', 'flex', 'important');
+                modal.style.setProperty('z-index', '9999', 'important');
+            }
+        });
+    }
+
+    if (toggleEditar) {
+        toggleEditar.addEventListener('change', function () {
+            const modal = document.getElementById('modal-editar-perfil');
+            console.log("Estado del checkbox edición:", this.checked);
+            if (this.checked) {
+                abrirModalEdicion();
+                if (modal) {
+                    modal.style.setProperty('display', 'flex', 'important');
+                    modal.style.setProperty('z-index', '9999', 'important');
+                }
+            } else {
+                if (modal) {
+                    modal.style.display = "";
+                    modal.style.removeProperty('z-index');
+                }
+            }
+        });
+    }
+
+    const formEditarPerfil = document.getElementById('form-editar-perfil');
+    if (formEditarPerfil) {
+        formEditarPerfil.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new URLSearchParams();
+            formData.append('nombre', document.getElementById('edit-user-nombre').value);
+            formData.append('email', document.getElementById('edit-user-email').value);
+            formData.append('direccion', document.getElementById('edit-user-direc').value);
+            formData.append('pass', document.getElementById('edit-user-pass').value);
+
+            fetch("../../RelacionLaboralServlet?action=actualizarPerfil", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData
+            })
+                .then(res => res.json())
+                .then(data => {
+                    alert(data.message);
+                    if (data.status === "success") location.reload();
+                })
+                .catch(err => alert("Error al actualizar perfil."));
+        });
+    }
 
     cargarPerfil();
 });
