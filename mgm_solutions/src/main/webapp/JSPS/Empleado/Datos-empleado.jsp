@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MGM_SOLUTIONS - Perfil Empleado</title>
     <link rel="stylesheet" href="../../styles.css">
+    <script src="../../JS/custom_alert.js" defer></script>
     <script src="../../JS/perfil-empleado.js" defer></script>
 </head>
 
@@ -77,7 +78,9 @@
                     </div>
                     <!-- Botón centrado usando clases CSS -->
                     <div class="datos__contenedor-boton">
-                        <label id="btn-abrir-editar-perfil" class="modulo__boton modulo__boton--anadir modulo__boton--editar-perfil">Editar Perfil</label>
+                        <label id="btn-abrir-editar-perfil"
+                            class="modulo__boton modulo__boton--anadir modulo__boton--editar-perfil">Editar
+                            Perfil</label>
                     </div>
                 </div>
             </div>
@@ -165,20 +168,22 @@
                     <input type="text" id="edit-user-nombre" name="nombre" class="modulo__input" required>
                 </div>
                 <div class="modulo__campo">
-                    <label for="edit-user-email">Correo Electrónico:</label>
+                    <label for="edit-user-email">Correo Electronico:</label>
                     <input type="email" id="edit-user-email" name="email" class="modulo__input" required>
                 </div>
                 <div class="modulo__campo">
-                    <label for="edit-user-direc">Dirección:</label>
+                    <label for="edit-user-direc">Direccion:</label>
                     <input type="text" id="edit-user-direc" name="direccion" class="modulo__input">
                 </div>
                 <div class="modulo__campo">
-                    <label for="edit-user-pass">Nueva Contraseña (dejar en blanco para no cambiar):</label>
+                    <label for="edit-user-pass">Nueva Contrasena (dejar en blanco para no cambiar):</label>
                     <input type="password" id="edit-user-pass" name="password" class="modulo__input">
                 </div>
                 <div class="modulo__botones">
-                    <label for="toggle-modulo-editar-perfil" class="modulo__boton modulo__boton--cancelar">Cancelar</label>
-                    <button type="submit" class="modulo__boton modulo__boton--agregar" style="border: none;">Guardar Cambios</button>
+                    <label for="toggle-modulo-editar-perfil"
+                        class="modulo__boton modulo__boton--cancelar">Cancelar</label>
+                    <button type="submit" class="modulo__boton modulo__boton--agregar" style="border: none;">Guardar
+                        Cambios</button>
                 </div>
             </form>
         </div>

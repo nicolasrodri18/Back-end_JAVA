@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MGM_SOLUTIONS - Gestión de Productos</title>
+    <title>MGM_SOLUTIONS - Gestion de Productos</title>
     <link rel="stylesheet" href="../../styles.css">
+    <script src="../../JS/custom_alert.js" defer></script>
     <script src="../../JS/perfil-empresa.js" defer></script>
 </head>
 
@@ -57,7 +58,7 @@
                 <div class="modulo__campo">
                     <label for="edit-porcentaje-ganancia">Porcentaje de Ganancia (%):</label>
                     <input type="number" id="edit-porcentaje-ganancia" name="edit-porcentaje-ganancia"
-                        placeholder="Cálculo automático" class="modulo__input" step="0.01" readonly
+                        placeholder="Calculo automatico" class="modulo__input" step="0.01" readonly
                         style="background-color: rgba(255,255,255,0.1); cursor: not-allowed;">
                 </div>
 
@@ -77,7 +78,7 @@
 
     <div class="modulo__overlay--cerrar-sesion">
         <div class="modulo__cerrar-sesion">
-            <p class="modulo__cerrar-sesion--texto">Cerraras Sesion deseas Continuar?</p>
+            <p class="modulo__cerrar-sesion--texto">Cerraras Sesion ¿deseas continuar?</p>
             <div class="modulo__cerrar-sesion--botones">
                 <label for="toggle-modulo-cerrar-sesion" class="modulo__boton modulo__boton--cancelar">Cancelar</label>
                 <a href="../Login.jsp" class="modulo__boton modulo__boton--continuar">Continuar</a>
@@ -93,7 +94,7 @@
                 </h2>
                 <div class="modulo__campo">
                     <label for="id-producto">ID del Producto:</label>
-                    <input type="number" id="id-producto" name="id-producto" placeholder="ID del Producto (Máx 9 dígitos)"
+                    <input type="number" id="id-producto" name="id-producto" placeholder="ID del Producto (Max 9 digitos)"
                         class="modulo__input" max="999999999" required>
                 </div>
 
@@ -184,6 +185,7 @@
         </div>
 
         <div class="navbar__navegacion--links">
+            <a href="Datos-empresa.jsp" class="navegacion__links">Datos</a>
             <a href="Listas-empleados-empresa.jsp" class="navegacion__links">Empleados</a>
             <a href="Listas-ventas-empresa.jsp" class="navegacion__links">Ventas</a>
             <a href="Lista-productos-empresa.jsp" class="navegacion__links">Lista de Precios y Productos</a>

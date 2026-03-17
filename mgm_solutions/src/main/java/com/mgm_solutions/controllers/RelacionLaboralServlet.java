@@ -28,6 +28,8 @@ public class RelacionLaboralServlet extends HttpServlet {
             listarEmpleados(request, response);
         } else if ("getPerfil".equals(action)) {
             getPerfil(request, response);
+        } else if ("listarCiudades".equals(action)) {
+            listarCiudades(request, response);
         }
     }
 
@@ -45,6 +47,8 @@ public class RelacionLaboralServlet extends HttpServlet {
             actualizarEstado(request, response);
         } else if ("actualizarPerfil".equals(action)) {
             actualizarPerfil(request, response);
+        } else if ("actualizarPerfilEmpresa".equals(action)) {
+            actualizarPerfilEmpresa(request, response);
         }
     }
 
@@ -344,7 +348,128 @@ public class RelacionLaboralServlet extends HttpServlet {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            out.print("{\"status\":\"error\", \"message\":\"Error de servidor.\"}");
         }
+    }
+
+    private void actualizarPerfilEmpresa(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("application/json;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        HttpSession session = request.getSession();
+        String userDoc = (String) session.getAttribute("userDoc");
+
+        if (userDoc == null) {
+            out.print("{\"status\":\"error\", \"message\":\"Sesión expirada.\"}");
+            return;
+        }
+
+        String nombre = request.getParameter("nombre");
+        String email = request.getParameter("email");
+        String direccion = request.getParameter("direccion");
+        String ciudadId = request.getParameter("ciudad");
+        String pass = request.getParameter("pass");
+
+        Connection conn = null;
+        try {
+            conn = ConnectionDB.gConnectionDB();
+            conn.setAutoCommit(false);
+
+            String sqlUser = "UPDATE TBL_USUARIOS SET Nombre = ?, Direccion = ?, Ciudad = ? WHERE DOCUMENTO_NIT = ?";
+            if (pass != null && !pass.trim().isEmpty()) {
+                sqlUser = "UPDATE TBL_USUARIOS SET Nombre = ?, Direccion = ?, Ciudad = ?, Contraseña = ? WHERE DOCUMENTO_NIT = ?";
+            }
+
+            try (PreparedStatement psUser = conn.prepareStatement(sqlUser)) {
+                psUser.setString(1, nombre);
+                psUser.setString(2, direccion);
+                psUser.setInt(3, Integer.parseInt(ciudadId));
+                if (pass != null && !pass.trim().isEmpty()) {
+                    psUser.setString(4, com.mgm_solutions.config.SecurityUtils.hashPassword(pass));
+                    psUser.setString(5, userDoc);
+                } else {
+                    psUser.setString(4, userDoc);
+                }
+                psUser.executeUpdate();
+            }
+
+            String sqlCheckEmail = "SELECT Correo FROM TBL_Correos WHERE DOCUMENTO_NIT = ?";
+            boolean exists = false;
+            try (PreparedStatement psCheck = conn.prepareStatement(sqlCheckEmail)) {
+                psCheck.setString(1, userDoc);
+                try (ResultSet rsCheck = psCheck.executeQuery()) {
+                    if (rsCheck.next()) exists = true;
+                }
+            }
+
+            if (exists) {
+                String sqlEmail = "UPDATE TBL_Correos SET Correo = ? WHERE DOCUMENTO_NIT = ?";
+                try (PreparedStatement psEmail = conn.prepareStatement(sqlEmail)) {
+                    psEmail.setString(1, email);
+                    psEmail.setString(2, userDoc);
+                    psEmail.executeUpdate();
+                }
+            } else {
+                String sqlEmail = "INSERT INTO TBL_Correos (Correo, DOCUMENTO_NIT) VALUES (?, ?)";
+                try (PreparedStatement psEmail = conn.prepareStatement(sqlEmail)) {
+                    psEmail.setString(1, email);
+                    psEmail.setString(2, userDoc);
+                    psEmail.executeUpdate();
+                }
+            }
+
+            conn.commit();
+
+            // Refresh session attributes
+            session.setAttribute("userName", nombre);
+            session.setAttribute("userEmail", email);
+            session.setAttribute("userDirec", direccion);
+            
+            // Get city name for session
+            String sqlCity = "SELECT Nombre FROM TBL_CIUDADES WHERE ID_Ciudad = ?";
+            try (PreparedStatement psCity = conn.prepareStatement(sqlCity)) {
+                psCity.setInt(1, Integer.parseInt(ciudadId));
+                try (ResultSet rsCity = psCity.executeQuery()) {
+                    if (rsCity.next()) {
+                        session.setAttribute("ciaCiudad", rsCity.getString("Nombre"));
+                    }
+                }
+            }
+
+            out.print("{\"status\":\"success\", \"message\":\"Datos de empresa actualizados correctamente.\"}");
+
+        } catch (Exception e) {
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            e.printStackTrace();
+            out.print("{\"status\":\"error\", \"message\":\"Error en la base de datos.\"}");
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void listarCiudades(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("application/json;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        com.mgm_solutions.dao.CiudadDAO cityDao = new com.mgm_solutions.dao.CiudadDAO();
+        java.util.List<com.mgm_solutions.models.Ciudad> ciudades = cityDao.listar();
+        
+        out.print("[");
+        for (int i = 0; i < ciudades.size(); i++) {
+            com.mgm_solutions.models.Ciudad c = ciudades.get(i);
+            out.print("{\"id\":" + c.getId() + ", \"nombre\":\"" + c.getNombre() + "\"}");
+            if (i < ciudades.size() - 1) out.print(",");
+        }
+        out.print("]");
     }
 }

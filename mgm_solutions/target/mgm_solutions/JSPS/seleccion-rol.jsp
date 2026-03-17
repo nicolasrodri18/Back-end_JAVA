@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MGM_SOLUTIONS</title>
+    <script src="../JS/custom_alert.js" defer></script>
     <link rel="stylesheet" href="../styles.css">
 </head>
 

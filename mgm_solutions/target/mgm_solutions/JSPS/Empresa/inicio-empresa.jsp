@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MGM_SOLUTIONS - Inicio Empresa</title>
     <link rel="stylesheet" href="../../styles.css">
+    <script src="../../JS/custom_alert.js" defer></script>
     <script src="../../JS/perfil-empresa.js" defer></script>
 </head>
 
@@ -14,7 +15,7 @@
 
     <div class="modulo__overlay--cerrar-sesion">
         <div class="modulo__cerrar-sesion">
-            <p class="modulo__cerrar-sesion--texto">Cerraras Sesion deseas Continuar?</p>
+            <p class="modulo__cerrar-sesion--texto">Cerraras Sesion ¿deseas continuar?</p>
             <div class="modulo__cerrar-sesion--botones">
                 <label for="toggle-modulo-cerrar-sesion" class="modulo__boton modulo__boton--cancelar">Cancelar</label>
                 <a href="../Login.jsp" class="modulo__boton modulo__boton--continuar">Continuar</a>
@@ -35,6 +36,7 @@
         </div>
 
         <div class="navbar__navegacion--links">
+            <a href="Datos-empresa.jsp" class="navegacion__links">Datos</a>
             <a href="Listas-empleados-empresa.jsp" class="navegacion__links">Empleados</a>
             <a href="Listas-ventas-empresa.jsp" class="navegacion__links">Ventas</a>
             <a href="Lista-productos-empresa.jsp" class="navegacion__links">Lista de Precios y Productos</a>
@@ -46,7 +48,7 @@
     </header>
     <main class="contenido__menu--inicio">
         <h1 class="cuerpo__contenido">
-            Hola <span id="welcome-name">...</span>, Bienvenid@
+            Hola <span id="welcome-name">...</span>, Bienvenida/o
         </h1>
         <h1 class="cuerpo__contenido">
             Puedes dirigirte a los menus pertinentes

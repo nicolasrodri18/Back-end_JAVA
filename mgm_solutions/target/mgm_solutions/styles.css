@@ -12,6 +12,7 @@
 @import url(CSS/components/modulo_detalle_registro.css);
 @import url(CSS/components/modulo_anadir_empleado.css);
 @import url(CSS/components/modulo_eliminar.css);
+@import url(CSS/components/custom_alert.css);
 
 /* Media Queries */
 @import url(CSS/Media_Query/media-query-portatil-1.css);

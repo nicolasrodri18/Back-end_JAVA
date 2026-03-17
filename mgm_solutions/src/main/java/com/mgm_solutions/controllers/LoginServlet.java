@@ -72,6 +72,24 @@ public class LoginServlet extends HttpServlet {
                             rolNombre = "Empresa";
                             redirectUrl = "JSPS/Empresa/inicio-empresa.jsp?loginSuccess=1";
                             jsonRedirect = request.getContextPath() + "/JSPS/Empresa/inicio-empresa.jsp";
+
+                            // FETCH COMPANY EXTRA DATA (Email, Ciudad)
+                            String sqlCiaData = "SELECT C.Correo, CIU.Nombre as CiudadNombre "
+                                    + "FROM TBL_USUARIOS U "
+                                    + "LEFT JOIN TBL_Correos C ON U.DOCUMENTO_NIT = C.DOCUMENTO_NIT "
+                                    + "LEFT JOIN TBL_CIUDADES CIU ON U.Ciudad = CIU.ID_Ciudad "
+                                    + "WHERE U.DOCUMENTO_NIT = ?";
+                            try (PreparedStatement psCia = conn.prepareStatement(sqlCiaData)) {
+                                psCia.setString(1, nitInput);
+                                try (ResultSet rsCia = psCia.executeQuery()) {
+                                    if (rsCia.next()) {
+                                        session.setAttribute("userEmail", rsCia.getString("Correo"));
+                                        session.setAttribute("ciaCiudad", rsCia.getString("CiudadNombre"));
+                                    }
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case 3: // Usuario/Empleado
                             rolNombre = "Usuario/Empleado";
