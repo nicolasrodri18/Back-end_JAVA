@@ -37,9 +37,12 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        // Detecta si la petición es AJAX mediante la cabecera estándar de XMLHttpRequest.
         boolean esAjax = "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
 
+        // Obtiene el NIT o documento del usuario desde el formulario.
         String nitInput = request.getParameter("nit-documento");
+        // Obtiene la contraseña ingresada por el usuario.
         String passInput = request.getParameter("password");
 
         Connection conn = null;
@@ -47,27 +50,36 @@ public class LoginServlet extends HttpServlet {
         ResultSet rs = null;
 
         try {
+            // Abre una nueva conexión a la base de datos usando el Singleton ConnectionDB.
             conn = ConnectionDB.gConnectionDB();
 
+            // SQL para obtener los datos básicos del usuario por su documento/NIT.
             String sql = "SELECT DOCUMENTO_NIT, Nombre, Direccion, Contraseña, ID_ROL FROM TBL_USUARIOS WHERE DOCUMENTO_NIT = ?";
             ps = conn.prepareStatement(sql);
-            ps.setString(1, nitInput);
-            rs = ps.executeQuery();
+            ps.setString(1, nitInput); // Asigna el NIT al parámetro configurado.
+            rs = ps.executeQuery(); // Ejecuta la consulta en la DB.
 
+            // Si se encuentra un registro que coincida con el NIT...
             if (rs.next()) {
+                // Obtiene el hash BCrypt almacenado en la columna 'Contraseña'.
                 String hashAlmacenado = rs.getString("Contraseña");
 
+                // Compara la contraseña en texto plano con el hash de la base de datos.
                 if (SecurityUtils.checkPassword(passInput, hashAlmacenado)) {
-                    // LOGIN EXITOSO: guardar sesión
+                    // LOGIN EXITOSO: Se inicia el manejo de sesión del servidor.
                     HttpSession session = request.getSession();
+                    // Registra el documento del usuario en la sesión actual.
                     session.setAttribute("userDoc", nitInput);
+                    // Registra el nombre completo del usuario.
                     session.setAttribute("userName", rs.getString("Nombre"));
+                    // Determina y guarda el rol (1:Admin, 2:Empresa, 3:Empleado).
                     int rol = rs.getInt("ID_ROL");
                     session.setAttribute("userRol", rol);
+                    // Guarda la dirección o un valor por defecto si es nulo.
                     String uDir = rs.getString("Direccion");
                     session.setAttribute("userDirec", uDir != null ? uDir : "No registrada");
 
-                    // Mensaje de éxito (flash en sesión) para que la JSP lo muestre si lo desea
+                    // Guarda un mensaje de éxito temporal en la sesión.
                     session.setAttribute("successMessage", "Inicio de sesión exitoso");
 
                     // Determinar redirección según rol
@@ -77,17 +89,17 @@ public class LoginServlet extends HttpServlet {
                     String nombreEmpresa = null;
 
                     switch (rol) {
-                        case 1: // Administrador -> seleccionar rol
+                        case 1: // Administrador: Es redirigido a la página de selección de rol.
                             rolNombre = "Administrador";
                             redirectUrl = "JSPS/seleccion-rol.jsp?loginSuccess=1";
                             jsonRedirect = request.getContextPath() + "/JSPS/seleccion-rol.jsp";
                             break;
-                        case 2: // Empresa
+                        case 2: // Empresa: Es redirigido al panel administrativo corporativo.
                             rolNombre = "Empresa";
                             redirectUrl = "JSPS/Empresa/inicio-empresa.jsp?loginSuccess=1";
                             jsonRedirect = request.getContextPath() + "/JSPS/Empresa/inicio-empresa.jsp";
 
-                            // FETCH COMPANY EXTRA DATA (Email, Ciudad)
+                            // Obtención de datos adicionales de la empresa (Correo y Ciudad).
                             String sqlCiaData = "SELECT C.Correo, CIU.Nombre as CiudadNombre "
                                     + "FROM TBL_USUARIOS U "
                                     + "LEFT JOIN TBL_Correos C ON U.DOCUMENTO_NIT = C.DOCUMENTO_NIT "
@@ -97,6 +109,7 @@ public class LoginServlet extends HttpServlet {
                                 psCia.setString(1, nitInput);
                                 try (ResultSet rsCia = psCia.executeQuery()) {
                                     if (rsCia.next()) {
+                                        // Guarda el correo y el nombre de la ciudad en la sesión.
                                         session.setAttribute("userEmail", rsCia.getString("Correo"));
                                         session.setAttribute("ciaCiudad", rsCia.getString("CiudadNombre"));
                                     }
@@ -183,23 +196,26 @@ public class LoginServlet extends HttpServlet {
             }
 
         } catch (Exception e) {
+            // Log de error en consola para depuración del backend.
             e.printStackTrace();
+            // Envía respuesta genérica de error de servidor.
             responder(esAjax, response, "error", "error_servidor",
                     "index.jsp?loginError=db", null, null, null, null);
         } finally {
+            // Bloque de cierre seguro de recursos JDBC para evitar fugas de memoria.
             try {
                 if (rs != null)
-                    rs.close();
+                    rs.close(); // Cierra el conjunto de resultados.
             } catch (Exception e) {
             }
             try {
                 if (ps != null)
-                    ps.close();
+                    ps.close(); // Cierra la sentencia preparada.
             } catch (Exception e) {
             }
             try {
                 if (conn != null)
-                    conn.close();
+                    conn.close(); // Libera la conexión al pool.
             } catch (Exception e) {
             }
         }

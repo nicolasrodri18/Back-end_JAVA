@@ -106,7 +106,8 @@ document.addEventListener("DOMContentLoaded", function () {
             timer: 5000,
             timerProgressBar: true
         }).then(function () {
-            // Desmarcar el checkbox para volver a mostrar el formulario de login
+            // Desmarcar el checkbox para volver a mostrar el formulario de login.
+            // Esto cierra el modal de registro.
             var toggle = document.getElementById(toggleId);
             if (toggle) toggle.checked = false;
         });
@@ -120,34 +121,37 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (formEmpresa) {
         formEmpresa.addEventListener("submit", async function (e) {
-            e.preventDefault(); // Evita la navegación/recarga
-            limpiarErrores(formEmpresa);
+            e.preventDefault(); // Detiene el envío tradicional del formulario para usar fetch.
+            limpiarErrores(formEmpresa); // Remueve marcas de error previas.
 
             try {
+                // Envía los datos al servidor de forma asíncrona.
                 var resp = await fetch(formEmpresa.action, {
                     method: "POST",
-                    body: new URLSearchParams(new FormData(formEmpresa)),
-                    headers: { "X-Requested-With": "XMLHttpRequest" }
+                    body: new URLSearchParams(new FormData(formEmpresa)), // Serializa los datos del formulario.
+                    headers: { "X-Requested-With": "XMLHttpRequest" } // Indica al servidor que es una petición AJAX.
                 });
 
-                var data = await resp.json();
+                var data = await resp.json(); // Parsea la respuesta JSON del servidor.
 
                 if (data.status === "ok") {
-                    formEmpresa.reset();
+                    formEmpresa.reset(); // Limpia los campos tras un registro exitoso.
                     mostrarExito(
                         {
                             titulo: "¡Empresa registrada con éxito!",
                             texto: "Ya puedes iniciar sesión con las credenciales de tu empresa."
                         },
-                        "toggle-registro__empresa"
+                        "toggle-registro__empresa" // ID del checkbox que controla la visibilidad del modal.
                     );
                 } else {
+                    // Si hay un error, busca la configuración del error por el código devuelto.
                     var info = erroresEmpresa[data.codigo] || erroresEmpresa["empresa_existente"];
-                    marcarCampoError(info.campo);
-                    mostrarAlerta(info);
+                    marcarCampoError(info.campo); // Pinta el borde rojo en el campo específico.
+                    mostrarAlerta(info); // Muestra el modal de advertencia de SweetAlert.
                 }
 
             } catch (err) {
+                // Maneja fallos de red o errores inesperados en el proceso.
                 mostrarAlerta(erroresEmpresa["empresa_existente"]);
             }
         });
@@ -202,13 +206,13 @@ document.addEventListener("DOMContentLoaded", function () {
     var campoDocumento = document.getElementById("doc-usuario");
     if (campoDocumento) {
         campoDocumento.addEventListener("keypress", function (e) {
-            // Permitir solo 0-9; bloquear cualquier otra tecla
+            // Bloquea cualquier tecla que no sea un número (0-9).
             if (!/[0-9]/.test(e.key) && !["Backspace", "Tab", "ArrowLeft", "ArrowRight", "Delete"].includes(e.key)) {
                 e.preventDefault();
             }
         });
 
-        // Bloqueo por si pegan texto con caracteres inválidos
+        // Limpieza reactiva por si el usuario intenta pegar texto no numérico.
         campoDocumento.addEventListener("input", function () {
             this.value = this.value.replace(/[^0-9]/g, "");
         });

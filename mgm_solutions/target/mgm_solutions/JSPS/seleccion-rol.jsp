@@ -1,3 +1,8 @@
+<%-- 
+    seleccion-rol.jsp 
+    Página de redirección intermedia para usuarios con múltiples roles.
+    Permite al usuario elegir qué interfaz desea cargar después de autenticarse.
+--%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,6 +20,7 @@
     </header>
     <main class="cuerpo">
         <div class="seleccion-rol">
+            <%-- Muestra un saludo personalizado extrayendo el nombre del usuario desde la sesión HTTP. --%>
             <h1 class="cuerpo__contenido--texto">Hola <%= session.getAttribute("userName") %>, Selecciona tu Rol</h1>
             <a class="seleccion-rol__empleado campo-rol" href="Empleado/inicio-empleado.jsp">
                 Empleado

@@ -39,14 +39,15 @@ public class RegistroEmpresaServlet extends HttpServlet {
 
         boolean esAjax = "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
 
-        // 1. Capturar datos del formulario
-        String nombreEmpresa = request.getParameter("nombre-empresa");
-        String nit = request.getParameter("nit-empresa");
-        String email = request.getParameter("email");
-        String passRaw = request.getParameter("password");
+        // 1. Capturar datos enviados por el formulario de registro.
+        String nombreEmpresa = request.getParameter("nombre-empresa"); // Nombre legal de la compañía.
+        String nit = request.getParameter("nit-empresa"); // Identificador tributario único (NIT).
+        String email = request.getParameter("email"); // Correo electrónico corporativo.
+        String passRaw = request.getParameter("password"); // Contraseña en texto plano.
+        // Se genera el hash seguro (BCrypt) para no almacenar la clave en texto claro.
         String passEncriptada = SecurityUtils.hashPassword(passRaw);
-        String ciudadId = request.getParameter("ciudad");
-        String direccion = request.getParameter("direccion");
+        String ciudadId = request.getParameter("ciudad"); // ID de la ciudad seleccionada del dropdown.
+        String direccion = request.getParameter("direccion"); // Dirección física de la sede principal.
 
         Connection conn = null;
         PreparedStatement psCheck = null;
@@ -57,19 +58,20 @@ public class RegistroEmpresaServlet extends HttpServlet {
         try {
             conn = ConnectionDB.gConnectionDB();
 
-            // ── 2. VALIDACIÓN: ¿el NIT ya existe en TBL_USUARIOS? ──────────
+            // ── 2. VALIDACIÓN: Verificar si el NIT ya se encuentra registrado. ──────────
             String sqlCheckNit = "SELECT DOCUMENTO_NIT FROM TBL_USUARIOS WHERE DOCUMENTO_NIT = ?";
             psCheck = conn.prepareStatement(sqlCheckNit);
-            psCheck.setString(1, nit);
-            rsCheck = psCheck.executeQuery();
+            psCheck.setString(1, nit); // Asigna el NIT a validar.
+            rsCheck = psCheck.executeQuery(); // Ejecuta la búsqueda.
 
             if (rsCheck.next()) {
+                // Si existe un registro, detiene el proceso y responde con error.
                 responder(esAjax, response, "error", "nit_existente",
                         "JSPS/Login.jsp?error=nit_existente");
                 return;
             }
-            rsCheck.close();
-            psCheck.close();
+            rsCheck.close(); // Libera el ResultSet para la siguiente validación.
+            psCheck.close(); // Libera el Statement.
 
             // ── 3. VALIDACIÓN: ¿el correo ya existe en TBL_Correos? ────────
             String sqlCheckCorreo = "SELECT Correo FROM TBL_Correos WHERE Correo = ?";
@@ -85,25 +87,29 @@ public class RegistroEmpresaServlet extends HttpServlet {
             rsCheck.close();
             psCheck.close();
 
-            // ── 4. INSERCIÓN en transacción ─────────────────────────────────
+            // ── 4. INSERCIÓN MULTI-TABLA EN TRANSACCIÓN ─────────────────────────────────
+            // Se desactiva el auto-commit para asegurar que el usuario y su correo se creen juntos o nada.
             conn.setAutoCommit(false);
 
+            // Inserción en la tabla maestra de usuarios con rol de Empresa (2).
             String sqlUser = "INSERT INTO TBL_USUARIOS (DOCUMENTO_NIT, ID_ROL, Nombre, Direccion, Contraseña, Ciudad) VALUES (?, ?, ?, ?, ?, ?)";
             psUser = conn.prepareStatement(sqlUser);
             psUser.setString(1, nit);
-            psUser.setInt(2, 2); // ROL EMPRESA
+            psUser.setInt(2, 2); // ID_ROL 2 corresponde a 'Empresa'.
             psUser.setString(3, nombreEmpresa);
             psUser.setString(4, direccion);
             psUser.setString(5, passEncriptada);
             psUser.setInt(6, Integer.parseInt(ciudadId));
-            psUser.executeUpdate();
+            psUser.executeUpdate(); // Ejecuta la inserción del usuario.
 
+            // Inserción del correo electrónico vinculado al NIT de la empresa.
             String sqlEmail = "INSERT INTO TBL_Correos (Correo, DOCUMENTO_NIT) VALUES (?, ?)";
             psEmail = conn.prepareStatement(sqlEmail);
             psEmail.setString(1, email);
             psEmail.setString(2, nit);
-            psEmail.executeUpdate();
+            psEmail.executeUpdate(); // Ejecuta la inserción del correo.
 
+            // Si ambas operaciones fueron exitosas, se persisten los cambios permanentemente.
             conn.commit();
             responder(esAjax, response, "ok", null,
                     "JSPS/Login.jsp?registro=empresa");

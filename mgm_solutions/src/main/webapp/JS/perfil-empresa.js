@@ -14,11 +14,14 @@ document.addEventListener("DOMContentLoaded", function () {
      * Solicita los datos del perfil actual (Nombre, Rol) para actualizar el header.
      */
     function cargarHeader() {
+        // Petición al servlet para obtener la información básica de la sesión actual.
         fetch("../../RelacionLaboralServlet?action=getPerfil")
-            .then(res => res.json())
+            .then(res => res.json()) // Convierte la respuesta cruda en un objeto JS.
             .then(data => {
+                // Actualiza el nombre del usuario en la barra de navegación lateral.
                 if (navbarNombre) navbarNombre.textContent = `Hi, ${data.userName}`;
                 const welcomeName = document.getElementById('welcome-name');
+                // Actualiza el saludo de bienvenida en el panel principal.
                 if (welcomeName) welcomeName.textContent = data.userName;
             })
             .catch(err => console.error("Error al cargar header:", err));
@@ -30,13 +33,15 @@ document.addEventListener("DOMContentLoaded", function () {
     // Función para renderizar una lista de empleados en las cards
     function renderEmpleados(lista) {
         if (!contenedorEmpleados) return;
+        // Si no hay resultados (por búsqueda o carga inicial), muestra un mensaje amigable.
         if (lista.length === 0) {
             contenedorEmpleados.innerHTML = '<p style="text-align: center; width: 100%; grid-column: 1 / -1; padding: 2rem;">No se encontraron empleados con ese criterio.</p>';
             return;
         }
-        contenedorEmpleados.innerHTML = '';
+        contenedorEmpleados.innerHTML = ''; // Limpia el contenedor antes de renderizar la nueva lista.
         lista.forEach(emp => {
             const card = document.createElement('div');
+            // Determina la clase visual según si el empleado está Activo o Inactivo.
             const estadoClass = emp.estado === 'Activo' ? 'card__lista--activo' : 'card__lista--inactivo';
             card.className = `card__lista ${estadoClass}`;
             card.innerHTML = `

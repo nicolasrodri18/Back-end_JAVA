@@ -38,12 +38,12 @@ public class RegistroUsuarioServlet extends HttpServlet {
 
         boolean esAjax = "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
 
-        // 1. Recibir datos del formulario
-        String nombre = request.getParameter("nombre-completo");
-        String nit = request.getParameter("nit-documento");
-        String email = request.getParameter("email-user");
-        String pass = request.getParameter("password-user");
-        String direccion = request.getParameter("direccion-user");
+        // 1. Recepción y captura de los parámetros enviados desde el formulario de registro de usuario.
+        String nombre = request.getParameter("nombre-completo"); // Nombre y apellido del usuario.
+        String nit = request.getParameter("nit-documento"); // Documento de identidad (Cédula/NIT).
+        String email = request.getParameter("email-user"); // Correo personal para notificaciones.
+        String pass = request.getParameter("password-user"); // Contraseña sin procesar.
+        String direccion = request.getParameter("direccion-user"); // Dirección de residencia.
 
         Connection conn = null;
         PreparedStatement psCheck = null;
@@ -54,19 +54,20 @@ public class RegistroUsuarioServlet extends HttpServlet {
         try {
             conn = ConnectionDB.gConnectionDB();
 
-            // ── 2. VALIDACIÓN: ¿el documento ya existe en TBL_USUARIOS? ────
+            // ── 2. VALIDACIÓN TÉCNICA: ¿El número de documento ya está en la base de datos? ────
             String sqlCheckDoc = "SELECT DOCUMENTO_NIT FROM TBL_USUARIOS WHERE DOCUMENTO_NIT = ?";
             psCheck = conn.prepareStatement(sqlCheckDoc);
-            psCheck.setString(1, nit);
-            rsCheck = psCheck.executeQuery();
+            psCheck.setString(1, nit); // Se enlaza el documento capturado.
+            rsCheck = psCheck.executeQuery(); // Se ejecuta la consulta.
 
             if (rsCheck.next()) {
+                // Si hay coincidencia, se aborta y se informa al usuario.
                 responder(esAjax, response, "error", "documento_existente",
                         "JSPS/Login.jsp?error=documento_existente");
                 return;
             }
-            rsCheck.close();
-            psCheck.close();
+            rsCheck.close(); // Cierre del conjunto de resultados intermedio.
+            psCheck.close(); // Cierre de la sentencia intermedia.
 
             // ── 3. VALIDACIÓN: ¿el correo ya existe en TBL_Correos? ────────
             String sqlCheckCorreo = "SELECT Correo FROM TBL_Correos WHERE Correo = ?";
@@ -82,25 +83,30 @@ public class RegistroUsuarioServlet extends HttpServlet {
             rsCheck.close();
             psCheck.close();
 
-            // ── 4. INSERCIÓN en transacción ─────────────────────────────────
+            // ── 4. PERSISTENCIA DE DATOS CON CONTROL TRANSACCIONAL ─────────────────────────
+            // Desactiva el auto-commit para garantizar que el usuario y su correo se creen atómicamente.
             conn.setAutoCommit(false);
 
+            // Inserción en la tabla de usuarios asignando el rol 'Usuario' (3).
             String sqlUser = "INSERT INTO TBL_USUARIOS (DOCUMENTO_NIT, ID_ROL, Nombre, Direccion, Contraseña, Ciudad) VALUES (?, ?, ?, ?, ?, ?)";
             psUser = conn.prepareStatement(sqlUser);
             psUser.setString(1, nit);
-            psUser.setInt(2, 3); // Rol de Usuario
+            psUser.setInt(2, 3); // ID 3 representa el rol estándar de un trabajador o cliente.
             psUser.setString(3, nombre);
             psUser.setString(4, direccion);
+            // Se encripta la contraseña antes de guardarla para cumplir con estándares de seguridad.
             psUser.setString(5, SecurityUtils.hashPassword(pass));
-            psUser.setInt(6, 6); // Ciudad Bucaramanga por defecto
+            psUser.setInt(6, 6); // Se asigna '6' (Bucaramanga) como ciudad predeterminada para nuevos registros.
             psUser.executeUpdate();
 
+            // Vinculación del correo electrónico con el documento del usuario recién creado.
             String sqlEmail = "INSERT INTO TBL_Correos (Correo, DOCUMENTO_NIT) VALUES (?, ?)";
             psEmail = conn.prepareStatement(sqlEmail);
             psEmail.setString(1, email);
             psEmail.setString(2, nit);
             psEmail.executeUpdate();
 
+            // Si los dos registros se completaron correctamente, se confirman los cambios.
             conn.commit();
             responder(esAjax, response, "ok", null,
                     "JSPS/Login.jsp?registro=usuario");

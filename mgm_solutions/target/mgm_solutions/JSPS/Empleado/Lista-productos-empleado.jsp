@@ -1,3 +1,8 @@
+<%-- 
+    Lista-productos-empleado.jsp 
+    Módulo de ventas para el empleado. Muestra el inventario de la empresa
+    y permite registrar ventas en tiempo real.
+--%>
 <!DOCTYPE html>
 <html lang="en">
 

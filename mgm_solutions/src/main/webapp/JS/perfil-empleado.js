@@ -28,11 +28,15 @@ document.addEventListener("DOMContentLoaded", function () {
     let todosLosProductos = [];
 
     function cargarPerfil() {
+        // Obtiene la información del perfil del empleado y su empresa asociada.
         fetch("../../RelacionLaboralServlet?action=getPerfil")
             .then(res => res.json())
             .then(data => {
+                // Actualiza los textos de saludo y cabecera con el nombre real del usuario.
                 if (fields.perfilHeader) fields.perfilHeader.textContent = `Hola, ${data.userName}`;
                 if (fields.welcomeName) fields.welcomeName.textContent = data.userName;
+                
+                // Muestra un mensaje dinámico dependiendo de si el empleado está vinculado o no.
                 if (fields.companyStatus) {
                     fields.companyStatus.innerHTML = data.nombreEmpresa
                         ? `Haces Parte de la empresa <br> ${data.nombreEmpresa}`
@@ -80,21 +84,24 @@ document.addEventListener("DOMContentLoaded", function () {
         const contenedor = document.querySelector('.cuerpo__contenido__cards');
         if (!contenedor) return;
 
+        // Si el empleado no tiene empresa, bloquea la visualización del inventario.
         if (!empresaNombre) {
             contenedor.innerHTML = '<p style="text-align: center; width: 100%; padding: 2rem; font-weight: bold; color: var(--color_primario);">No tienes una empresa vinculada para ver la lista de productos.</p>';
             return;
         }
 
+        // Petición al InventarioServlet para obtener los productos de la empresa actual.
         fetch("../../InventarioServlet?action=listar")
             .then(res => res.json())
             .then(data => {
+                // Si el array está vacío, informa al usuario.
                 if (!data || data.length === 0) {
                     contenedor.innerHTML = '<p style="text-align: center; width: 100%; padding: 2rem;">No hay productos disponibles actualmente en tu empresa.</p>';
                     return;
                 }
-                todosLosProductos = data;
-                renderProductos(todosLosProductos, contenedor);
-                inicializarBusquedaProductos(contenedor);
+                todosLosProductos = data; // Cache local para búsquedas sin re-petición al servidor.
+                renderProductos(todosLosProductos, contenedor); // Genera las cards de productos.
+                inicializarBusquedaProductos(contenedor); // Activa el filtro de búsqueda.
             })
             .catch(err => {
                 console.error("Error al cargar productos:", err);

@@ -85,9 +85,12 @@
                         <option value="" disabled selected>Seleccione una ciudad</option>
                         <%
                             try {
+                                // Instancia el DAO para acceder a la base de datos de ciudades.
                                 CiudadDAO dao = new CiudadDAO();
+                                // Recupera la lista completa de ciudades registradas.
                                 List<Ciudad> ciudades = dao.listar();
                                 if (ciudades != null && !ciudades.isEmpty()) {
+                                    // Itera sobre el mapa de ciudades para generar las opciones del select.
                                     for (Ciudad c : ciudades) {
                         %>
                             <option value="<%= c.getId() %>"><%= c.getNombre() %></option>
@@ -99,6 +102,7 @@
                         <%
                                 }
                             } catch (Exception e) {
+                                // En caso de fallo en la conexión, muestra un aviso técnico en el combo.
                         %>
                             <option value="">Error al cargar ciudades</option>
                         <%

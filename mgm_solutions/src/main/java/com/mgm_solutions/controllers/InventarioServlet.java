@@ -57,37 +57,44 @@ public class InventarioServlet extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
         PrintWriter out = response.getWriter();
 
+        // Obtiene el estado de la relación laboral almacenado en la sesión.
         String status = (String) session.getAttribute("statusRelacion");
+        // Bloquea el acceso si la relación está marcada como 'Inactivo'.
         if ("Inactivo".equals(status)) {
-            response.setStatus(403);
+            response.setStatus(403); // Responde con prohibido.
             out.print("{\"status\":\"error\", \"message\":\"Tu cuenta está inactiva. No puedes acceder al almacén.\"}");
             return;
         }
 
+        // Intenta obtener el NIT de la empresa desde la sesión (para empleados).
         String nitEmpresa = (String) session.getAttribute("ciaNit");
+        // Si no existe, asume que el usuario actual es la empresa misma.
         if (nitEmpresa == null)
             nitEmpresa = (String) session.getAttribute("userDoc");
 
+        // Si no se encuentra un NIT válido tras ambos intentos, devuelve lista vacía.
         if (nitEmpresa == null) {
             out.print("[]");
             return;
         }
 
         try (Connection conn = ConnectionDB.gConnectionDB()) {
+            // Consulta SQL detallada que une el almacén con el maestro de productos.
             String sql = "SELECT A.Registro_Almacen, A.ID_Producto, P.Nombre_Producto, A.Stock, A.Precio_Asignado, " +
                     "A.Precio_de_Compra, A.Porcentaje_de_ganancia, A.Fecha_Vencimiento " +
                     "FROM TBL_Almacen A " +
                     "JOIN TBL_Producto P ON A.ID_Producto = P.ID_Producto " +
                     "WHERE A.DOCUMENTO_NIT = ?";
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setString(1, nitEmpresa);
+                ps.setString(1, nitEmpresa); // Inyecta el NIT para filtrar solo productos de esa empresa.
                 try (ResultSet rs = ps.executeQuery()) {
-                    out.print("[");
+                    out.print("["); // Inicia la construcción manual del array JSON.
                     boolean primero = true;
                     while (rs.next()) {
                         if (!primero)
-                            out.print(",");
+                            out.print(","); // Añade coma entre objetos JSON.
                         out.print("{");
+                        // Serialización manual de cada registro a formato JSON.
                         out.print("\"idRegistro\":" + rs.getInt("Registro_Almacen") + ",");
                         out.print("\"idProducto\":" + rs.getInt("ID_Producto") + ",");
                         out.print("\"nombre\":\"" + rs.getString("Nombre_Producto") + "\",");
@@ -99,7 +106,7 @@ public class InventarioServlet extends HttpServlet {
                         out.print("}");
                         primero = false;
                     }
-                    out.print("]");
+                    out.print("]"); // Cierra el array JSON.
                 }
             }
         } catch (Exception e) {
@@ -130,16 +137,19 @@ public class InventarioServlet extends HttpServlet {
             return;
         }
 
+        // Se obtiene el NIT de la sesión del usuario (empresa logueada).
         String nitEmpresa = (String) session.getAttribute("userDoc");
+        // Captura del ID del producto enviado por el formulario.
         String idStr = request.getParameter("id");
+        // Validación técnica: El ID no debe superar la longitud de un INT estándar en la base de datos (9 dígitos).
         if (idStr != null && idStr.length() > 9) {
             out.print("{\"status\":\"error\", \"message\":\"El ID del producto no puede exceder los 9 dígitos.\"}");
             return;
         }
-        int idProducto = Integer.parseInt(idStr);
-        String nombre = request.getParameter("nombre");
-        int stock = Integer.parseInt(request.getParameter("stock"));
-        double precio = Double.parseDouble(request.getParameter("precio"));
+        int idProducto = Integer.parseInt(idStr); // Conversión a entero.
+        String nombre = request.getParameter("nombre"); // Nombre comercial.
+        int stock = Integer.parseInt(request.getParameter("stock")); // Cantidad inicial.
+        double precio = Double.parseDouble(request.getParameter("precio")); // Valor de venta.
 
         // Campos obligatorios
         String precioCompraStr = request.getParameter("precioCompra");
@@ -168,8 +178,10 @@ public class InventarioServlet extends HttpServlet {
         }
 
         try (Connection conn = ConnectionDB.gConnectionDB()) {
+            // Desactiva el auto-commit para manejar manualmente la transacción y asegurar atomicidad.
             conn.setAutoCommit(false);
             try {
+                // 1. Inserta el registro básico del producto en el maestro global.
                 String sqlProd = "INSERT INTO TBL_Producto (ID_Producto, Nombre_Producto) VALUES (?, ?)";
                 try (PreparedStatement psP2 = conn.prepareStatement(sqlProd)) {
                     psP2.setInt(1, idProducto);
@@ -177,6 +189,7 @@ public class InventarioServlet extends HttpServlet {
                     psP2.executeUpdate();
                 }
 
+                // 2. Vincula el producto a la empresa específica en la tabla de almacén.
                 String sqlAlm = "INSERT INTO TBL_Almacen (DOCUMENTO_NIT, ID_Producto, Precio_Asignado, Precio_de_Compra, Porcentaje_de_ganancia, Stock, Fecha_Vencimiento) VALUES (?, ?, ?, ?, ?, ?, ?)";
                 try (PreparedStatement psA = conn.prepareStatement(sqlAlm)) {
                     psA.setString(1, nitEmpresa);
@@ -201,13 +214,16 @@ public class InventarioServlet extends HttpServlet {
                     psA.executeUpdate();
                 }
 
+                // Si ambas inserciones fueron exitosas, confirma los cambios en la DB.
                 conn.commit();
                 out.print("{\"status\":\"success\", \"message\":\"Producto agregado correctamente.\"}");
             } catch (java.sql.SQLIntegrityConstraintViolationException e) {
+                // Si el ID ya existe, revierte cualquier cambio parcial realizado.
                 conn.rollback();
                 out.print("{\"status\":\"error\", \"message\":\"ID de producto ya registrado.\"}");
                 return;
             } catch (Exception e) {
+                // Ante cualquier otro error inesperado, revierte la transacción.
                 conn.rollback();
                 throw e;
             }
@@ -276,9 +292,10 @@ public class InventarioServlet extends HttpServlet {
          */
 
         try (Connection conn = ConnectionDB.gConnectionDB()) {
+            // Manejo manual de transacción para actualizar dos tablas relacionadas.
             conn.setAutoCommit(false);
             try {
-                // 1. Actualizar Nombre en TBL_Producto
+                // 1. Actualiza el nombre del producto en el catálogo maestro.
                 String sqlProd = "UPDATE TBL_Producto SET Nombre_Producto = ? WHERE ID_Producto = ?";
                 try (PreparedStatement psP = conn.prepareStatement(sqlProd)) {
                     psP.setString(1, nombre);

@@ -7,12 +7,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const ciaCiudad = document.getElementById('cia-ciudad');
 
     function cargarPerfil() {
+        // Recupera los datos de la empresa desde la sesión del servidor.
         fetch("../../RelacionLaboralServlet?action=getPerfil")
             .then(res => res.json())
             .then(data => {
+                // Actualiza los campos de texto informativos con los datos recibidos.
                 if (navbarNombre) navbarNombre.textContent = `Hola, ${data.userName}`;
                 if (ciaNit) ciaNit.textContent = data.userDoc;
                 if (ciaNombre) ciaNombre.textContent = data.userName;
+                // Si algún dato es nulo, muestra un mensaje de 'No registrado'.
                 if (ciaEmail) ciaEmail.textContent = data.userEmail || "No registrado";
                 if (ciaDirec) ciaDirec.textContent = data.userDirec || "No registrada";
                 if (ciaCiudad) ciaCiudad.textContent = data.ciaCiudad || "No registrada";
@@ -89,14 +92,17 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('ciudad', document.getElementById('edit-cia-ciudad').value);
             formData.append('pass', document.getElementById('edit-cia-pass').value);
 
+            // Envía la actualización al servlet mediante una petición POST.
             fetch("../../RelacionLaboralServlet?action=actualizarPerfilEmpresa", {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: formData
+                body: formData // Los datos están codificados para compatibilidad con parámetros de Servlet.
             })
                 .then(res => res.json())
                 .then(data => {
+                    // Muestra el mensaje de éxito o error devuelto por el servidor.
                     alert(data.message);
+                    // Si la actualización fue exitosa, recarga la página para visualizar los cambios.
                     if (data.status === "success") location.reload();
                 })
                 .catch(err => alert("Error al actualizar datos de empresa."));

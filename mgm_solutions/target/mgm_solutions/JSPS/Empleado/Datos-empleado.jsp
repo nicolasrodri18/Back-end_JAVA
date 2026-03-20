@@ -1,3 +1,8 @@
+<%-- 
+    Datos-empleado.jsp 
+    Vista del perfil personal del empleado. Permite editar información de contacto
+    y visualizar los datos de la empresa a la que está vinculado.
+--%>
 <!DOCTYPE html>
 <html lang="en">
 

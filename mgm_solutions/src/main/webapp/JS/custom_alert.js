@@ -13,11 +13,13 @@
     const nativeAlert = window.alert;
     window.alert = function(message) {
         console.log("%c[CustomAlert] Intercepted:", "color: #0A7917; font-weight: bold;", message);
+        // Devuelve una promesa para que el código llamante pueda usar 'await alert(...)'.
         return new Promise((resolve) => {
-            // Si la UI ya está lista, mostramos el alerta. Si no, lo encolamos.
+            // Si el DOM y los elementos del modal ya están creados, muestra el alerta.
             if (isInitialized && overlay && messageEl) {
                 showCustomAlert(message, resolve);
             } else {
+                // Si se llama antes de cargar el DOM, se guarda en cola para mostrarse después.
                 console.warn("[CustomAlert] Not initialized yet, queuing message:", message);
                 alertQueue.push({ message, resolve });
             }
@@ -25,11 +27,14 @@
     };
 
     const showCustomAlert = (message, resolve) => {
+        // Almacena la función resolve para ejecutarla cuando el usuario haga clic en 'Aceptar'.
         resolveCurrentAlert = resolve;
+        // Inserta el mensaje en el cuerpo del modal.
         messageEl.textContent = message;
+        // Hace visible el contenedor del modal usando display flex.
         overlay.style.display = 'flex';
-        overlay.offsetHeight; // Force reflow
-        overlay.classList.add('active');
+        overlay.offsetHeight; // Truco de 'reflow' para asegurar que la animación de CSS se ejecute.
+        overlay.classList.add('active'); // Aplica la clase que activa la opacidad y escala.
     };
 
     const initAlertUI = () => {

@@ -1,3 +1,8 @@
+<%-- 
+    inicio-empleado.jsp 
+    Panel de bienvenida para el rol Empleado. Contiene accesos directos
+    a los módulos de ventas y perfil.
+--%>
 <!DOCTYPE html>
 <html lang="en">
 

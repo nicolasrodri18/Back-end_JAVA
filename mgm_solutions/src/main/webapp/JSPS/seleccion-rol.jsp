@@ -20,6 +20,7 @@
     </header>
     <main class="cuerpo">
         <div class="seleccion-rol">
+            <%-- Muestra un saludo personalizado extrayendo el nombre del usuario desde la sesión HTTP. --%>
             <h1 class="cuerpo__contenido--texto">Hola <%= session.getAttribute("userName") %>, Selecciona tu Rol</h1>
             <a class="seleccion-rol__empleado campo-rol" href="Empleado/inicio-empleado.jsp">
                 Empleado
