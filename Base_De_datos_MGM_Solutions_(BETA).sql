@@ -83,6 +83,7 @@ CREATE TABLE TBL_Productos_Vendidos (
     ID_Registro_Venta INT NOT NULL,
     Registro_Almacen INT NOT NULL,
     Cantidad_Vendida INT NOT NULL,
+    Precio_Unitario_Venta DECIMAL(10, 2) NOT NULL,
     FOREIGN KEY (ID_Registro_Venta) REFERENCES TBL_Venta(ID_Registro_Venta),
     FOREIGN KEY (Registro_Almacen) REFERENCES TBL_Almacen(Registro_Almacen)
 );

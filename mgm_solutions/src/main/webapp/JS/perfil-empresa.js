@@ -176,8 +176,12 @@ document.addEventListener("DOMContentLoaded", function () {
                         <h5 class="card__lista--texto__descripcion">${venta.producto} (x${venta.cantidad})</h5>
                     </div>
                     <div class="card--texto">
-                        <h4 class="card__lista--texto__propiedad">Monto:</h4>
+                        <h4 class="card__lista--texto__propiedad">Monto Total:</h4>
                         <h5 class="card__lista--texto__descripcion">$${venta.total}</h5>
+                    </div>
+                    <div class="card--texto">
+                        <h4 class="card__lista--texto__propiedad">Precio Unitario:</h4>
+                        <h5 class="card__lista--texto__descripcion">$${venta.precioUnitario}</h5>
                     </div>
                 </div>
                 <div class="card__lista--botones">
@@ -505,6 +509,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 10px 0;">
                 <p class="modulo__detalle--texto"><strong>Producto Vendido:</strong> ${venta.producto}</p>
                 <p class="modulo__detalle--texto"><strong>Cantidad:</strong> ${venta.cantidad} unidades</p>
+                <p class="modulo__detalle--texto"><strong>Precio Unitario:</strong> $${venta.precioUnitario}</p>
                 <p class="modulo__detalle--texto" style="font-size: 1.2rem; margin-top: 10px; color: var(--color_primario);"><strong>Total:</strong> $${venta.total}</p>
             `;
 

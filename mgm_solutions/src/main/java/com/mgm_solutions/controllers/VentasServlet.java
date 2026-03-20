@@ -52,7 +52,7 @@ public class VentasServlet extends HttpServlet {
         try (Connection conn = ConnectionDB.gConnectionDB()) {
             String sql = "SELECT V.ID_Registro_Venta, V.DOCUMENTO_NIT AS EmpleadoID, U.Nombre AS EmpleadoNombre, V.Fecha, V.Total_Venta, "
                     +
-                    "P.Nombre_Producto, PV.Cantidad_Vendida, PV.Registro_Almacen " +
+                    "P.Nombre_Producto, PV.Cantidad_Vendida, PV.Registro_Almacen, PV.Precio_Unitario_Venta " +
                     "FROM TBL_Venta V " +
                     "JOIN TBL_USUARIOS U ON V.DOCUMENTO_NIT = U.DOCUMENTO_NIT " +
                     "JOIN TBL_Productos_Vendidos PV ON V.ID_Registro_Venta = PV.ID_Registro_Venta " +
@@ -76,7 +76,8 @@ public class VentasServlet extends HttpServlet {
                         out.print("\"fecha\":\"" + rs.getDate("Fecha") + "\",");
                         out.print("\"total\":" + rs.getBigDecimal("Total_Venta") + ",");
                         out.print("\"producto\":\"" + rs.getString("Nombre_Producto") + "\",");
-                        out.print("\"cantidad\":" + rs.getInt("Cantidad_Vendida"));
+                        out.print("\"cantidad\":" + rs.getInt("Cantidad_Vendida") + ",");
+                        out.print("\"precioUnitario\":" + rs.getBigDecimal("Precio_Unitario_Venta"));
                         out.print("}");
                         primero = false;
                     }
@@ -96,6 +97,7 @@ public class VentasServlet extends HttpServlet {
         int idRegistroAlmacen = Integer.parseInt(request.getParameter("idRegistroAlmacen"));
         int cantidad = Integer.parseInt(request.getParameter("cantidad"));
         double totalVenta = Double.parseDouble(request.getParameter("total"));
+        double precioUnitario = Double.parseDouble(request.getParameter("precioUnitario"));
 
         response.setContentType("application/json;charset=UTF-8");
         PrintWriter out = response.getWriter();
@@ -166,11 +168,12 @@ public class VentasServlet extends HttpServlet {
                 }
 
                 // 2. Insertar en TBL_Productos_Vendidos
-                String sqlPV = "INSERT INTO TBL_Productos_Vendidos (ID_Registro_Venta, Registro_Almacen, Cantidad_Vendida) VALUES (?, ?, ?)";
+                String sqlPV = "INSERT INTO TBL_Productos_Vendidos (ID_Registro_Venta, Registro_Almacen, Cantidad_Vendida, Precio_Unitario_Venta) VALUES (?, ?, ?, ?)";
                 try (PreparedStatement psPV = conn.prepareStatement(sqlPV)) {
                     psPV.setInt(1, idVenta);
                     psPV.setInt(2, idRegistroAlmacen);
                     psPV.setInt(3, cantidad);
+                    psPV.setDouble(4, precioUnitario);
                     psPV.executeUpdate();
                 }
 

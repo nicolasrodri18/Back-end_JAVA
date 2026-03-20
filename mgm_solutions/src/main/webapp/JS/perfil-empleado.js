@@ -230,6 +230,7 @@ document.addEventListener("DOMContentLoaded", function () {
             formData.append('idRegistroAlmacen', idRegistro);
             formData.append('cantidad', cantidad);
             formData.append('total', spanTotal.textContent);
+            formData.append('precioUnitario', precio);
 
             fetch("../../VentasServlet?action=registrarVenta", {
                 method: 'POST',
