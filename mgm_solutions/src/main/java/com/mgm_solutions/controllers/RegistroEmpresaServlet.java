@@ -16,9 +16,23 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Servlet encargado de procesar el registro de nuevas empresas en el sistema.
+ * Gestiona la validación de duplicados (NIT y correo) y la inserción transaccional
+ * en las tablas de usuarios y correos.
+ */
 @WebServlet("/RegistroEmpresaServlet")
 public class RegistroEmpresaServlet extends HttpServlet {
 
+    /**
+     * Procesa la solicitud de registro enviada por el formulario de empresas.
+     * Realiza validaciones previas antes de persistir los datos.
+     * 
+     * @param request HttpServletRequest.
+     * @param response HttpServletResponse.
+     * @throws ServletException Si ocurre un error de servlet.
+     * @throws IOException Si ocurre un error de entrada/salida.
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

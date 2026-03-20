@@ -16,9 +16,23 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+/**
+ * Servlet que gestiona el proceso de autenticación de usuarios.
+ * Permite el acceso a Administradores, Empresas y Empleados, 
+ * configurando la sesión según el rol y gestionando tanto peticiones AJAX como tradicionales.
+ */
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 
+    /**
+     * Procesa la solicitud de inicio de sesión.
+     * Valida las credenciales contra la base de datos y configura la sesión.
+     * 
+     * @param request La petición HttpServletRequest.
+     * @param response La respuesta HttpServletResponse.
+     * @throws ServletException Si hay errores en el servlet.
+     * @throws IOException Si hay errores de entrada/salida.
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -194,6 +208,20 @@ public class LoginServlet extends HttpServlet {
     /*
      * Si la petición viene de fetch() devuelve JSON;
      * si es un submit tradicional, redirige.
+     */
+    /**
+     * Gestiona la respuesta al cliente dependiendo si la petición fue AJAX o no.
+     * 
+     * @param esAjax Verdadero si la petición es via XMLHttpRequest (fetch).
+     * @param response Objeto de respuesta.
+     * @param status Estado de la operación (ok/error).
+     * @param codigo Código de error si aplica.
+     * @param redirectUrl URL de redirección para navegación tradicional.
+     * @param jsonRedirect URL de redirección para navegación vía JS.
+     * @param nombre Nombre del usuario.
+     * @param rolNombre Nombre del rol asignado.
+     * @param nombreEmpresa Nombre de la empresa asociada (si aplica).
+     * @throws IOException Si ocurre un error de escritura.
      */
     private void responder(boolean esAjax, HttpServletResponse response,
             String status, String codigo,

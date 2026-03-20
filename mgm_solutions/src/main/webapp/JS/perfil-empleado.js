@@ -1,4 +1,5 @@
 // perfil-empleado.js - MGM Solutions
+// Gestiona la vista y lógica del perfil del empleado, incluyendo inventario y ventas.
 document.addEventListener("DOMContentLoaded", function () {
     console.log("Perfil de Empleado cargado correctamente.");
 
@@ -30,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
         fetch("../../RelacionLaboralServlet?action=getPerfil")
             .then(res => res.json())
             .then(data => {
-                if (fields.perfilHeader) fields.perfilHeader.textContent = `Hi, ${data.userName}`;
+                if (fields.perfilHeader) fields.perfilHeader.textContent = `Hola, ${data.userName}`;
                 if (fields.welcomeName) fields.welcomeName.textContent = data.userName;
                 if (fields.companyStatus) {
                     fields.companyStatus.innerHTML = data.nombreEmpresa
@@ -219,10 +220,10 @@ document.addEventListener("DOMContentLoaded", function () {
         };
 
         const btnConfirmar = document.getElementById('btn-confirmar-venta');
-        btnConfirmar.onclick = function () {
+        btnConfirmar.onclick = async function () {
             const cantidad = parseInt(inputCant.value);
             if (cantidad <= 0) {
-                alert("Selecciona una cantidad válida.");
+                await alert("Selecciona una cantidad válida.");
                 return;
             }
 
@@ -238,14 +239,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 body: formData
             })
                 .then(res => res.json())
-                .then(data => {
-                    alert(data.message);
+                .then(async data => {
+                    await alert(data.message);
                     if (data.status === "success") location.reload();
                 })
-                .catch(err => alert("Error al registrar la venta."));
+                .catch(async err => await alert("Error al registrar la venta."));
         };
     };
 
+    /**
+     * Prepara y abre el modal de edición de perfil con los datos actuales.
+     */
     function abrirModalEdicion() {
         const nombreInput = document.getElementById('edit-user-nombre');
         const emailInput = document.getElementById('edit-user-email');

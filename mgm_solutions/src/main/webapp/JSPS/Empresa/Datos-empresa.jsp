@@ -1,3 +1,8 @@
+<%-- 
+    Datos-empresa.jsp 
+    Vista del perfil corporativo. Permite a la empresa actualizar sus datos
+    de contacto, ubicación (Ciudad) y contraseña.
+--%>
 <!DOCTYPE html>
 <html lang="en">
 

@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
         fetch("../../RelacionLaboralServlet?action=getPerfil")
             .then(res => res.json())
             .then(data => {
-                if (navbarNombre) navbarNombre.textContent = `Hi, ${data.userName}`;
+                if (navbarNombre) navbarNombre.textContent = `Hola, ${data.userName}`;
                 if (ciaNit) ciaNit.textContent = data.userDoc;
                 if (ciaNombre) ciaNombre.textContent = data.userName;
                 if (ciaEmail) ciaEmail.textContent = data.userEmail || "No registrado";
@@ -19,6 +19,10 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
+    /**
+     * Carga dinámicamente el selector de ciudades para el formulario de edición.
+     * @param {string} selectedCityName Nombre de la ciudad actual para marcarla como seleccionada.
+     */
     function cargarCiudades(selectedCityName) {
         const selectCiudad = document.getElementById('edit-cia-ciudad');
         if (!selectCiudad) return;

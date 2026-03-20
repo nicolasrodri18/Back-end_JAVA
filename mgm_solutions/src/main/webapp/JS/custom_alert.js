@@ -2,19 +2,30 @@
     let alertQueue = [];
     let isInitialized = false;
     let overlay, messageEl;
+    let resolveCurrentAlert = null;
 
     // 1. Override window.alert IMMEDIATELY
+    /**
+     * Sobrescribe la función nativa window.alert para usar un modal personalizado.
+     * Esta versión devuelve una Promesa, lo que permite usar 'await alert(...)' 
+     * para detener la ejecución hasta que el usuario cierre el modal.
+     */
     const nativeAlert = window.alert;
     window.alert = function(message) {
-        if (isInitialized) {
-            showCustomAlert(message);
-        } else {
-            alertQueue.push(message);
-        }
-        console.log("Custom alert intercepted:", message);
+        console.log("%c[CustomAlert] Intercepted:", "color: #0A7917; font-weight: bold;", message);
+        return new Promise((resolve) => {
+            // Si la UI ya está lista, mostramos el alerta. Si no, lo encolamos.
+            if (isInitialized && overlay && messageEl) {
+                showCustomAlert(message, resolve);
+            } else {
+                console.warn("[CustomAlert] Not initialized yet, queuing message:", message);
+                alertQueue.push({ message, resolve });
+            }
+        });
     };
 
-    const showCustomAlert = (message) => {
+    const showCustomAlert = (message, resolve) => {
+        resolveCurrentAlert = resolve;
         messageEl.textContent = message;
         overlay.style.display = 'flex';
         overlay.offsetHeight; // Force reflow
@@ -36,7 +47,7 @@
         const alertHtml = `
             <div id="custom-alert-overlay" class="custom-alert__overlay">
                 <div class="custom-alert__modal">
-                    <span class="custom-alert__title">Alerta:</span>
+                    <span class="custom-alert__title">Recibido:</span>
                     <p id="custom-alert-message" class="custom-alert__message"></p>
                     <button id="custom-alert-btn" class="custom-alert__button">Aceptar</button>
                 </div>
@@ -50,7 +61,13 @@
 
         btn.addEventListener('click', () => {
             overlay.classList.remove('active');
-            setTimeout(() => { overlay.style.display = 'none'; }, 300);
+            setTimeout(() => { 
+                overlay.style.display = 'none'; 
+                if (resolveCurrentAlert) {
+                    resolveCurrentAlert();
+                    resolveCurrentAlert = null;
+                }
+            }, 300);
         });
 
         overlay.addEventListener('click', (e) => {
@@ -59,15 +76,17 @@
 
         isInitialized = true;
         
-        // Process queued alerts
         while (alertQueue.length > 0) {
-            showCustomAlert(alertQueue.shift());
+            const item = alertQueue.shift();
+            showCustomAlert(item.message, item.resolve);
         }
     };
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initAlertUI);
-    } else {
+    console.log("%c[CustomAlert] Script loaded and window.alert overwritten", "color: #0A7917; font-weight: bold;");
+
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
         initAlertUI();
+    } else {
+        document.addEventListener('DOMContentLoaded', initAlertUI);
     }
 })();

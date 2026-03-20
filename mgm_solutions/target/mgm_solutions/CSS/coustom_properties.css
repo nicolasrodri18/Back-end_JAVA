@@ -1,3 +1,11 @@
+/* 
+ * coustom_properties.css - MGM Solutions
+ * Este archivo centraliza todas las variables de diseño (Tokens):
+ * - Colores (Primarios, Grises, Alertas)
+ * - Dimensiones de Grids y Layouts
+ * - Tamaños de Fuente y Espaciados
+ * - Z-index y Transiciones
+ */
 :root {
     --fondo_main: #ffffff;
 

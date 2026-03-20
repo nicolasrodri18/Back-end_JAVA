@@ -1,3 +1,8 @@
+<%-- 
+    seleccion-rol.jsp 
+    Página de redirección intermedia para usuarios con múltiples roles.
+    Permite al usuario elegir qué interfaz desea cargar después de autenticarse.
+--%>
 <!DOCTYPE html>
 <html lang="en">
 

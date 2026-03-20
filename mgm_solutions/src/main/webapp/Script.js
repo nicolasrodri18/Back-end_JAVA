@@ -106,7 +106,8 @@ document.addEventListener("DOMContentLoaded", function () {
             timer: 5000,
             timerProgressBar: true
         }).then(function () {
-            // Desmarcar el checkbox para volver a mostrar el formulario de login
+            // Desmarcar el checkbox para volver a mostrar el formulario de login.
+            // Esto cierra el modal de registro.
             var toggle = document.getElementById(toggleId);
             if (toggle) toggle.checked = false;
         });
@@ -208,7 +209,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        // Bloqueo por si pegan texto con caracteres inválidos
+        // Bloqueo adicional por si pegan texto con caracteres inválidos.
         campoDocumento.addEventListener("input", function () {
             this.value = this.value.replace(/[^0-9]/g, "");
         });

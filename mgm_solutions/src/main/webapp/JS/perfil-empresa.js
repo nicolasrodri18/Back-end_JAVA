@@ -10,6 +10,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const productosCards = document.querySelector('.cuerpo__contenido__cards:not(.grid__lista)');
 
     // 1. Cargar Nombre en Navbar y Datos de Perfil
+    /** 
+     * Solicita los datos del perfil actual (Nombre, Rol) para actualizar el header.
+     */
     function cargarHeader() {
         fetch("../../RelacionLaboralServlet?action=getPerfil")
             .then(res => res.json())
@@ -69,6 +72,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // 2. Cargar Lista de Empleados
+    /**
+     * Obtiene y renderiza la lista de empleados vinculados a la empresa.
+     */
     function cargarEmpleados() {
         const titulo = document.querySelector('.cuerpo--texto');
         if (!contenedorEmpleados || !titulo || titulo.textContent !== "Lista Empleados") return;
@@ -236,6 +242,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // 3. Cargar Lista de Ventas (Historial)
+    /**
+     * Obtiene el historial de ventas registradas por los empleados de la empresa.
+     */
     function cargarVentas() {
         const titulo = document.querySelector('.cuerpo--texto');
         if (!contenedorEmpleados || !titulo || titulo.textContent !== "Registro de venta") return;
@@ -359,6 +368,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // 4. Cargar Lista de Productos (Inventario)
+    /**
+     * Obtiene la lista de productos disponibles en el almacén de la empresa.
+     * Identifica automáticamente productos vencidos.
+     */
     function cargarProductos() {
         const titulo = document.querySelector('.cuerpo--texto');
         if (titulo && (titulo.textContent === "Lista Empleados" || titulo.textContent === "Registro de venta")) return;
@@ -485,11 +498,11 @@ document.addEventListener("DOMContentLoaded", function () {
             body: formData
         })
             .then(res => res.json())
-            .then(data => {
-                alert(data.message);
+            .then(async data => {
+                await alert(data.message);
                 if (data.status === "success") location.reload();
             })
-            .catch(err => alert("Error al actualizar estado"));
+            .catch(async err => await alert("Error al actualizar estado"));
     };
 
     window.verDetalleVenta = function (id) {
@@ -632,6 +645,10 @@ document.addEventListener("DOMContentLoaded", function () {
         if (inputPrecioVenta) inputPrecioVenta.addEventListener('input', calcularPorcentaje);
         if (inputPrecioCompra) inputPrecioCompra.addEventListener('input', calcularPorcentaje);
 
+        /**
+         * Maneja el envío del formulario para agregar un nuevo producto.
+         * Incluye validación de ID (9 dígitos) y campos obligatorios.
+         */
         formProducto.addEventListener('submit', function (e) {
             e.preventDefault();
             const idVal = document.getElementById('id-producto').value;
@@ -660,11 +677,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 body: formData
             })
                 .then(res => res.json())
-                .then(data => {
-                    alert(data.message);
+                .then(async data => {
+                    await alert(data.message);
                     if (data.status === "success") location.reload();
                 })
-                .catch(err => alert("Error al agregar producto"));
+                .catch(async err => await alert("Error al agregar producto"));
         });
     }
 

@@ -1,3 +1,8 @@
+<%-- 
+    index.jsp 
+    Página de aterrizaje (Landing Page) pública de MGM Solutions.
+    Muestra información sobre el servicio y redirige al módulo de acceso.
+--%>
 <!DOCTYPE html>
 <html lang="es">
 

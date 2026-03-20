@@ -16,9 +16,22 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Servlet que gestiona el registro de usuarios individuales (clientes/empleados).
+ * Asocia automáticamente el rol de Usuario (3) y una ciudad por defecto.
+ */
 @WebServlet("/RegistroUsuarioServlet")
 public class RegistroUsuarioServlet extends HttpServlet {
 
+    /**
+     * Procesa el formulario de registro de usuario.
+     * Verifica que el documento y el correo no estén registrados previamente.
+     * 
+     * @param request HttpServletRequest.
+     * @param response HttpServletResponse.
+     * @throws ServletException Si ocurre un error de servlet.
+     * @throws IOException Si ocurre un error de red.
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

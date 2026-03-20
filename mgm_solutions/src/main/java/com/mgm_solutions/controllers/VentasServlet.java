@@ -14,6 +14,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+/**
+ * Servlet encargado de la gestión de transacciones de venta.
+ * Permite registrar nuevas ventas actualizando el stock y consultar el historial por empresa.
+ * Incluye lógica de reversión (eliminación) de ventas registradas en el día actual.
+ */
 @WebServlet("/VentasServlet")
 public class VentasServlet extends HttpServlet {
 
@@ -91,6 +96,18 @@ public class VentasServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Registra una nueva venta realizada por un empleado.
+     * Realiza las siguientes operaciones en una transacción atómica:
+     * 1. Valida el stock actual y la fecha de vencimiento.
+     * 2. Registra la venta en TBL_Venta.
+     * 3. Registra el detalle del producto en TBL_Productos_Vendidos.
+     * 4. Descuenta la cantidad vendida del stock en TBL_Almacen.
+     * 
+     * @param request HttpServletRequest.
+     * @param response HttpServletResponse.
+     * @throws IOException Si ocurre un error de escritura.
+     */
     private void registrarVenta(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         String nitEmpleado = (String) session.getAttribute("userDoc");
@@ -198,6 +215,14 @@ public class VentasServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Elimina una venta registrada y restaura el stock al inventario.
+     * Solo permite eliminar ventas realizadas en la fecha actual (Seguridad).
+     * 
+     * @param request HttpServletRequest.
+     * @param response HttpServletResponse.
+     * @throws IOException Si ocurre un error de escritura.
+     */
     private void eliminarVenta(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String idVentaStr = request.getParameter("id");
         response.setContentType("application/json;charset=UTF-8");

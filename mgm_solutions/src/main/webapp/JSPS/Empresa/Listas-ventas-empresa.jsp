@@ -1,3 +1,8 @@
+<%-- 
+    Listas-ventas-empresa.jsp 
+    Historial de ventas de la empresa. Permite visualizar todas las transacciones
+    realizadas por los empleados y eliminar ventas del día actual para corregir errores.
+--%>
 <!DOCTYPE html>
 <html lang="en">
 

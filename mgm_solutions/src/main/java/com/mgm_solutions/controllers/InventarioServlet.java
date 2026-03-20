@@ -14,6 +14,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+/**
+ * Servlet encargado de la gestión del inventario de productos.
+ * Soporta operaciones de listado, creación, edición y eliminación (CRUD).
+ * Todas las operaciones están restringidas por el estado de la relación laboral (Activo).
+ */
 @WebServlet("/InventarioServlet")
 public class InventarioServlet extends HttpServlet {
 
@@ -39,6 +44,14 @@ public class InventarioServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Obtiene la lista de productos relacionados a una empresa específica en formato JSON.
+     * Solo accesible si el usuario está Activo.
+     * 
+     * @param request HttpServletRequest.
+     * @param response HttpServletResponse.
+     * @throws IOException Si ocurre un error de escritura.
+     */
     private void listarInventario(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         response.setContentType("application/json;charset=UTF-8");
@@ -96,6 +109,15 @@ public class InventarioServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Procesa la adición de un nuevo producto al inventario.
+     * Realiza validaciones de campos obligatorios, longitud de ID y fecha de vencimiento.
+     * Utiliza una transacción para asegurar la integridad en TBL_Producto y TBL_Almacen.
+     * 
+     * @param request HttpServletRequest.
+     * @param response HttpServletResponse.
+     * @throws IOException Si ocurre un error de escritura.
+     */
     private void agregarProducto(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         response.setContentType("application/json;charset=UTF-8");
@@ -119,20 +141,21 @@ public class InventarioServlet extends HttpServlet {
         int stock = Integer.parseInt(request.getParameter("stock"));
         double precio = Double.parseDouble(request.getParameter("precio"));
 
-        // Nuevos campos opcionales
+        // Campos obligatorios
         String precioCompraStr = request.getParameter("precioCompra");
         String porcentajeGananciaStr = request.getParameter("porcentajeGanancia");
         String fechaVencimientoStr = request.getParameter("fechaVencimiento");
 
-        Double precioCompra = (precioCompraStr != null && !precioCompraStr.isEmpty())
-                ? Double.parseDouble(precioCompraStr)
-                : null;
+        if (precioCompraStr == null || precioCompraStr.isEmpty() || fechaVencimientoStr == null || fechaVencimientoStr.isEmpty()) {
+            out.print("{\"status\":\"error\", \"message\":\"Todos los campos son obligatorios, incluyendo el precio de compra y la fecha de vencimiento.\"}");
+            return;
+        }
+
+        Double precioCompra = Double.parseDouble(precioCompraStr);
         Double porcentajeGanancia = (porcentajeGananciaStr != null && !porcentajeGananciaStr.isEmpty())
                 ? Double.parseDouble(porcentajeGananciaStr)
                 : null;
-        java.sql.Date fechaVencimiento = (fechaVencimientoStr != null && !fechaVencimientoStr.isEmpty())
-                ? java.sql.Date.valueOf(fechaVencimientoStr)
-                : null;
+        java.sql.Date fechaVencimiento = java.sql.Date.valueOf(fechaVencimientoStr);
 
         // Validar que la fecha de vencimiento no sea anterior a hoy
         if (fechaVencimiento != null) {
@@ -195,6 +218,14 @@ public class InventarioServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Actualiza la información de un producto y su registro en el almacén.
+     * Mantiene la integridad mediante una transacción SQL.
+     * 
+     * @param request HttpServletRequest.
+     * @param response HttpServletResponse.
+     * @throws IOException Si ocurre un error de escritura.
+     */
     private void editarProducto(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         response.setContentType("application/json;charset=UTF-8");
@@ -213,19 +244,21 @@ public class InventarioServlet extends HttpServlet {
         int stock = Integer.parseInt(request.getParameter("stock"));
         double precio = Double.parseDouble(request.getParameter("precio"));
 
+        // Campos obligatorios
         String precioCompraStr = request.getParameter("precioCompra");
         String porcentajeGananciaStr = request.getParameter("porcentajeGanancia");
         String fechaVencimientoStr = request.getParameter("fechaVencimiento");
 
-        Double precioCompra = (precioCompraStr != null && !precioCompraStr.isEmpty())
-                ? Double.parseDouble(precioCompraStr)
-                : null;
+        if (precioCompraStr == null || precioCompraStr.isEmpty() || fechaVencimientoStr == null || fechaVencimientoStr.isEmpty()) {
+            out.print("{\"status\":\"error\", \"message\":\"Todos los campos son obligatorios.\"}");
+            return;
+        }
+
+        Double precioCompra = Double.parseDouble(precioCompraStr);
         Double porcentajeGanancia = (porcentajeGananciaStr != null && !porcentajeGananciaStr.isEmpty())
                 ? Double.parseDouble(porcentajeGananciaStr)
                 : null;
-        java.sql.Date fechaVencimiento = (fechaVencimientoStr != null && !fechaVencimientoStr.isEmpty())
-                ? java.sql.Date.valueOf(fechaVencimientoStr)
-                : null;
+        java.sql.Date fechaVencimiento = java.sql.Date.valueOf(fechaVencimientoStr);
 
         // Validar que la fecha de vencimiento no sea anterior a hoy (solo si se cambia)
         // Se comenta o elimina la validación en edición para permitir corregir
@@ -287,6 +320,14 @@ public class InventarioServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Elimina completamente un producto del almacén y del maestro de productos.
+     * Se realiza una eliminación en cascada lógica dentro de una transacción.
+     * 
+     * @param request HttpServletRequest.
+     * @param response HttpServletResponse.
+     * @throws IOException Si ocurre un error de escritura.
+     */
     private void eliminarProducto(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         response.setContentType("application/json;charset=UTF-8");

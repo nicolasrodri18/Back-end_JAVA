@@ -1,3 +1,8 @@
+<%-- 
+    inicio-empresa.jsp 
+    Panel principal para el rol Empresa. Centraliza el acceso a la gestión 
+    de inventario, personal, ventas y configuración de perfil.
+--%>
 <!DOCTYPE html>
 <html lang="en">
 

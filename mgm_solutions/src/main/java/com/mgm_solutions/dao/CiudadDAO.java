@@ -6,8 +6,17 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Objeto de Acceso a Datos (DAO) para la entidad Ciudad.
+ * Proporciona métodos para interactuar con la tabla TBL_CIUDADES en la base de datos.
+ */
 public class CiudadDAO {
     
+    /**
+     * Recupera la lista completa de ciudades registradas.
+     * 
+     * @return List de objetos Ciudad.
+     */
     public List<Ciudad> listar() {
         List<Ciudad> ciudades = new ArrayList<>();
         String sql = "SELECT ID_Ciudad, Nombre FROM TBL_CIUDADES";

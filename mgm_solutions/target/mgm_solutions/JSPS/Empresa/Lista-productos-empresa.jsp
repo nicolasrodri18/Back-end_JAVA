@@ -1,3 +1,8 @@
+<%-- 
+    Lista-productos-empresa.jsp 
+    Vista principal para la gestión de inventario por parte de la Empresa.
+    Incluye la tabla de productos, búsqueda en tiempo real y modales para CRUD.
+--%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,7 +57,7 @@
                 <div class="modulo__campo">
                     <label for="edit-precio-compra">Precio de Compra:</label>
                     <input type="number" id="edit-precio-compra" name="edit-precio-compra"
-                        placeholder="Precio de Compra" class="modulo__input" step="0.01">
+                        placeholder="Precio de Compra" class="modulo__input" step="0.01" required>
                 </div>
 
                 <div class="modulo__campo">
@@ -64,7 +69,7 @@
 
                 <div class="modulo__campo">
                     <label for="edit-fecha-vencimiento">Fecha de Vencimiento:</label>
-                    <input type="date" id="edit-fecha-vencimiento" name="edit-fecha-vencimiento" class="modulo__input">
+                    <input type="date" id="edit-fecha-vencimiento" name="edit-fecha-vencimiento" class="modulo__input" required>
                 </div>
 
                 <div class="modulo__botones">
@@ -118,7 +123,7 @@
                 <div class="modulo__campo">
                     <label for="precio-compra">Precio de Compra:</label>
                     <input type="number" id="precio-compra" name="precio-compra" placeholder="Precio de Compra"
-                        class="modulo__input" step="0.01">
+                        class="modulo__input" step="0.01" required>
                 </div>
 
                 <div class="modulo__campo">
@@ -130,7 +135,7 @@
 
                 <div class="modulo__campo">
                     <label for="fecha-vencimiento">Fecha de Vencimiento:</label>
-                    <input type="date" id="fecha-vencimiento" name="fecha-vencimiento" class="modulo__input">
+                    <input type="date" id="fecha-vencimiento" name="fecha-vencimiento" class="modulo__input" required>
                 </div>
 
                 <div class="modulo__botones">

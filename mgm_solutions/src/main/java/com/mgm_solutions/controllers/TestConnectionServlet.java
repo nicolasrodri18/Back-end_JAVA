@@ -9,6 +9,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 
+/**
+ * Servlet de diagnóstico para verificar la comunicación entre la aplicación
+ * y el servidor de base de datos MySQL en tiempo real.
+ */
 @WebServlet("/test-db") // Esta será la URL en el navegador
 public class TestConnectionServlet extends HttpServlet {
     

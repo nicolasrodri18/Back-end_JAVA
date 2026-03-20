@@ -15,6 +15,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Servlet encargado de gestionar los vínculos laborales entre empresas y empleados.
+ * Controla invitaciones, estados de contratación, y actualización de perfiles de usuario.
+ */
 @WebServlet("/RelacionLaboralServlet")
 public class RelacionLaboralServlet extends HttpServlet {
 
@@ -52,6 +56,14 @@ public class RelacionLaboralServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Busca un usuario por su número de documento para procesos de invitación.
+     * Solo retorna resultados si el usuario tiene el rol de Empleado (3).
+     * 
+     * @param request HttpServletRequest.
+     * @param response HttpServletResponse.
+     * @throws IOException Si ocurre un error de escritura.
+     */
     private void buscarUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String documento = request.getParameter("documento");
         response.setContentType("application/json;charset=UTF-8");
@@ -80,6 +92,13 @@ public class RelacionLaboralServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Vincula un empleado a la empresa actual si no tiene una relación previa activa.
+     * 
+     * @param request HttpServletRequest.
+     * @param response HttpServletResponse.
+     * @throws IOException Si ocurre un error de escritura.
+     */
     private void invitarEmpleado(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         String nitEmpresa = (String) session.getAttribute("userDoc"); // El NIT de la empresa lo sacamos de la sesión
@@ -235,6 +254,15 @@ public class RelacionLaboralServlet extends HttpServlet {
         out.print("}");
     }
 
+    /**
+     * Actualiza la información de perfil del usuario autenticado (Nombre, Email, Dirección).
+     * Soporta la actualización opcional de la contraseña cifrada.
+     * 
+     * @param request HttpServletRequest.
+     * @param response HttpServletResponse.
+     * @throws ServletException Si ocurre un error de servlet.
+     * @throws IOException Si ocurre un error de escritura.
+     */
     private void actualizarPerfil(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");

@@ -2,6 +2,12 @@
 <%@ page import="com.mgm_solutions.models.Ciudad" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%-- 
+    Login.jsp 
+    Punto de entrada principal para la autenticación y registro de nuevos usuarios.
+    Utiliza un sistema de pestañas (toggles) para alternar entre Inicio de Sesión,
+    Registro de Usuario y Registro de Empresa.
+--%>
 <!DOCTYPE html>
 <html lang="es">
 <head>

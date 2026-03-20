@@ -1,3 +1,8 @@
+<%-- 
+    Listas-empleados-empresa.jsp 
+    Gestión de personal de la empresa. Permite buscar nuevos empleados por documento,
+    enviar invitaciones y gestionar el estado (Activo/Inactivo) de la nómina.
+--%>
 <!DOCTYPE html>
 <html lang="en">
 
